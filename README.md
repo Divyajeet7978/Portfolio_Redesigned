@@ -8,7 +8,9 @@
 
 <br>
 
+<div align="center">
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e1fcaf21-9354-40c6-8ec1-857f83a385c5/deploy-status)](https://app.netlify.com/sites/divyajeet/deploys)
+</div>
 
 ## 🌟 Features
 
