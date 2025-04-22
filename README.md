@@ -8,9 +8,7 @@
 
 <br>
 
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/58350585/154794338-3a0c1b7e-5e25-4f1a-b1f5-4a9c61e8b6f5.gif" width="800" alt="Portfolio Demo">
-</div>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e1fcaf21-9354-40c6-8ec1-857f83a385c5/deploy-status)](https://app.netlify.com/sites/divyajeet/deploys)
 
 ## 🌟 Features
 
