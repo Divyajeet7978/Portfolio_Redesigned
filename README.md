@@ -21,7 +21,7 @@
 - ✉️ **Functional Contact Form** with validation
 - 🛠 **Project Showcase** with filtering capabilities
 
-```diff
+
 + Built with cutting-edge web technologies for optimal performance
 
 
@@ -77,48 +77,25 @@ portfolio/
 ## 🌈 Color Palette
 | Color          | Hex                                                                |
 |----------------|--------------------------------------------------------------------|
-| Primary        | ![#6366f1](https://via.placeholder.com/10/6366f1?text=+) `#6366f1` |
-| Secondary      | ![#a855f7](https://via.placeholder.com/10/a855f7?text=+) `#a855f7` |
-| Accent         | ![#ec4899](https://via.placeholder.com/10/ec4899?text=+) `#ec4899` |
-| Dark Background| ![#111827](https://via.placeholder.com/10/111827?text=+) `#111827` |
-| Light Text     | ![#f9fafb](https://via.placeholder.com/10/f9fafb?text=+) `#f9fafb` |
+| Primary        | `#6366f1` |
+| Secondary      | `#a855f7` |
+| Accent         | `#ec4899` |
+| Dark Background| `#111827` |
+| Light Text     | `#f9fafb` |
 
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="https://i.imgur.com/JR5kD0a.png" width="45%" alt="Light Theme">
-  <img src="https://i.imgur.com/9QzQzZT.png" width="45%" alt="Dark Theme">  
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/1.png" width="45%" alt="Light Theme">
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/2.png" width="45%" alt="Dark Theme">  
 </div>
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📬 Contact
 
-Divyajeet Panda - [@yourtwitter](https://twitter.com/yourtwitter) - divyajeetpanda@outlook.com
+Divyajeet Panda - divyajeetpanda@outlook.com
 
 Project Link: [https://github.com/Divyajeet7978/portfolio](https://github.com/Divyajeet7978/portfolio)
 
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=Divyajeet7978&label=Profile%20views&color=0e75b6&style=flat" alt="Divyajeet7978" /> 
 </div>
-```
-
-## Key Features of This README:
-1. **Visual Badges** - For version, status, and technologies
-2. **Animated GIF** - Showcases the portfolio in action
-3. **Mermaid Diagram** - Visual representation of design concepts
-4. **Color Palette** - With visual color indicators
-5. **Responsive Layout** - Looks great on GitHub and other platforms
-6. **Interactive Elements** - Diff highlights, code blocks
-7. **Professional Structure** - Clear sections with emoji headings
