@@ -1,7 +1,7 @@
 # <div align="center">✨ Divyajeet's Portfolio ✨</div>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/Version-1.5.0-blue" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
   <img src="https://img.shields.io/badge/Status-Live-brightgreen" alt="Status">
 </div>
