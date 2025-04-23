@@ -6,6 +6,7 @@
     <title>Divyajeet Panda | Full Stack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -349,21 +350,33 @@
         .masonry-grid { 
             column-count: 3; 
             column-gap: 2rem; 
+			perspective: 1000px;
         }
 
         .masonry-item { 
             break-inside: avoid; 
             margin-bottom: 2rem; 
-            transition: transform var(--transition-fast), opacity var(--transition-fast);
+            transition: transform var(--transition-slow), opacity 0.3s ease;
             opacity: 1;
+			transform-style: preserve-3d;
+			will-change: transform, opacity;
         }
+		
+		.masonry-item.filtered-out {
+			display: none !important;
+		}
 
         .masonry-item.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            height: 0;
-            margin-bottom: 0;
-        }
+			opacity: 0;
+			transform: translateY(20px);
+			height: 0;
+			margin-bottom: 0;
+			pointer-events: none;
+		}
+		
+		.masonry-item > .glass-card {
+			height: 100%;
+		}
 
         /* Timeline */
         .timeline-item { 
@@ -803,7 +816,7 @@
 
         /* Responsive Adjustments */
         @media (max-width: 1024px) {
-            .masonry-grid { column-count: 2; }
+            .masonry-grid { column-count: 3; }
         }
 
         @media (max-width: 768px) {
@@ -1089,14 +1102,16 @@
             <div class="flex justify-center flex-wrap mb-12 gap-2 animate-on-scroll" style="animation-delay: 0.1s;">
                 <button class="tab-button active" data-filter="all">All Projects</button>
                 <button class="tab-button" data-filter="ai">AI/ML</button>
-                <button class="tab-button" data-filter="web">Web Development</button>
+                <button class="tab-button" data-filter="Auto">Automation</button>
                 <button class="tab-button" data-filter="security">Security</button>
+                <button class="tab-button" data-filter="web">Web Development</button>
             </div>
 
             <!-- Masonry Grid with FLIP Animation -->
             <div class="masonry-grid" id="portfolioGrid">
+			
                 <!-- Project 1 - AI -->
-<div class="masonry-item animate-on-scroll" data-category="ai" style="animation-delay: 0.2s;">
+<div class="masonry-item animate-on-scroll" data-category-ai style="animation-delay: 0.2s;">
     <div class="glass-card p-0 overflow-hidden hover-multi-effect">
         <div class="relative overflow-hidden h-64 group">
             <a href="https://github.com/Divyajeet7978/Baby-Emotion-Detector" 
@@ -1126,17 +1141,18 @@
             </div>
             <p class="opacity-80 mb-4 text-sm">Built an AI-powered tool to detect and classify infant emotions by analyzing facial expressions with 85% accuracy using OpenCV and TensorFlow, deployed on AWS for real-time feedback.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                <span class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">TensorFlow</span>
-                <span class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">OpenCV</span>
-                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">AWS</span>
+                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
+                <span class="text-xs px-3 py-1 bg-green-500/10 text-green rounded-full">TensorFlow/Keras</span>
+                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">OpenCV</span>
+                <span class="text-xs px-3 py-1 bg-red-500/10 text-red rounded-full">Flask</span>
+                <span class="text-xs px-3 py-1 bg-yellow-500/10 text-yellow rounded-full">Matplotlib</span>
             </div>
         </div>
     </div>
 </div>
 
-                <!-- Project 2 - Security -->
-<div class="masonry-item animate-on-scroll" data-category="security" style="animation-delay: 0.3s;">
+                <!-- Project 2 - Ai/Security -->
+<div class="masonry-item animate-on-scroll" data-category-security data-category-ai style="animation-delay: 0.3s;">
     <div class="glass-card p-0 overflow-hidden hover-multi-effect">
         <div class="relative overflow-hidden h-72 group">
             <a href="https://github.com/Divyajeet7978/AI-Driven-Cybersecurity-Threat-Detection-System" 
@@ -1159,24 +1175,24 @@
             <p class="opacity-75 text-sm mb-3">AI/ML • Security</p>
             <p class="opacity-80 mb-4 text-sm">Created an AI-powered system with Python and machine learning algorithms to identify and counter cyber-attacks in real time, improving threat detection accuracy by 45%.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                <span class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">TensorFlow</span>
-                <span class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">scikit-learn</span>
-                <span class="text-xs px-3 py-1 bg-green-500/10 text-green-500 rounded-full">AWS</span>
+                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
+                <span class="text-xs px-3 py-1 bg-green-500/10 text-green rounded-full">TensorFlow</span>
+                <span class="text-xs px-3 py-1 bg-blue-500/10 text-blue rounded-full">scikit-learn</span>
+                <span class="text-xs px-3 py-1 bg-indigo-500/10 text-indigo rounded-full">dask</span>
             </div>
         </div>
     </div>
 </div>
 
-                <!-- Project 3 - Web -->
-<div class="masonry-item animate-on-scroll" data-category="security" style="animation-delay: 0.3s;">
+                <!-- Project 3 - Auto -->
+<div class="masonry-item animate-on-scroll" data-category-auto style="animation-delay: 0.3s;">
     <div class="glass-card p-0 overflow-hidden hover-multi-effect">
         <div class="relative overflow-hidden h-72 group">
             <a href="https://github.com/Divyajeet7978/Assistant" 
                target="_blank" 
                rel="noopener noreferrer"
                class="block h-full w-full">
-                <img src="img/asst.png" alt="AI Cybersecurity System" 
+                <img src="img/asst.png" alt="Python-based voice assistant" 
                      class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
                 
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
@@ -1192,8 +1208,40 @@
             <p class="opacity-75 text-sm mb-3">Python</p>
             <p class="opacity-80 mb-4 text-sm">A simple Python-based voice assistant that can perform various tasks like web browsing, fetching weather information, searching Wikipedia, and more using voice commands.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                <span class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Speech Recognition</span>
+                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
+                <span class="text-xs px-3 py-1 bg-pink-500/10 text-pink rounded-full">Speech Recognition</span>
+            </div>
+        </div>
+    </div>
+</div>
+	
+				<!-- Project 4 - Web -->
+<div class="masonry-item animate-on-scroll" data-category-web style="animation-delay: 0.3s;">
+    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
+        <div class="relative overflow-hidden h-72 group">
+            <a href="https://github.com/Divyajeet7978/Portfolio_Redesigned" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="block h-full w-full">
+                <img src="img/1.png" alt="My Portfolio" 
+                     class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                    <div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="text-xl font-semibold text-white mb-1">My Portfolio</h3>
+                        <p class="text-sm text-white/80">Made with Tailwind CSS</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="p-6">
+            <h3 class="text-xl font-semibold">Portfolio</h3>
+            <p class="opacity-75 text-sm mb-3">HTML/CSS • JS</p>
+            <p class="opacity-80 mb-4 text-sm">Elegant Glassmorphism Design with Advanced UI Features</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">Tailwind CSS</span>
+                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">Three.JS</span>
+                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">GSAP</span>
             </div>
         </div>
     </div>
@@ -1837,11 +1885,10 @@
                 );
             });
         }
-
         // --- GSAP Animations ---
         if (typeof gsap !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
+		
             // Smooth Scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
@@ -1930,48 +1977,103 @@
 
             // Project Filtering with FLIP Animation
             const tabButtons = document.querySelectorAll('.tab-button');
-            const portfolioItems = document.querySelectorAll('.masonry-item');
-            const portfolioGrid = document.getElementById('portfolioGrid');
+			const portfolioItems = document.querySelectorAll('.masonry-item');
+			const portfolioGrid = document.getElementById('portfolioGrid');
 
-            if (tabButtons.length && portfolioItems.length) {
-                tabButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        // Update active button
-                        tabButtons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-
-                        const filter = button.getAttribute('data-filter');
-
-                        // Get current state before changes
-                        const state = Flip.getState(portfolioItems, {
-                            props: "opacity,transform",
-                            simple: true
-                        });
-
-                        // Filter items
-                        portfolioItems.forEach(item => {
-                            const itemCategory = item.getAttribute('data-category');
-                            const shouldShow = filter === 'all' || (itemCategory && itemCategory.includes(filter));
-
-                            if (shouldShow) {
-                                item.classList.remove('hidden');
-                            } else {
-                                item.classList.add('hidden');
-                            }
-                        });
-
-                        // Animate with FLIP
-                        Flip.from(state, {
-                            duration: 0.8,
-                            ease: "power2.inOut",
-                            stagger: 0.05,
-                            absolute: true,
-                            onComplete: () => ScrollTrigger.refresh()
-                        });
+			if (tabButtons.length && portfolioItems.length) {
+				tabButtons.forEach(button => {
+					button.addEventListener('click', () => {
+				// Update active button
+						tabButtons.forEach(btn => btn.classList.remove('active'));
+						button.classList.add('active');
+            
+            const filter = button.getAttribute('data-filter');
+			
+			// First get all current positions
+            const previousPositions = new Map();
+            portfolioItems.forEach(item => {
+                previousPositions.set(item, item.getBoundingClientRect());
+            });
+			
+			
+            // Apply filtering
+            portfolioItems.forEach(item => {
+                const shouldShow = filter === 'all' || item.hasAttribute(`data-category-${filter}`);
+                
+                if (shouldShow) {
+                    item.classList.remove('filtered-out');
+                    item.style.display = 'block'; // Ensure it's visible
+                } else {
+                    item.classList.add('filtered-out');
+                }
+            });
+			
+			// Calculate new positions and animate
+            portfolioItems.forEach(item => {
+                if (!item.classList.contains('filtered-out')) {
+                    const newPosition = item.getBoundingClientRect();
+                    const oldPosition = previousPositions.get(item);
+                    
+                    // Calculate the change in position
+                    const deltaX = oldPosition.left - newPosition.left;
+                    const deltaY = oldPosition.top - newPosition.top;
+                    
+                    // Apply the inverse transform to make it appear to stay in place
+                    gsap.fromTo(item, 
+                        {
+                            x: deltaX,
+                            y: deltaY,
+                            opacity: 0
+                        },
+                        {
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            clearProps: "transform" // Clean up after animation
+                        }
+                    );
+                } else {
+                    gsap.to(item, {
+                        opacity: 0,
+                        duration: 0.3,
+                        onComplete: () => {
+                            item.style.display = 'none'; // Remove from layout flow
+                            ScrollTrigger.refresh(); // Update scroll positions
+                        }
+                    });
+                }
+            });
+			
+			// Refresh layout after a short delay
+            setTimeout(() => {
+                // Force reflow
+                portfolioGrid.style.display = 'none';
+                portfolioGrid.offsetHeight; // Trigger reflow
+                portfolioGrid.style.display = 'block';
+                
+                ScrollTrigger.refresh();
+				}, 100);
+		
+			// Fallback GSAP animation
+                gsap.to(portfolioItems, {
+                    opacity: function() {
+                        return this.classList.contains('hidden') ? 0 : 1;
+                    },
+                    y: function() {
+                        return this.classList.contains('hidden') ? 20 : 0;
+                    },
+                    duration: 0.4,
+                    stagger: 0.03,
+                    ease: "power2.out",
+                    onComplete: ScrollTrigger.refresh
+                });
                     });
                 });
             }
         }
+
 
         // Set current year in footer
         if (currentYearSpan) {
