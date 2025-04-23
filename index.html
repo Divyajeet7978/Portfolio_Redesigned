@@ -1889,25 +1889,35 @@
         if (typeof gsap !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 		
-            // Smooth Scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        gsap.to(window, {
-                            duration: 1.2,
-                            scrollTo: {
-                                y: targetElement,
-                                offsetY: 80,
-                                autoKill: false
-                            },
-                            ease: "power3.inOut"
-                        });
-                    }
-                });
-            });
+            // Perfect Smooth Scrolling with Layout Awareness
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function(e) {
+				e.preventDefault();
+				const targetId = this.getAttribute('href');
+				const targetElement = document.querySelector(targetId);
+        
+				if (targetElement) {
+					document.body.offsetHeight;
+					const isFiltering = this.closest('.tab-button') !== null;
+					const delay = isFiltering ? 800 : 0;
+					const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+						const targetPosition = targetElement.offsetTop - headerHeight;
+					setTimeout(() => {
+						gsap.to(window, {
+							duration: 0.8,
+							scrollTo: {
+								y: targetPosition,
+								autoKill: false
+							},
+							ease: "power3.inOut",
+							onStart: () => {
+								document.body.offsetHeight;
+							}
+						});
+					}, delay);
+				}
+			});
+		});
 
             // Staggered Animations
             gsap.utils.toArray('.animate-on-scroll').forEach((el, i) => {
