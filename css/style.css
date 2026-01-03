@@ -923,6 +923,10 @@ html.dark .form-input:focus {
 
     .timeline-item::before {
         left: calc(0.75rem - 1.5px);
+        top: 1.5rem;
+        /* Start immediately after the smaller dot */
+        height: 100%;
+        /* Extend fully to the next item */
     }
 
     .timeline-dot {
