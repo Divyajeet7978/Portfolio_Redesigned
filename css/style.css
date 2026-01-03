@@ -268,10 +268,15 @@ html.contrast .glass-card {
     z-index: 1;
 }
 
-.hover-multi-effect:hover {
-    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.03);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+
+/* Only apply complex 3D hover effects on devices that support hover (Desktop) */
+@media (hover: hover) and (pointer: fine) {
+    .hover-multi-effect:hover {
+        transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.03);
+        box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+    }
 }
+
 
 .hover-multi-effect::before {
     content: '';
