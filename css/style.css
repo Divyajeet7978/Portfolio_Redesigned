@@ -57,6 +57,11 @@
     --text-5xl: calc(var(--text-4xl) * var(--text-scale));
 }
 
+/* Global Reset for Mobile Tap Highlight */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 html.theme-transitioning {
     --transition-fast: all 1s var(--ease-out) !important;
     --transition-base: all 1s var(--ease-out) !important;
