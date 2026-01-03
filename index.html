@@ -41,7 +41,9 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Scripts (Deferred) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Local Build) -->
+    <link href="css/tailwind.css" rel="stylesheet">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -660,30 +662,30 @@
                                 </div>
                                 <h4 class="mt-4 font-medium text-lg">Python</h4>
                             </div>
-                            <!-- JavaScript -->
+                            <!-- Java & JavaScript -->
                             <div class="text-center">
                                 <div class="radial-progress mx-auto text-secondary hover:text-secondary-light transition-colors cursor-pointer"
-                                    style="--value:88; --size:8rem; --thickness: 10px;"
-                                    data-tooltip="React, Node.js, TypeScript, Express, Jest">
-                                    88%
+                                    style="--value:90; --size:8rem; --thickness: 10px;"
+                                    data-tooltip="Java, Spring Boot, React, Node.js, TypeScript">
+                                    90%
                                 </div>
-                                <h4 class="mt-4 font-medium text-lg">JavaScript</h4>
+                                <h4 class="mt-4 font-medium text-lg">Java & JS</h4>
                             </div>
                             <!-- Databases -->
                             <div class="text-center">
                                 <div class="radial-progress mx-auto text-accent hover:text-accent-light transition-colors cursor-pointer"
-                                    style="--value:85; --size:8rem; --thickness: 10px;"
-                                    data-tooltip="SQL Server, MySQL, PostgreSQL, Oracle, NoSQL">
-                                    85%
+                                    style="--value:90; --size:8rem; --thickness: 10px;"
+                                    data-tooltip="PostgreSQL, Neo4j, MySQL, Oracle, NoSQL">
+                                    90%
                                 </div>
                                 <h4 class="mt-4 font-medium text-lg">Databases</h4>
                             </div>
                             <!-- Cloud/DevOps -->
                             <div class="text-center">
                                 <div class="radial-progress mx-auto text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
-                                    style="--value:80; --size:8rem; --thickness: 10px;"
+                                    style="--value:85; --size:8rem; --thickness: 10px;"
                                     data-tooltip="AWS, Docker, Kubernetes, CI/CD, Jenkins">
-                                    80%
+                                    85%
                                 </div>
                                 <h4 class="mt-4 font-medium text-lg">Cloud/DevOps</h4>
                             </div>
@@ -735,6 +737,20 @@
                                 <span
                                     class="text-3xl mb-1 text-green-500 group-hover:text-green-400 transition-colors">TF</span>
                                 <span class="text-xs opacity-70">TensorFlow</span>
+                            </div>
+                            <!-- Java -->
+                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-red-500/10 transition-colors duration-300 group cursor-pointer"
+                                data-tooltip="Backend Development, Spring Boot">
+                                <i
+                                    class="fab fa-java text-3xl mb-1 text-red-500 group-hover:text-red-400 transition-colors"></i>
+                                <span class="text-xs opacity-70">Java</span>
+                            </div>
+                            <!-- Neo4j -->
+                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-blue-500/10 transition-colors duration-300 group cursor-pointer"
+                                data-tooltip="Graph Database, Cypher Query Language">
+                                <i
+                                    class="fas fa-project-diagram text-3xl mb-1 text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                                <span class="text-xs opacity-70">Neo4j</span>
                             </div>
                         </div>
                     </div>
@@ -803,6 +819,9 @@
                                         <span
                                             class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Node.js</span>
                                         <span
+                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Spring
+                                            Boot</span>
+                                        <span
                                             class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">TensorFlow</span>
                                         <span
                                             class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">NumPy/Pandas</span>
@@ -829,6 +848,8 @@
                                     <div class="flex flex-wrap gap-2">
                                         <span
                                             class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">PostgreSQL</span>
+                                        <span
+                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">Neo4j</span>
                                         <span
                                             class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">MySQL</span>
                                         <span
