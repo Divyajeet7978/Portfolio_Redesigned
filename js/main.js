@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme && themes.includes(savedTheme)) {
         applyTheme(savedTheme);
     } else {
-        applyTheme(themes[0]);
+        applyTheme('contrast');
     }
 });
 
