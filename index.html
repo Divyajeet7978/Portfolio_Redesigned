@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="contrast">
 
 <head>
@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -61,126 +61,102 @@
     <div class="cursor-dot"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 left-0 px-4 py-2 sm:p-4 z-50">
-        <div class="glass-card max-w-7xl mx-auto px-4 sm:px-6 py-3 hover-multi-effect">
-            <div class="flex justify-between items-center">
-                <a href="#home"
-                    class="text-2xl font-bold gradient-text heading-font hover:opacity-90 transition-opacity">Divyajeet
-                    Panda</a>
-                <div class="flex items-center space-x-4 sm:space-x-6">
-                    <div class="hidden md:flex items-center space-x-6">
-                        <a href="#home" class="hover:text-primary transition-colors duration-300 font-medium">Home</a>
-                        <a href="#work" class="hover:text-primary transition-colors duration-300 font-medium">Work</a>
-                        <a href="#skills"
-                            class="hover:text-primary transition-colors duration-300 font-medium">Skills</a>
-                        <a href="#about" class="hover:text-primary transition-colors duration-300 font-medium">About</a>
-                        <a href="#contact"
-                            class="hover:text-primary transition-colors duration-300 font-medium">Contact</a>
-                    </div>
-
-                    <button id="themeToggle" aria-label="Toggle theme" class="theme-toggle-button hover-multi-effect">
-                        <i class="fas fa-sun"></i>
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-adjust"></i>
-                    </button>
-
-                    <button id="menuToggle"
-                        class="md:hidden p-2 rounded-full hover:bg-[var(--glass-bg)] transition-colors hover-multi-effect">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
+    <nav id="mainNav">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo">Divyajeet Panda</a>
+            <div style="display:flex;align-items:center;gap:0.25rem;">
+                <div class="nav-links">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#work" class="nav-link">Work</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </div>
-            </div>
-        </div>
-        <div id="mobileMenu" class="hidden md:hidden mt-2">
-            <div class="glass-card max-w-7xl mx-auto p-4 text-center space-y-3 hover-multi-effect">
-                <a href="#home"
-                    class="block py-2 hover:text-primary transition-colors duration-300 mobile-link font-medium">Home</a>
-                <a href="#work"
-                    class="block py-2 hover:text-primary transition-colors duration-300 mobile-link font-medium">Work</a>
-                <a href="#skills"
-                    class="block py-2 hover:text-primary transition-colors duration-300 mobile-link font-medium">Skills</a>
-                <a href="#about"
-                    class="block py-2 hover:text-primary transition-colors duration-300 mobile-link font-medium">About</a>
-                <a href="#contact"
-                    class="block py-2 hover:text-primary transition-colors duration-300 mobile-link font-medium">Contact</a>
+                <button id="themeToggle" aria-label="Toggle theme" class="theme-toggle-button">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-adjust"></i>
+                </button>
+                <button id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
+    <div id="mobileMenu" class="hidden">
+        <a href="#home" class="mobile-link">Home</a>
+        <a href="#work" class="mobile-link">Work</a>
+        <a href="#skills" class="mobile-link">Skills</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+    </div>
     <!-- Hero Section -->
-    <section id="home"
-        class="min-h-screen flex items-center justify-center px-4 pt-56 pb-16 relative overflow-hidden layered-section">
-        <!-- Background Layer -->
-        <div class="layer-1 absolute inset-0 overflow-hidden z-0">
-            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/10 blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl animate-pulse"
-                style="animation-delay: 1s;"></div>
-        </div>
+    <section id="home">
+        <!-- Gradient Orbs -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
 
-        <!-- Content Layer -->
-        <div class="layer-2 max-w-4xl mx-auto text-center relative z-10">
-            <div class="glass-card p-8 sm:p-12 inline-block hover-multi-effect animate-on-scroll">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 heading-font leading-tight">Building <span
-                        class="gradient-text">Digital</span> Solutions</h1>
-                <p class="text-lg sm:text-xl opacity-80 mb-8 max-w-2xl mx-auto">Full Stack Developer specializing in
-                    Python, JavaScript, and AI-driven applications.</p>
+        <!-- Content -->
+        <div class="hero-content animate-on-scroll">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                Available for opportunities
+            </div>
+
+            <h1 class="hero-title">
+                Building <span class="highlight gradient-text">Digital</span><br>Solutions That Matter
+            </h1>
+
+            <p class="hero-subtitle">
+                Full Stack Developer specializing in Python, JavaScript, and AI-driven applications — crafting
+                performant, beautiful software.
+            </p>
+
+            <div class="hero-actions">
                 <a href="#work" class="cta-button">
-                    View My Projects <i class="fas fa-arrow-right"></i>
+                    <span>View My Work</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="cta-button-outline">
+                    <span>Get In Touch</span>
+                    <i class="fas fa-paper-plane"></i>
                 </a>
             </div>
-
-            <!-- Floating Illustration with SVG Animation -->
-            <div class="relative mt-16 sm:mt-20 w-full max-w-lg mx-auto">
-                <svg id="heroIllustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"
-                    class="floating w-full h-auto animate-on-scroll" style="animation-delay: 0.2s;">
-                    <!-- SVG paths will be animated via JS -->
-                    <path class="svg-path" fill="#6366f1"
-                        d="M400,100c100,0,200,50,200,150s-100,150-200,150s-200-50-200-150S300,100,400,100z" />
-                    <path class="svg-path" fill="#a855f7"
-                        d="M300,300c50,50,150,50,200,0s50-150,0-200s-150-50-200,0S250,250,300,300z" />
-                    <path class="svg-path" fill="#ec4899"
-                        d="M500,400c-50,50-150,50-200,0s-50-150,0-200s150-50,200,0S550,350,500,400z" />
-                </svg>
-                <div
-                    class="absolute -inset-16 bg-gradient-to-r from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl -z-10">
-                </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div
-                class="absolute bottom-8 left-[49%] transform -translate-x-1/2 animate-bounce opacity-70 hidden sm:block">
-                <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-1">
-                    <div class="wheel"></div>
-                </div>
-            </div>
         </div>
 
-        <!-- Decorative Layer -->
-
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
     </section>
 
     <!-- Work Section -->
-    <section id="work" class="py-28 px-4 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 animate-on-scroll">
-                <h2 class="text-4xl font-bold mb-4 gradient-text heading-font">Professional Experience</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">My career journey and key accomplishments.</p>
+    <section id="work">
+        <div style="max-width: 72rem; margin: 0 auto;">
+            <div class="text-center animate-on-scroll">
+                <span class="section-label">Experience</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
+                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">My Career Journey</h2>
             </div>
 
             <!-- Experience Timeline -->
-            <div class="glass-card p-8 hover-multi-effect animate-on-scroll">
-                <h3 class="text-xl font-semibold mb-10 text-center heading-font">Work History</h3>
+            <div class="glass-card animate-on-scroll" style="padding: 2.5rem; max-width: 48rem; margin: 3rem auto 0;">
                 <div class="relative">
                     <!-- Vimaan Robotics -->
                     <div class="timeline-item">
                         <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
                         <div>
-                            <h4 class="font-semibold text-lg">Software Engineer</h4>
-                            <p class="text-sm opacity-70 mb-2">Vimaan Robotics &bull; Aug 2025 - Present &bull;
-                                Bengaluru,
-                                India
+                            <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Software Engineer
+                            </h4>
+                            <p
+                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary-light); margin-bottom: 1rem;">
+                                Vimaan Robotics &bull; Aug 2025 - Present &bull; Bengaluru, India
                             </p>
-                            <p class="opacity-80 text-sm">Spearheaded backend development using <strong>Neo4j</strong>
-                                and <strong>PostgreSQL</strong> to optimize data delivery for frontend visualization,
+                            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.25rem;">
+                                Spearheaded backend development using <strong>Neo4j</strong> and
+                                <strong>PostgreSQL</strong> to optimize data delivery for frontend visualization,
                                 ensuring seamless data flow for complex inventory systems. Automated critical manual
                                 workflows using <strong>Python</strong> scripts and enhanced <strong>CI/CD</strong>
                                 pipelines, significantly reducing deployment time and improving operational efficiency.
@@ -191,16 +167,15 @@
                                 Designed intuitive UI components and integrated backend APIs to verify and visualize
                                 complex data, ensuring products meet exact client specifications. Managed end-to-end
                                 deployment planning and execution, performing rigorous testing and debugging of
-                                <strong>Java/Spring Boot</strong> backend systems to ensure error-free releases.</p>
-                            <div class="flex flex-wrap gap-2 mt-3">
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Java</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Neo4j</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">PostgreSQL</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">CI/CD</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">API
-                                    Integration</span>
+                                <strong>Java/Spring Boot</strong> backend systems to ensure error-free releases.
+                            </p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Java</span>
+                                <span class="tag-pill">Neo4j</span>
+                                <span class="tag-pill">PostgreSQL</span>
+                                <span class="tag-pill">CI/CD</span>
+                                <span class="tag-pill">API Integration</span>
                             </div>
                         </div>
                     </div>
@@ -208,41 +183,47 @@
                     <div class="timeline-item">
                         <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
                         <div>
-                            <h4 class="font-semibold text-lg">Senior Systems Engineer</h4>
-                            <p class="text-sm opacity-70 mb-2">Cognizant &bull; Sep 2022 - Jan 2025 &bull; Bengaluru,
-                                India
+                            <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Senior Systems
+                                Engineer</h4>
+                            <p
+                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary-light); margin-bottom: 1rem;">
+                                Cognizant &bull; Sep 2022 - Jan 2025 &bull; Bengaluru, India
                             </p>
-                            <p class="opacity-80 text-sm">Architected and deployed microservices using <strong>Python
-                                    (FastAPI)</strong> and <strong>Node.js</strong>, containerized with
-                                <strong>Docker</strong> and orchestrated via <strong>Kubernetes</strong> across AWS ECS
-                                and Azure AKS, improving scalability and reliability. Improved database performance by
-                                optimizing queries in <strong>PostgreSQL</strong>, resulting in a <strong>25%
-                                    reduction</strong> in execution time and a <strong>19% improvement</strong> in
-                                overall query performance. Developed <strong>RESTful</strong> and
-                                <strong>GraphQL</strong> APIs with rate limiting, caching, and robust authentication
-                                (<strong>OAuth 2.0, JWT</strong>), reducing security vulnerabilities by 12%. Utilized
-                                <strong>Kafka</strong> and <strong>RabbitMQ</strong> to create event-driven real-time
-                                data workflows, increasing processing efficiency by <strong>19%</strong> while
-                                maintaining data consistency. Implemented full-stack observability using
-                                <strong>Prometheus, Grafana</strong>, and the <strong>ELK stack</strong> for proactive
-                                monitoring and lowered incident response times by 16%. Mentored junior engineers in best
-                                practices, code reviews, and architecture design, accelerating team delivery speed by
-                                10%.</p>
-                            <div class="flex flex-wrap gap-2 mt-3">
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Django</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">AWS</span>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Agile</span>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.25rem;">
+                                Architected and deployed microservices using <strong>Python (FastAPI)</strong> and
+                                <strong>Node.js</strong>, containerized with <strong>Docker</strong> and orchestrated
+                                via <strong>Kubernetes</strong> across AWS ECS and Azure AKS, improving scalability and
+                                reliability. Improved database performance by optimizing queries in
+                                <strong>PostgreSQL</strong>, resulting in a <strong>25% reduction</strong> in execution
+                                time and a <strong>19% improvement</strong> in overall query performance. Developed
+                                <strong>RESTful</strong> and <strong>GraphQL</strong> APIs with rate limiting, caching,
+                                and robust authentication (<strong>OAuth 2.0, JWT</strong>), reducing security
+                                vulnerabilities by 12%. Utilized <strong>Kafka</strong> and <strong>RabbitMQ</strong> to
+                                create event-driven real-time data workflows, increasing processing efficiency by
+                                <strong>19%</strong> while maintaining data consistency. Implemented full-stack
+                                observability using <strong>Prometheus, Grafana</strong>, and the <strong>ELK
+                                    stack</strong> for proactive monitoring and lowered incident response times by 16%.
+                                Mentored junior engineers in best practices, code reviews, and architecture design,
+                                accelerating team delivery speed by 10%.
+                            </p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Django</span>
+                                <span class="tag-pill">AWS</span>
+                                <span class="tag-pill">Agile</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="section-divider" style="margin: 6rem auto;"></div>
+
             <!-- Projects Section -->
-            <div class="text-center mb-16 animate-on-scroll mt-28">
-                <h2 class="text-4xl font-bold mb-4 gradient-text heading-font">Key Projects</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">A showcase of my technical implementations.</p>
+            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
+                <span class="section-label">Portfolio</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
+                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Key Projects</h2>
             </div>
 
             <!-- Filter Tabs -->
@@ -283,19 +264,17 @@
                                     <h3 class="text-xl font-semibold">Baby Emotion Detector</h3>
                                     <p class="opacity-75 text-sm">AI/ML &bull; Computer Vision</p>
                                 </div>
-                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Featured</span>
+                                <span class="tag-pill">Featured</span>
                             </div>
                             <p class="opacity-80 mb-4 text-sm">Built an AI-powered tool to detect and classify infant
                                 emotions by analyzing facial expressions with 85% accuracy using OpenCV and TensorFlow,
                                 deployed on AWS for real-time feedback.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-green-500/10 text-green rounded-full">TensorFlow/Keras</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">OpenCV</span>
-                                <span class="text-xs px-3 py-1 bg-red-500/10 text-red rounded-full">Flask</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-yellow-500/10 text-yellow rounded-full">Matplotlib</span>
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">TensorFlow/Keras</span>
+                                <span class="tag-pill">OpenCV</span>
+                                <span class="tag-pill">Flask</span>
+                                <span class="tag-pill">Matplotlib</span>
                             </div>
                         </div>
                     </div>
@@ -322,18 +301,16 @@
                             </a>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-semibold">AI-Driven Cybersecurity Threat Detection</h3>
+                            <h3 class="text-lg font-semibold leading-tight mb-2">AI Cybersecurity Threat Detection</h3>
                             <p class="opacity-75 text-sm mb-3">AI/ML &bull; Security</p>
                             <p class="opacity-80 mb-4 text-sm">Created an AI-powered system with Python and machine
                                 learning algorithms to identify and counter cyber-attacks in real time, improving threat
                                 detection accuracy by 45%.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-green-500/10 text-green rounded-full">TensorFlow</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-blue-500/10 text-blue rounded-full">scikit-learn</span>
-                                <span class="text-xs px-3 py-1 bg-indigo-500/10 text-indigo rounded-full">dask</span>
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">TensorFlow</span>
+                                <span class="tag-pill">scikit-learn</span>
+                                <span class="tag-pill">dask</span>
                             </div>
                         </div>
                     </div>
@@ -365,8 +342,8 @@
                                 various tasks like web browsing, fetching weather information, searching Wikipedia, and
                                 more using voice commands.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-pink-500/10 text-pink rounded-full">Speech
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Speech
                                     Recognition</span>
                             </div>
                         </div>
@@ -398,10 +375,10 @@
                             <p class="opacity-80 mb-4 text-sm">Elegant Glassmorphism Design with Advanced UI Features
                             </p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">Tailwind
+                                <span class="tag-pill">Tailwind
                                     CSS</span>
-                                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">Three.JS</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">GSAP</span>
+                                <span class="tag-pill">Three.JS</span>
+                                <span class="tag-pill">GSAP</span>
                             </div>
                         </div>
                     </div>
@@ -437,13 +414,13 @@
                                 flexibility, while the frontend is crafted with HTML, CSS, and JavaScript to offer a
                                 polished user interface.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">Tailwind
+                                <span class="tag-pill">Tailwind
                                     CSS</span>
-                                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">Three.JS</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Flask</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Pdfkit</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Faker</span>
+                                <span class="tag-pill">Three.JS</span>
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Flask</span>
+                                <span class="tag-pill">Pdfkit</span>
+                                <span class="tag-pill">Faker</span>
                             </div>
                         </div>
                     </div>
@@ -477,11 +454,11 @@
                                 forecasts with dynamic backgrounds and visual effects that change based on current
                                 conditions.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">Tailwind
+                                <span class="tag-pill">Tailwind
                                     CSS</span>
-                                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">Vue.JS</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Weather API</span>
+                                <span class="tag-pill">Vue.JS</span>
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Weather API</span>
                             </div>
                         </div>
                     </div>
@@ -514,15 +491,15 @@
                             <p class="opacity-80 mb-4 text-sm">FinTrak is a beautifully designed, frontend-only personal
                                 finance management dashboard built using React, Tailwind CSS, Framer Motion, and
                                 Chart.js. It empowers users to track their expenses, budgets, investments, and financial
-                                goals in a visually appealing, interactive interfaceâ€”enhanced with real-time AI-driven
+                                goals in a visually appealing, interactive interface — enhanced with real-time AI-driven
                                 insights.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">Tailwind
+                                <span class="tag-pill">Tailwind
                                     CSS</span>
-                                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">Chart.JS</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Framer
+                                <span class="tag-pill">Chart.JS</span>
+                                <span class="tag-pill">Framer
                                     Motion</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">React</span>
+                                <span class="tag-pill">React</span>
                             </div>
                         </div>
                     </div>
@@ -557,10 +534,10 @@
                                 pathfinding, tree traversal, and dynamic programming algorithms through beautifully
                                 animated and responsive visualizations.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-teal-500/10 text-teal rounded-full">CSS3</span>
-                                <span class="text-xs px-3 py-1 bg-lime-500/10 text-lime rounded-full">JS
+                                <span class="tag-pill">CSS3</span>
+                                <span class="tag-pill">JS
                                     (Vanilla)</span>
-                                <span class="text-xs px-3 py-1 bg-gray-500/10 text-gray rounded-full">Google
+                                <span class="tag-pill">Google
                                     Fonts</span>
 
                             </div>
@@ -598,14 +575,11 @@
                                 algorithms. Inspired by Google's Material Design, this tool offers a modern and
                                 user-friendly interface to enhance your algorithm learning experience.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Python</span>
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">Tkinter</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-yellow-500/10 text-yellow rounded-full">Matplotlib</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">ttkthemes</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">NetworkX</span>
+                                <span class="tag-pill">Python</span>
+                                <span class="tag-pill">Tkinter</span>
+                                <span class="tag-pill">Matplotlib</span>
+                                <span class="tag-pill">ttkthemes</span>
+                                <span class="tag-pill">NetworkX</span>
                             </div>
                         </div>
                     </div>
@@ -638,16 +612,15 @@
                                 html2canvas</p>
                             <p class="opacity-80 mb-4 text-sm">PackPal is an AI-powered smart travel packing assistant
                                 that helps travelers plan, pack, and export optimized luggage lists based on
-                                destination, airline, weather, and more â€” all in a single responsive web app.</p>
+                                destination, airline, weather, and more — all in a single responsive web app.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">CSS3</span>
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">JavaScript
+                                <span class="tag-pill">CSS3</span>
+                                <span class="tag-pill">JavaScript
                                     (ES6+)</span>
-                                <span class="text-xs px-3 py-1 bg-yellow-500/10 text-yellow rounded-full">Font
+                                <span class="tag-pill">Font
                                     Awesome</span>
-                                <span class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">jsPDF</span>
-                                <span
-                                    class="text-xs px-3 py-1 bg-purple-500/10 text-purple rounded-full">html2canvas</span>
+                                <span class="tag-pill">jsPDF</span>
+                                <span class="tag-pill">html2canvas</span>
                             </div>
                         </div>
                     </div>
@@ -656,11 +629,13 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-28 px-4 bg-[var(--glass-bg)] relative overflow-hidden">
+    <section id="skills" class="py-28 px-4 relative overflow-hidden">
+        <div class="section-divider absolute top-0 left-0 right-0"></div>
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 animate-on-scroll">
-                <h2 class="text-4xl font-bold mb-4 gradient-text heading-font">Technical Skills</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">My technical capabilities and expertise.</p>
+            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
+                <span class="section-label">Expertise</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
+                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Technical Skills</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -794,17 +769,12 @@
                                     <p class="py-4 opacity-80">Strong expertise in multiple programming languages with a
                                         focus on Python and JavaScript/TypeScript for full-stack development.</p>
                                     <div class="flex flex-wrap gap-2">
-                                        <span
-                                            class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Python</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">JavaScript</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">TypeScript</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Java</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">C/C++</span>
-                                        <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Shell
+                                        <span class="tag-pill">Python</span>
+                                        <span class="tag-pill">JavaScript</span>
+                                        <span class="tag-pill">TypeScript</span>
+                                        <span class="tag-pill">Java</span>
+                                        <span class="tag-pill">C/C++</span>
+                                        <span class="tag-pill">Shell
                                             Scripting</span>
                                     </div>
                                 </div>
@@ -827,21 +797,14 @@
                                     <p class="py-4 opacity-80">Extensive experience with both frontend and backend
                                         frameworks, as well as data science and machine learning libraries.</p>
                                     <div class="flex flex-wrap gap-2">
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Django</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Flask</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">React</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Node.js</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Spring
+                                        <span class="tag-pill">Django</span>
+                                        <span class="tag-pill">Flask</span>
+                                        <span class="tag-pill">React</span>
+                                        <span class="tag-pill">Node.js</span>
+                                        <span class="tag-pill">Spring
                                             Boot</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">TensorFlow</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">NumPy/Pandas</span>
+                                        <span class="tag-pill">TensorFlow</span>
+                                        <span class="tag-pill">NumPy/Pandas</span>
                                     </div>
                                 </div>
                             </div>
@@ -863,18 +826,12 @@
                                     <p class="py-4 opacity-80">Experience with both SQL and NoSQL databases, including
                                         optimization and administration.</p>
                                     <div class="flex flex-wrap gap-2">
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">PostgreSQL</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">Neo4j</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">MySQL</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">Oracle</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">MongoDB</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">PL/SQL</span>
+                                        <span class="tag-pill">PostgreSQL</span>
+                                        <span class="tag-pill">Neo4j</span>
+                                        <span class="tag-pill">MySQL</span>
+                                        <span class="tag-pill">Oracle</span>
+                                        <span class="tag-pill">MongoDB</span>
+                                        <span class="tag-pill">PL/SQL</span>
                                     </div>
                                 </div>
                             </div>
@@ -896,16 +853,11 @@
                                     <p class="py-4 opacity-80">Cloud infrastructure management and DevOps practices for
                                         efficient software delivery.</p>
                                     <div class="flex flex-wrap gap-2">
-                                        <span
-                                            class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">AWS</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">Docker</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">Kubernetes</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">CI/CD</span>
-                                        <span
-                                            class="text-xs px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">Jenkins</span>
+                                        <span class="tag-pill">AWS</span>
+                                        <span class="tag-pill">Docker</span>
+                                        <span class="tag-pill">Kubernetes</span>
+                                        <span class="tag-pill">CI/CD</span>
+                                        <span class="tag-pill">Jenkins</span>
                                     </div>
                                 </div>
                             </div>
@@ -922,11 +874,12 @@
 
     <!-- About Section -->
     <section id="about" class="py-28 px-4 relative overflow-hidden">
+        <div class="section-divider absolute top-0 left-0 right-0"></div>
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20 animate-on-scroll">
-                <h2 class="text-4xl font-bold mb-4 gradient-text heading-font">About Me</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">The developer behind the code - my journey and
-                    philosophy.</p>
+            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
+                <span class="section-label">Behind the Code</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
+                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">About Me</h2>
             </div>
 
             <div class="space-y-24">
@@ -950,10 +903,9 @@
                             seamlessly, requires minimal maintenance, and can adapt to changing requirements. I strive
                             to write code that my future self and other developers will thank me for.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">Clean Code</span>
-                            <span
-                                class="text-xs px-3 py-1 bg-secondary/10 text-secondary rounded-full">Scalability</span>
-                            <span class="text-xs px-3 py-1 bg-accent/10 text-accent rounded-full">Security</span>
+                            <span class="tag-pill">Clean Code</span>
+                            <span class="tag-pill">Scalability</span>
+                            <span class="tag-pill">Security</span>
                         </div>
                     </div>
                 </div>
@@ -1045,11 +997,13 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-28 px-4 bg-[var(--glass-bg)] relative overflow-hidden">
+    <section id="contact" class="py-28 px-4 relative overflow-hidden">
+        <div class="section-divider absolute top-0 left-0 right-0"></div>
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16 animate-on-scroll">
-                <h2 class="text-4xl font-bold mb-4 gradient-text heading-font">Let's Connect</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">Have a project or opportunity? Get in touch!</p>
+            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
+                <span class="section-label">Get in Touch</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
+                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Let's Connect</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
