@@ -1435,6 +1435,10 @@ footer a:hover {
         display: block;
     }
 
+    .cursor-dot {
+        display: none !important;
+    }
+
     .masonry-grid {
         column-count: 1;
     }
