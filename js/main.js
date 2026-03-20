@@ -74,64 +74,33 @@ document.querySelectorAll('.mobile-link').forEach(link => {
 
 // --- Custom Cursor ---
 if (cursorDot) {
-    window.addEventListener('mousemove', (e) => {
-        gsap.to(cursorDot, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.15,
-            ease: "power2.out"
-        });
+    document.addEventListener('mousemove', (e) => {
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+        cursorDot.classList.add('active');
     });
 
-    // Cursor hover effects
-    const hoverElements = document.querySelectorAll('a, button, .hover-effect');
+    const hoverElements = document.querySelectorAll('a, button, .hover-multi-effect, .tab-button, .radial-progress');
     hoverElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            gsap.to(cursorDot, {
-                width: '24px',
-                height: '24px',
-                backgroundColor: 'var(--primary)',
-                duration: 0.3
-            });
-            el.style.cursor = 'none';
-        });
-        el.addEventListener('mouseleave', () => {
-            gsap.to(cursorDot, {
-                width: '10px',
-                height: '10px',
-                backgroundColor: 'currentColor',
-                duration: 0.3
-            });
-        });
+        el.addEventListener('mouseenter', () => cursorDot.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursorDot.classList.remove('hovering'));
     });
 }
 
-// --- SVG Path Animation ---
-const heroIllustration = document.getElementById('heroIllustration');
-if (heroIllustration) {
-    const paths = heroIllustration.querySelectorAll('.svg-path');
-    paths.forEach((path, i) => {
-        const length = path.getTotalLength();
-        path.style.strokeDasharray = length;
-        path.style.strokeDashoffset = length;
-        path.style.stroke = 'currentColor';
-        path.style.strokeWidth = '2px';
-        path.style.fill = 'none';
-
-        gsap.fromTo(path,
-            { strokeDashoffset: length },
-            {
-                strokeDashoffset: 0,
-                duration: 1.5,
-                delay: i * 0.3,
-                ease: "power2.out",
-                onComplete: () => {
-                    path.style.fill = path.getAttribute('fill');
-                }
-            }
-        );
+// --- Navigation Scroll Effect ---
+const mainNav = document.getElementById('mainNav');
+if (mainNav) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            mainNav.classList.add('scrolled');
+        } else {
+            mainNav.classList.remove('scrolled');
+        }
     });
 }
+
+// --- SVG Path Animation (Removed) ---
+// SVG animation code removed since the hero design no longer uses the SVG blob illustration.
 // --- GSAP Animations ---
 if (typeof gsap !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -185,19 +154,8 @@ if (typeof gsap !== 'undefined') {
         );
     });
 
-    // Hero Illustration Parallax
-    if (heroIllustration) {
-        gsap.to(heroIllustration, {
-            yPercent: -15,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#home",
-                start: "top top",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-    }
+    // Hero Illustration Parallax (Removed)
+    // Removed because the illustration is gone.
 
     // Horizontal Scroll Dragging
     const sliders = document.querySelectorAll('.horizontal-scroll');
