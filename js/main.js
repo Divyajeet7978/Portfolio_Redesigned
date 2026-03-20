@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Mobile Menu ---
 mobileMenuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('show');
     const icon = mobileMenuToggle.querySelector('i');
     icon.classList.toggle('fa-bars');
     icon.classList.toggle('fa-times');
@@ -66,14 +66,15 @@ mobileMenuToggle.addEventListener('click', () => {
 // Close mobile menu on link click
 document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('show');
         mobileMenuToggle.querySelector('i').classList.add('fa-bars');
         mobileMenuToggle.querySelector('i').classList.remove('fa-times');
     });
 });
 
 // --- Custom Cursor ---
-if (cursorDot) {
+// Only initialize custom cursor on larger viewports
+if (cursorDot && window.innerWidth > 768) {
     document.addEventListener('mousemove', (e) => {
         cursorDot.style.left = e.clientX + 'px';
         cursorDot.style.top = e.clientY + 'px';
