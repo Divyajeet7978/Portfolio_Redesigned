@@ -91,8 +91,8 @@ portfolio/
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/1.webp" width="45%" alt="Light Theme">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/cs.webp" width="45%" alt="Dark Theme">  
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/screenshot-light.webp" width="45%" alt="Light Theme">
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/screenshot-dark.webp" width="45%" alt="Dark Theme">  
 </div>
 
 ## 📬 Contact
