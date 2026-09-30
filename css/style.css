@@ -185,6 +185,7 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
+    overflow-x: clip;
     line-height: 1.6;
     transition: background-color var(--duration-slow) var(--ease-out-expo),
         color var(--duration-slow) var(--ease-out-expo);
@@ -1989,6 +1990,13 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
+    nav {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        padding: 0.5rem 1rem;
+    }
+
     .nav-links {
         display: none !important;
     }
@@ -2011,8 +2019,9 @@ footer a:hover {
     }
 
     #home {
-        padding-top: 8rem !important;
+        padding-top: 4rem !important;
         min-height: 100vh;
+        min-height: 100dvh;
         align-items: center !important;
     }
 
