@@ -423,6 +423,32 @@ function animateTimeline() {
     });
 }
 
+// --- Certifications: show all / show fewer ---
+function initCertifications() {
+    const toggle = document.getElementById('certToggle');
+    const grid = document.getElementById('certGrid');
+    if (!toggle || !grid) return;
+    const extras = grid.querySelectorAll('.cert-extra');
+    const label = toggle.querySelector('span');
+    const collapsedLabel = label.textContent;
+
+    toggle.addEventListener('click', () => {
+        const expanded = grid.classList.toggle('expanded');
+        toggle.setAttribute('aria-expanded', String(expanded));
+        label.textContent = expanded ? 'Show fewer' : collapsedLabel;
+
+        if (expanded && !reduceMotion) {
+            gsap.fromTo(extras,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', clearProps: 'transform' }
+            );
+        }
+        if (!expanded) toggle.scrollIntoView({ block: 'nearest' });
+        // The section height changed: recompute scroll trigger positions below it
+        ScrollTrigger.refresh();
+    });
+}
+
 // --- Contact Form Validation ---
 function initContactForm() {
     const contactForm = document.getElementById('contactForm');
@@ -685,6 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAccordions();
     animateRadialProgress();
     animateTimeline();
+    initCertifications();
     initContactForm();
     initBackToTop();
     initParticles();
