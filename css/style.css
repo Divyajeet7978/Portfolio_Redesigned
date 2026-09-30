@@ -3,8 +3,30 @@
    Modern, Aesthetic & Beautiful Design
    ============================================ */
 
-/* === CUSTOM FONTS === */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* === CUSTOM FONTS (self-hosted latin subsets) === */
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url(../fonts/space-grotesk.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url(../fonts/inter.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 500;
+    font-display: swap;
+    src: url(../fonts/jetbrains-mono.woff2) format('woff2');
+}
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
@@ -83,10 +105,13 @@
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-body: 'Inter', -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+
+    color-scheme: dark;
 }
 
 /* === THEME CLASSES === */
 html.light {
+    color-scheme: light;
     --bg-primary: #fafafa;
     --bg-secondary: #f5f5f5;
     --bg-tertiary: #efefef;
@@ -150,7 +175,6 @@ html.contrast {
 }
 
 html {
-    scroll-behavior: smooth;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -501,12 +525,14 @@ html.contrast .theme-toggle-button .fa-adjust {
     opacity: 0;
     transition: all var(--duration-base) var(--ease-out-expo);
     pointer-events: none;
+    visibility: hidden;
 }
 
 #mobileMenu.show {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
 }
 
 #mobileMenu.hidden {
@@ -573,7 +599,7 @@ html.contrast .theme-toggle-button .fa-adjust {
     background: var(--accent);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    translate: -50% -50%;
     animation-delay: -14s;
 }
 
@@ -602,6 +628,19 @@ html.contrast .theme-toggle-button .fa-adjust {
     text-align: center;
     position: relative;
     z-index: 2;
+    animation: heroEnter 0.8s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .hero-badge {
@@ -986,7 +1025,6 @@ html.light .cta-button:hover {
 .masonry-item {
     break-inside: avoid;
     margin-bottom: 2.5rem;
-    transition: all var(--duration-slow) var(--ease-out-expo);
     opacity: 1;
 }
 
@@ -1034,7 +1072,7 @@ html.light .cta-button:hover {
 /* Radial Progress */
 .radial-progress {
     --value: 0;
-    --size: 7rem;
+    --size: 8rem;
     --thickness: 8px;
     position: relative;
     width: var(--size);
@@ -1055,33 +1093,6 @@ html.light .cta-button:hover {
 
 .radial-progress:hover {
     transform: scale(1.08);
-}
-
-/* Tooltip for radial progress */
-.radial-progress::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    padding: 0.4rem 0.75rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    font-family: var(--font-body);
-    font-weight: 400;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: all var(--duration-fast) var(--ease-out-expo);
-    border: 1px solid var(--border-color);
-    z-index: 10;
-}
-
-.radial-progress:hover::before {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
 }
 
 /* Skill Tool Icons */
@@ -1135,7 +1146,6 @@ html.light .cta-button:hover {
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.6s var(--ease-out-expo);
 }
 
 .accordion-content>div {
@@ -1295,7 +1305,6 @@ footer a:hover {
 /* === ANIMATIONS === */
 .animate-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
 }
 
 .floating {
@@ -1423,6 +1432,12 @@ footer a:hover {
 @media (max-width: 1024px) {
     .masonry-grid {
         column-count: 2;
+    }
+}
+
+@media (min-width: 769px) {
+    #mobileMenu {
+        display: none;
     }
 }
 
@@ -1557,4 +1572,16 @@ html.theme-transitioning,
 html.theme-transitioning body,
 html.theme-transitioning * {
     transition-duration: 0.7s !important;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

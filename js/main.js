@@ -9,7 +9,9 @@ const cursorDot = document.querySelector('.cursor-dot');
 
 // --- Theme Management ---
 const themes = ['light', 'dark', 'contrast'];
-let currentThemeIndex = 0;
+// The saved theme is applied by the inline script in <head> before first paint
+let currentThemeIndex = Math.max(0, themes.findIndex(t => html.classList.contains(t)));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function applyTheme(theme) {
     // Start transition
@@ -21,18 +23,10 @@ function applyTheme(theme) {
     // Apply theme changes
     html.classList.remove(...themes);
     html.classList.add(theme);
-    localStorage.setItem('portfolioTheme', theme);
+    try {
+        localStorage.setItem('portfolioTheme', theme);
+    } catch (e) { /* storage unavailable (private mode) */ }
     currentThemeIndex = themes.indexOf(theme);
-
-    // Update particles smoothly
-    if (window.particlesMaterial) {
-        particlesMaterial.color.set(
-            new THREE.Color(
-                getComputedStyle(document.documentElement)
-                    .getPropertyValue('--primary')
-            )
-        );
-    }
 
     // End transition
     setTimeout(() => {
@@ -45,36 +39,28 @@ function cycleTheme() {
     applyTheme(themes[currentThemeIndex]);
 }
 
-// Apply saved theme on load
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('portfolioTheme');
-    if (savedTheme && themes.includes(savedTheme)) {
-        applyTheme(savedTheme);
-    } else {
-        applyTheme('contrast');
-    }
-});
-
 // --- Mobile Menu ---
-mobileMenuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('show');
+function setMobileMenuOpen(open) {
+    mobileMenu.classList.toggle('show', open);
+    mobileMenuToggle.setAttribute('aria-expanded', String(open));
+    mobileMenuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     const icon = mobileMenuToggle.querySelector('i');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
+    icon.classList.toggle('fa-bars', !open);
+    icon.classList.toggle('fa-times', open);
+}
+
+mobileMenuToggle.addEventListener('click', () => {
+    setMobileMenuOpen(!mobileMenu.classList.contains('show'));
 });
 
 // Close mobile menu on link click
 document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.remove('show');
-        mobileMenuToggle.querySelector('i').classList.add('fa-bars');
-        mobileMenuToggle.querySelector('i').classList.remove('fa-times');
-    });
+    link.addEventListener('click', () => setMobileMenuOpen(false));
 });
 
 // --- Custom Cursor ---
-// Only initialize custom cursor on larger viewports
-if (cursorDot && window.innerWidth > 768) {
+// Only initialize custom cursor on devices with a precise hovering pointer
+if (cursorDot && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.addEventListener('mousemove', (e) => {
         cursorDot.style.left = e.clientX + 'px';
         cursorDot.style.top = e.clientY + 'px';
@@ -111,17 +97,18 @@ if (typeof gsap !== 'undefined') {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
                 document.body.offsetHeight;
                 const isFiltering = this.closest('.tab-button') !== null;
                 const delay = isFiltering ? 800 : 0;
-                const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+                const headerHeight = mainNav ? mainNav.offsetHeight : 80;
                 const targetPosition = targetElement.offsetTop - headerHeight;
                 setTimeout(() => {
                     gsap.to(window, {
-                        duration: 0.8,
+                        duration: reduceMotion ? 0 : 0.8,
                         scrollTo: {
                             y: targetPosition,
                             autoKill: false
@@ -137,14 +124,19 @@ if (typeof gsap !== 'undefined') {
     });
 
     // Staggered Animations
-    gsap.utils.toArray('.animate-on-scroll').forEach((el, i) => {
+    gsap.utils.toArray('.animate-on-scroll').forEach(el => {
+        if (reduceMotion) {
+            gsap.set(el, { opacity: 1 });
+            return;
+        }
         gsap.fromTo(el,
             { opacity: 0, y: 50 },
             {
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
-                delay: el.style.animationDelay ? parseFloat(el.style.animationDelay) : i * 0.1,
+                delay: parseFloat(el.style.animationDelay) || 0,
+                clearProps: 'transform',
                 scrollTrigger: {
                     trigger: el,
                     start: "top 85%",
@@ -194,7 +186,6 @@ if (typeof gsap !== 'undefined') {
     // Project Filtering with FLIP Animation
     const tabButtons = document.querySelectorAll('.tab-button');
     const portfolioItems = document.querySelectorAll('.masonry-item');
-    const portfolioGrid = document.getElementById('portfolioGrid');
 
     if (tabButtons.length && portfolioItems.length) {
         tabButtons.forEach(button => {
@@ -204,6 +195,11 @@ if (typeof gsap !== 'undefined') {
                 button.classList.add('active');
 
                 const filter = button.getAttribute('data-filter');
+
+                // Finish pending scroll-ins so they can't replay over the filter animation
+                portfolioItems.forEach(item => {
+                    gsap.getTweensOf(item).forEach(tween => tween.scrollTrigger && tween.progress(1));
+                });
 
                 // First get all current positions
                 const previousPositions = new Map();
@@ -215,86 +211,44 @@ if (typeof gsap !== 'undefined') {
                 // Apply filtering
                 portfolioItems.forEach(item => {
                     const shouldShow = filter === 'all' || item.hasAttribute(`data-category-${filter}`);
-
-                    if (shouldShow) {
-                        item.classList.remove('filtered-out');
-                        item.style.display = 'block'; // Ensure it's visible
-                    } else {
-                        item.classList.add('filtered-out');
-                    }
+                    item.classList.toggle('filtered-out', !shouldShow);
                 });
 
                 // Calculate new positions and animate
                 portfolioItems.forEach(item => {
-                    if (!item.classList.contains('filtered-out')) {
-                        const newPosition = item.getBoundingClientRect();
-                        const oldPosition = previousPositions.get(item);
+                    if (item.classList.contains('filtered-out')) return;
 
-                        // Calculate the change in position
-                        const deltaX = oldPosition.left - newPosition.left;
-                        const deltaY = oldPosition.top - newPosition.top;
+                    const newPosition = item.getBoundingClientRect();
+                    const oldPosition = previousPositions.get(item);
+                    // Items that were filtered out had no layout box: fade them in instead of sliding
+                    const wasHidden = oldPosition.width === 0;
 
-                        // Apply the inverse transform to make it appear to stay in place
-                        gsap.fromTo(item,
-                            {
-                                x: deltaX,
-                                y: deltaY,
-                                opacity: 0
-                            },
-                            {
-                                x: 0,
-                                y: 0,
-                                opacity: 1,
-                                duration: 0.6,
-                                ease: "power2.out",
-                                clearProps: "transform" // Clean up after animation
-                            }
-                        );
-                    } else {
-                        gsap.to(item, {
-                            opacity: 0,
-                            duration: 0.3,
-                            onComplete: () => {
-                                item.style.display = 'none'; // Remove from layout flow
-                                ScrollTrigger.refresh(); // Update scroll positions
-                            }
-                        });
-                    }
+                    // Apply the inverse transform to make it appear to stay in place
+                    gsap.fromTo(item,
+                        {
+                            x: wasHidden ? 0 : oldPosition.left - newPosition.left,
+                            y: wasHidden ? 20 : oldPosition.top - newPosition.top,
+                            opacity: wasHidden ? 0 : 1
+                        },
+                        {
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                            duration: reduceMotion ? 0 : 0.6,
+                            ease: "power2.out",
+                            overwrite: 'auto',
+                            clearProps: "transform" // Clean up after animation
+                        }
+                    );
                 });
 
-                // Refresh layout after a short delay
-                setTimeout(() => {
-                    // Force reflow
-                    portfolioGrid.style.display = 'none';
-                    portfolioGrid.offsetHeight; // Trigger reflow
-                    portfolioGrid.style.display = 'block';
-
-                    ScrollTrigger.refresh();
-                }, 100);
-
-                // Fallback GSAP animation
-                gsap.to(portfolioItems, {
-                    opacity: function () {
-                        return this.classList.contains('hidden') ? 0 : 1;
-                    },
-                    y: function () {
-                        return this.classList.contains('hidden') ? 20 : 0;
-                    },
-                    duration: 0.4,
-                    stagger: 0.03,
-                    ease: "power2.out",
-                    onComplete: ScrollTrigger.refresh
-                });
+                // Update scroll positions for the new layout
+                ScrollTrigger.refresh();
             });
         });
     }
 }
 
-
-// Set current year in footer
-if (currentYearSpan) {
-    currentYearSpan.textContent = new Date().getFullYear();
-}
 
 // --- Tooltip System ---
 function initTooltips() {
@@ -326,13 +280,13 @@ function initTooltips() {
         });
     });
 
+    // The tooltip is position: fixed, so it is placed in viewport coordinates
     function positionTooltip(e, tooltip) {
         const x = e.clientX;
         const y = e.clientY;
-        const scrollY = window.scrollY;
 
         tooltip.style.left = `${x + 15}px`;
-        tooltip.style.top = `${y + scrollY + 15}px`;
+        tooltip.style.top = `${y + 15}px`;
 
         // Adjust if tooltip goes off screen right
         const tooltipRect = tooltip.getBoundingClientRect();
@@ -342,7 +296,7 @@ function initTooltips() {
 
         // Adjust if tooltip goes off screen bottom
         if (tooltipRect.bottom > window.innerHeight) {
-            tooltip.style.top = `${y + scrollY - tooltipRect.height - 15}px`;
+            tooltip.style.top = `${y - tooltipRect.height - 15}px`;
         }
     }
 }
@@ -355,13 +309,24 @@ function initAccordions() {
     if (accordionItems.length > 0) {
         const firstItem = accordionItems[0];
         firstItem.classList.add('active');
-        const firstContent = firstItem.querySelector('.accordion-content');
-        firstContent.style.maxHeight = firstContent.scrollHeight + "px";
+        // 'none' rather than a measured height, so later font/layout changes can't clip it
+        firstItem.querySelector('.accordion-content').style.maxHeight = 'none';
     }
 
     accordionItems.forEach(item => {
         const header = item.querySelector('.accordion-header');
         const content = item.querySelector('.accordion-content');
+
+        // Make the header keyboard-operable
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-expanded', String(item.classList.contains('active')));
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                header.click();
+            }
+        });
 
         header.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
@@ -375,19 +340,26 @@ function initAccordions() {
             // });
 
             // Toggle current item
+            header.setAttribute('aria-expanded', String(!isActive));
             if (isActive) {
                 item.classList.remove('active');
+                // Pin the current height: 'none' can't be tweened
+                content.style.maxHeight = content.offsetHeight + 'px';
                 gsap.to(content, {
                     maxHeight: 0,
                     duration: 0.6,
-                    ease: "power2.out"
+                    ease: "power2.out",
+                    overwrite: true
                 });
             } else {
                 item.classList.add('active');
                 gsap.to(content, {
-                    maxHeight: content.scrollHeight + "px",
+                    maxHeight: content.scrollHeight,
                     duration: 0.6,
-                    ease: "power2.out"
+                    ease: "power2.out",
+                    overwrite: true,
+                    // Release the cap once open so content reflow can't clip it
+                    onComplete: () => { content.style.maxHeight = 'none'; }
                 });
             }
         });
@@ -401,12 +373,18 @@ function animateRadialProgress() {
     radialBars.forEach(bar => {
         const value = bar.style.getPropertyValue('--value') || 0;
         bar.style.setProperty('--value', '0');
+        bar.textContent = '0%';
 
         gsap.to(bar, {
             '--value': value,
-            duration: 1.5,
+            duration: reduceMotion ? 0 : 1.5,
             delay: 0.3,
-            ease: "elastic.out(1, 0.5)",
+            // No overshooting ease: the label must never read above the real value
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: bar,
+                start: "top 85%"
+            },
             onUpdate: () => {
                 const currentValue = bar.style.getPropertyValue('--value');
                 bar.textContent = `${Math.round(currentValue)}%`;
@@ -444,29 +422,6 @@ function animateTimeline() {
         });
     });
 }
-
-// --- Initialize Everything ---
-document.addEventListener('DOMContentLoaded', () => {
-    initTooltips();
-    initAccordions();
-    animateRadialProgress();
-    animateTimeline();
-
-    // Add scroll animations for about section
-    gsap.utils.toArray('.zigzag-item').forEach((item, i) => {
-        gsap.from(item, {
-            opacity: 0,
-            y: 50,
-            duration: 0.8,
-            delay: i * 0.15,
-            scrollTrigger: {
-                trigger: item,
-                start: "top 80%"
-            },
-            ease: "power2.out"
-        });
-    });
-});
 
 // --- Contact Form Validation ---
 function initContactForm() {
@@ -555,8 +510,13 @@ function initContactForm() {
         submitButton.querySelector('i').classList.add('fa-spin');
 
         try {
-            // Simulate network request
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Submit to Netlify Forms (URL-encoded POST to the site root)
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            });
+            if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
 
             // Show success message
             showSuccessMessage("Message sent successfully!");
@@ -632,115 +592,97 @@ function initBackToTop() {
     });
 }
 
-// --- Three.js Particle System ---
+// --- Particle Background (2D canvas) ---
+// Draws the same scene the previous Three.js version did (75deg camera at z=5,
+// additive square points), without loading a 3D library.
 function initParticles() {
     const canvas = document.getElementById('particle-canvas');
-    if (!canvas || !window.THREE) return;
+    if (!canvas || reduceMotion) return;
+    const ctx = canvas.getContext('2d');
 
-    // Scene setup
-    const renderer = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: true
-    });
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-
-    // Handle resize
     function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', onWindowResize, false);
     onWindowResize();
 
-    // Create particles
     // Reduce count on mobile for performance
     const isMobile = window.innerWidth < 768;
     const particleCount = isMobile ? 30 : Math.min(500, Math.floor(window.innerWidth / 3));
-    const particlesGeometry = new THREE.BufferGeometry();
-    const posArray = new Float32Array(particleCount * 3);
-    const colorArray = new Float32Array(particleCount * 3);
-    const sizeArray = new Float32Array(particleCount);
-    const velocityArray = new Float32Array(particleCount * 3);
+    const positions = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+    const colors = [];
 
-    // Set primary color from CSS variable
-    const primaryColor = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--primary'));
+    // Primary color from CSS variable, with a small per-particle variation
+    const hex = getComputedStyle(html).getPropertyValue('--primary').trim().replace('#', '');
+    const primary = [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16) / 255);
 
     for (let i = 0; i < particleCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 15;
-        velocityArray[i] = (Math.random() - 0.5) * 0.002;
-
-        // Color variations
+        positions[i] = (Math.random() - 0.5) * 15;
+        velocities[i] = (Math.random() - 0.5) * 0.002;
         if (i % 3 === 0) {
-            const colorVariation = new THREE.Color(
-                primaryColor.r + (Math.random() * 0.2 - 0.1),
-                primaryColor.g + (Math.random() * 0.2 - 0.1),
-                primaryColor.b + (Math.random() * 0.2 - 0.1)
-            );
-            colorArray[i] = colorVariation.r;
-            colorArray[i + 1] = colorVariation.g;
-            colorArray[i + 2] = colorVariation.b;
-        }
-
-        // Random sizes
-        if (i % 3 === 0) {
-            sizeArray[i / 3] = Math.random() * 0.2 + 0.1;
+            const [r, g, b] = primary.map(c => Math.round(Math.min(1, Math.max(0, c + Math.random() * 0.2 - 0.1)) * 255));
+            colors.push(`rgb(${r},${g},${b})`);
         }
     }
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizeArray, 1));
+    const cameraZ = 5;
+    const halfFovTan = Math.tan((75 / 2) * Math.PI / 180);
+    let rotationX = 0;
+    let rotationY = 0;
 
-    // Particle material
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.1,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending,
-        sizeAttenuation: true
-    });
-
-    // Create particle system
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Animation loop
-    const clock = new THREE.Clock();
     function animate() {
         requestAnimationFrame(animate);
-        const delta = clock.getDelta();
-        const positions = particlesMesh.geometry.attributes.position.array;
+        const w = canvas.width;
+        const h = canvas.height;
+        const focal = (h / 2) / halfFovTan;
+        const sinY = Math.sin(rotationY), cosY = Math.cos(rotationY);
+        const sinX = Math.sin(rotationX), cosX = Math.cos(rotationX);
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = 0.8;
 
         for (let i = 0; i < positions.length; i += 3) {
-            positions[i] += velocityArray[i];
-            positions[i + 1] += velocityArray[i + 1];
-            positions[i + 2] += velocityArray[i + 2];
+            positions[i] += velocities[i];
+            positions[i + 1] += velocities[i + 1];
+            positions[i + 2] += velocities[i + 2];
 
             // Boundary check with gentle bounce
-            if (positions[i + 1] < -7.5 || positions[i + 1] > 7.5) velocityArray[i + 1] *= -0.8;
-            if (positions[i] < -7.5 || positions[i] > 7.5) velocityArray[i] *= -0.8;
+            if (positions[i] < -7.5 || positions[i] > 7.5) velocities[i] *= -0.8;
+            if (positions[i + 1] < -7.5 || positions[i + 1] > 7.5) velocities[i + 1] *= -0.8;
+            if (positions[i + 2] < -7.5 || positions[i + 2] > 7.5) velocities[i + 2] *= -0.8;
+
+            // Rotate around Y then X (Three.js 'XYZ' Euler order), then project
+            const x = positions[i], y = positions[i + 1], z = positions[i + 2];
+            const x1 = x * cosY + z * sinY;
+            const z1 = z * cosY - x * sinY;
+            const y2 = y * cosX - z1 * sinX;
+            const z2 = y * sinX + z1 * cosX;
+            const depth = cameraZ - z2;
+            if (depth < 0.1) continue;
+
+            const size = 0.05 * h / depth;
+            const sx = w / 2 + (x1 * focal) / depth;
+            const sy = h / 2 - (y2 * focal) / depth;
+            ctx.fillStyle = colors[i / 3];
+            ctx.fillRect(sx - size / 2, sy - size / 2, size, size);
         }
-        particlesMesh.geometry.attributes.position.needsUpdate = true;
 
         // Subtly rotate the particles
-        particlesMesh.rotation.y += 0.0003;
-        particlesMesh.rotation.x += 0.0001;
-
-        renderer.render(scene, camera);
+        rotationY += 0.0003;
+        rotationX += 0.0001;
     }
     animate();
-
-    // Make particlesMaterial available for theme changes
-    window.particlesMaterial = particlesMaterial;
 }
 
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
+    initTooltips();
+    initAccordions();
+    animateRadialProgress();
+    animateTimeline();
     initContactForm();
     initBackToTop();
     initParticles();
