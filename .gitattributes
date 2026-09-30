@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# PDFs are binary: never convert their line endings
+*.pdf binary

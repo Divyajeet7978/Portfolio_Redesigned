@@ -431,6 +431,33 @@ html.light nav.scrolled .nav-inner {
     transform: translateX(-50%) scaleX(1);
 }
 
+/* Resume shortcut, styled as a small pill after the links */
+.nav-resume {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.5rem;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    text-decoration: none;
+    border: 1px solid rgba(124, 92, 252, 0.3);
+    border-radius: var(--radius-full);
+    background: rgba(124, 92, 252, 0.08);
+    transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.nav-resume:hover {
+    color: var(--text-primary);
+    border-color: var(--primary);
+    background: rgba(124, 92, 252, 0.16);
+}
+
+html.light .nav-resume {
+    color: var(--primary-dark);
+}
+
 /* Theme Toggle */
 .theme-toggle-button {
     position: relative;
@@ -1545,6 +1572,112 @@ html.light .cert-link {
 @media (max-width: 640px) {
     .cert-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* === RESUME SECTION === */
+#resume {
+    padding: 6rem 1.5rem;
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+.resume-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: 3.5rem;
+    padding: 3.5rem;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.12), transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(124, 92, 252, 0.16), transparent 55%),
+        var(--bg-card);
+}
+
+/* The first page, tilted over a second sheet */
+.resume-preview {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    transform: rotate(-4deg);
+    transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.resume-preview::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color-hover);
+    transform: rotate(7deg) translate(14px, 6px);
+    transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.resume-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-color);
+}
+
+.resume-preview:hover {
+    transform: rotate(0deg) translateY(-6px);
+}
+
+.resume-preview:hover::before {
+    transform: rotate(4deg) translate(10px, 8px);
+}
+
+.resume-body h2 {
+    text-wrap: balance;
+}
+
+.resume-highlights {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.resume-actions .cta-button:hover i {
+    transform: translateY(2px);
+}
+
+.resume-meta {
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+@media (max-width: 768px) {
+    .resume-card {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+    }
+
+    .resume-preview {
+        max-width: 200px;
+    }
+
+    .resume-highlights,
+    .resume-actions {
+        justify-content: center;
     }
 }
 
