@@ -1,0 +1,46 @@
+/* Font Awesome Free 6.5.2 subset: only the icons this site uses. https://fontawesome.com License: https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1) */
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:block;src:url(../fonts/fa-solid.woff2) format("woff2")}
+@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:block;src:url(../fonts/fa-brands.woff2) format("woff2")}
+.fab,.fas{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}
+.fas{font-family:"Font Awesome 6 Free";font-weight:900}
+.fab{font-family:"Font Awesome 6 Brands";font-weight:400}
+.fa-spin{animation:fa-spin 2s linear infinite}
+@keyframes fa-spin{0%{transform:rotate(0)}to{transform:rotate(1turn)}}
+.fa-adjust:before{content:"\f042"}
+.fa-arrow-right:before{content:"\f061"}
+.fa-arrow-up:before{content:"\f062"}
+.fa-bars:before{content:"\f0c9"}
+.fa-book:before{content:"\f02d"}
+.fa-briefcase:before{content:"\f0b1"}
+.fa-camera:before{content:"\f030"}
+.fa-check:before{content:"\f00c"}
+.fa-check-circle:before{content:"\f058"}
+.fa-chevron-down:before{content:"\f078"}
+.fa-code:before{content:"\f121"}
+.fa-comment-dots:before{content:"\f4ad"}
+.fa-drafting-compass:before{content:"\f568"}
+.fa-envelope:before{content:"\f0e0"}
+.fa-external-link-alt:before{content:"\f35d"}
+.fa-home:before{content:"\f015"}
+.fa-map-marker-alt:before{content:"\f3c5"}
+.fa-moon:before{content:"\f186"}
+.fa-paper-plane:before{content:"\f1d8"}
+.fa-plane:before{content:"\f072"}
+.fa-project-diagram:before{content:"\f542"}
+.fa-robot:before{content:"\f544"}
+.fa-search:before{content:"\f002"}
+.fa-sun:before{content:"\f185"}
+.fa-tag:before{content:"\f02b"}
+.fa-times:before{content:"\f00d"}
+.fa-times-circle:before{content:"\f057"}
+.fa-user:before{content:"\f007"}
+.fa-aws:before{content:"\f375"}
+.fa-docker:before{content:"\f395"}
+.fa-git-alt:before{content:"\f841"}
+.fa-github:before{content:"\f09b"}
+.fa-java:before{content:"\f4e4"}
+.fa-linkedin-in:before{content:"\f0e1"}
+.fa-python:before{content:"\f3e2"}
+.fa-react:before{content:"\f41b"}
+.fa-twitter:before{content:"\f099"}
+.fa-hackerrank:before{content:"\f5f7"}
