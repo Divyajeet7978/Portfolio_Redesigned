@@ -607,9 +607,9 @@ function initParticles() {
     window.addEventListener('resize', onWindowResize, false);
     onWindowResize();
 
-    // Reduce count on mobile for performance
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 30 : Math.min(500, Math.floor(window.innerWidth / 3));
+    // The same count on every screen: density depends only on count (the field is a fixed cube),
+    // so phones show the same field as desktops, just cropped narrower
+    const particleCount = 500;
     const positions = new Float32Array(particleCount * 3);
     const velocities = new Float32Array(particleCount * 3);
     const colors = [];
@@ -666,6 +666,8 @@ function initParticles() {
             const size = 0.05 * h / depth;
             const sx = w / 2 + (x1 * focal) / depth;
             const sy = h / 2 - (y2 * focal) / depth;
+            // Skip particles outside the viewport (most of the field on narrow portrait screens)
+            if (sx < -size || sx > w + size || sy < -size || sy > h + size) continue;
             ctx.fillStyle = colors[i / 3];
             ctx.fillRect(sx - size / 2, sy - size / 2, size, size);
         }
