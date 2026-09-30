@@ -33,7 +33,7 @@
 | Category        | Technologies                                                                 |
 |-----------------|------------------------------------------------------------------------------|
 | **Frontend**    | ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black) |
-| **Libraries**   | ![GSAP](https://img.shields.io/badge/-GSAP-88CE02?logo=greensock&logoColor=white) ![Three.js](https://img.shields.io/badge/-Three.js-000000?logo=three.js&logoColor=white) |
+| **Libraries**   | ![GSAP](https://img.shields.io/badge/-GSAP-88CE02?logo=greensock&logoColor=white) |
 | **Tools**       | ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white) ![VSCode](https://img.shields.io/badge/-VSCode-007ACC?logo=visual-studio-code&logoColor=white) |
 
 ## 🎨 Design Highlights
@@ -70,9 +70,12 @@ open index.html
 ```
 portfolio/
 ├── index.html          # Main HTML file
-├── css/                # CSS styles
+├── css/                # CSS styles (icons.css: Font Awesome subset)
+├── fonts/              # Self-hosted font subsets
 ├── img/                # All project images
 ├── js/                 # JavaScript files
+├── vendor/             # Self-hosted third-party scripts (GSAP)
+├── _headers            # Netlify cache headers
 └── README.md           # This documentation
 ```
 
@@ -88,8 +91,8 @@ portfolio/
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/1.png" width="45%" alt="Light Theme">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/2.png" width="45%" alt="Dark Theme">  
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/1.webp" width="45%" alt="Light Theme">
+  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/cs.webp" width="45%" alt="Dark Theme">  
 </div>
 
 ## 📬 Contact
