@@ -1457,6 +1457,13 @@ html.light .cert-kicker {
     border-color: rgba(77, 141, 255, 0.3);
 }
 
+.cert-mark-neo4j {
+    color: #3ba7ff;
+    background: rgba(1, 139, 255, 0.12);
+    border-color: rgba(1, 139, 255, 0.3);
+    font-size: 1.05rem;
+}
+
 html.light .cert-mark-hackerrank {
     color: #15803d;
 }
@@ -1467,6 +1474,10 @@ html.light .cert-mark-udemy {
 
 html.light .cert-mark-coursera {
     color: #0056d2;
+}
+
+html.light .cert-mark-neo4j {
+    color: #0a6190;
 }
 
 .cert-title {
