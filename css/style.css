@@ -1470,10 +1470,22 @@ html.light .cert-kicker {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 700;
     border: 1px solid;
+}
+
+/* Issuer logos from the sprite in #certifications */
+.brand-logo {
+    fill: currentColor;
+}
+
+.cert-mark .brand-logo {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.cert-emblem .brand-logo {
+    width: 2.6rem;
+    height: 2.6rem;
 }
 
 .cert-mark-hackerrank {
@@ -1498,7 +1510,6 @@ html.light .cert-kicker {
     color: #3ba7ff;
     background: rgba(1, 139, 255, 0.12);
     border-color: rgba(1, 139, 255, 0.3);
-    font-size: 1.05rem;
 }
 
 html.light .cert-mark-hackerrank {
