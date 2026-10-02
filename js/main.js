@@ -721,9 +721,10 @@ function initParticles() {
     window.addEventListener('resize', onWindowResize, false);
     onWindowResize();
 
-    // Redraw at most about 60 times a second, since redrawing on every frame of a 120 or 240 Hz
-    // screen overloads the GPU. Each redraw advances by the frames since the last one, so the
-    // particles move exactly as fast as before on every screen.
+    // Redraw at most about 30 times a second: every redraw makes the browser recomposite the whole
+    // screen, which held large high-refresh screens well below their refresh rate. Each redraw
+    // advances by the frames since the last one, so the particles move exactly as fast as before
+    // on every screen.
     let lastDraw = performance.now();
     let frames = 0;
     // Hold the field still while the page scrolls: redrawing a full-screen layer under moving
@@ -738,7 +739,8 @@ function initParticles() {
             return;
         }
         frames++;
-        if (now - lastDraw < 15) return;
+        // Just under 33 ms, so 60 and 240 Hz screens land on every 2nd and 8th frame
+        if (now - lastDraw < 31) return;
         lastDraw = now;
         draw(frames);
         frames = 0;
