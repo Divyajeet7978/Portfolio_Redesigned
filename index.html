@@ -797,6 +797,13 @@
 
     <!-- Certifications Section -->
     <section id="certifications" class="py-28 px-4 relative overflow-hidden">
+        <!-- Issuer logos (Simple Icons, CC0), reused by the cards below -->
+        <svg width="0" height="0" class="absolute" aria-hidden="true">
+            <symbol id="logo-neo4j" viewBox="0 0 24 24"><path d="M9.629 13.227c-.593 0-1.139.2-1.58.533l-2.892-1.976a2.61 2.61 0 0 0 .101-.711 2.633 2.633 0 0 0-2.629-2.629A2.632 2.632 0 0 0 0 11.073a2.632 2.632 0 0 0 2.629 2.629c.593 0 1.139-.2 1.579-.533L7.1 15.145c-.063.226-.1.465-.1.711 0 .247.037.484.1.711l-2.892 1.976a2.608 2.608 0 0 0-1.579-.533A2.632 2.632 0 0 0 0 20.639a2.632 2.632 0 0 0 2.629 2.629 2.632 2.632 0 0 0 2.629-2.629c0-.247-.037-.485-.101-.711l2.892-1.976c.441.333.987.533 1.58.533a2.633 2.633 0 0 0 2.629-2.629c0-1.45-1.18-2.629-2.629-2.629ZM16.112.732c-4.72 0-7.888 2.748-7.888 8.082v3.802a3.525 3.525 0 0 1 3.071.008v-3.81c0-3.459 1.907-5.237 4.817-5.237s4.817 1.778 4.817 5.237v8.309H24V8.814C24 3.448 20.832.732 16.112.732Z"/></symbol>
+            <symbol id="logo-hackerrank" viewBox="0 0 24 24"><path d="M0 0v24h24V0zm9.95 8.002h1.805c.061 0 .111.05.111.111v7.767c0 .061-.05.111-.11.111H9.95c-.061 0-.111-.05-.111-.11v-2.87H7.894v2.87c0 .06-.05.11-.11.11H5.976a.11.11 0 01-.11-.11V8.112c0-.06.05-.11.11-.11h1.806c.061 0 .11.05.11.11v2.869H9.84v-2.87c0-.06.05-.11.11-.11zm2.999 0h5.778c.061 0 .111.05.111.11v7.767a.11.11 0 01-.11.112h-5.78a.11.11 0 01-.11-.11V8.111c0-.06.05-.11.11-.11z"/></symbol>
+            <symbol id="logo-udemy" viewBox="0 0 24 24"><path d="M12 0L5.81 3.573v3.574l6.189-3.574 6.191 3.574V3.573zM5.81 10.148v8.144c0 1.85.589 3.243 1.741 4.234S10.177 24 11.973 24s3.269-.482 4.448-1.474c1.179-.991 1.768-2.439 1.768-4.314v-8.064h-3.242v7.85c0 2.036-1.509 3.055-2.948 3.055-1.428 0-2.947-.991-2.947-3.027v-7.878z"/></symbol>
+            <symbol id="logo-coursera" viewBox="0 0 24 24"><path d="M11.374 23.977c-4.183-.21-8.006-2.626-9.959-6.347-2.097-3.858-1.871-8.864.732-12.454C4.748 1.338 9.497-.698 14.281.23c4.583.857 8.351 4.494 9.358 8.911 1.122 4.344-.423 9.173-3.925 12.04-2.289 1.953-5.295 2.956-8.34 2.797zm7.705-8.05a588.737 588.737 0 0 0-3.171-1.887c-.903 1.483-2.885 2.248-4.57 1.665-2.024-.639-3.394-2.987-2.488-5.134.801-2.009 2.79-2.707 4.357-2.464a4.19 4.19 0 0 1 2.623 1.669c1.077-.631 2.128-1.218 3.173-1.855-2.03-3.118-6.151-4.294-9.656-2.754-3.13 1.423-4.89 4.68-4.388 7.919.54 3.598 3.73 6.486 7.716 6.404a7.664 7.664 0 0 0 6.404-3.563z"/></symbol>
+        </svg>
         <div class="section-divider absolute top-0 left-0 right-0"></div>
         <div class="max-w-6xl mx-auto">
             <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
@@ -833,7 +840,7 @@
                 </article>
 
                 <article class="cert-featured glass-card animate-on-scroll" style="animation-delay: 0.08s;">
-                    <div class="cert-emblem" aria-hidden="true"><i class="fas fa-award"></i></div>
+                    <div class="cert-emblem" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></div>
                     <div class="cert-featured-body">
                         <p class="cert-kicker"><i class="fas fa-check-circle"></i> Professional certification</p>
                         <h3>Neo4j Certified Professional</h3>
@@ -858,7 +865,7 @@
             <div class="cert-grid" id="certGrid">
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><i class="fas fa-project-diagram"></i></span>
+                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></span>
                         <div>
                             <h3 class="cert-title">Neo4j Graph Data Science Certification</h3>
                             <p class="cert-issuer">Neo4j GraphAcademy</p>
@@ -875,7 +882,7 @@
                 </article>
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.08s;">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><i class="fas fa-project-diagram"></i></span>
+                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></span>
                         <div>
                             <h3 class="cert-title">Neo4j &amp; Generative AI Certification</h3>
                             <p class="cert-issuer">Neo4j GraphAcademy</p>
@@ -892,7 +899,7 @@
                 </article>
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.16s;">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><i class="fab fa-hackerrank"></i></span>
+                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
                         <div>
                             <h3 class="cert-title">Software Engineer</h3>
                             <p class="cert-issuer">HackerRank</p>
@@ -909,7 +916,7 @@
                 </article>
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><i class="fab fa-hackerrank"></i></span>
+                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
                         <div>
                             <h3 class="cert-title">Frontend Developer (React)</h3>
                             <p class="cert-issuer">HackerRank</p>
@@ -926,7 +933,7 @@
                 </article>
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.08s;">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><i class="fab fa-hackerrank"></i></span>
+                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
                         <div>
                             <h3 class="cert-title">Python</h3>
                             <p class="cert-issuer">HackerRank</p>
@@ -943,7 +950,7 @@
                 </article>
                 <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.16s;">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><i class="fab fa-hackerrank"></i></span>
+                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
                         <div>
                             <h3 class="cert-title">SQL (Advanced)</h3>
                             <p class="cert-issuer">HackerRank</p>
@@ -961,7 +968,7 @@
                 <!-- Revealed by "Show all" -->
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">Modern JavaScript From The Beginning 2.0 (2024)</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -978,7 +985,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">Advanced SQL: MySQL Data Analysis &amp; Business Intelligence</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -995,7 +1002,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">Introduction to Service Management with ITIL 4</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -1012,7 +1019,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">Blue Prism Foundation Course</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -1029,7 +1036,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">Software Engineering 101: Plan and Execute Better Software</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -1046,7 +1053,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">The Complete Oracle SQL Bootcamp (2023)</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -1063,7 +1070,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true">U</span>
+                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
                         <div>
                             <h3 class="cert-title">SQL for Beginners: Learn SQL using MySQL and Database Design</h3>
                             <p class="cert-issuer">Udemy</p>
@@ -1080,7 +1087,7 @@
                 </article>
                 <article class="cert-card cert-extra glass-card hover-multi-effect">
                     <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-coursera" aria-hidden="true">C</span>
+                        <span class="cert-mark cert-mark-coursera" aria-hidden="true"><svg class="brand-logo"><use href="#logo-coursera"/></svg></span>
                         <div>
                             <h3 class="cert-title">Introduction to Back-End Development</h3>
                             <p class="cert-issuer">Coursera</p>
