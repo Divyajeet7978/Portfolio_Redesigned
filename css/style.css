@@ -1318,10 +1318,10 @@ html.light .cta-button:hover {
     font-size: 0.95rem;
 }
 
-/* Featured certifications, side by side */
+/* Featured certifications, three across */
 .cert-featured-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.25rem;
     margin-bottom: 1.5rem;
 }
@@ -1345,7 +1345,7 @@ html.light .cta-button:hover {
     border-color: rgba(124, 92, 252, 0.45);
 }
 
-/* Button under the text, level across both cards */
+/* Button under the text */
 .cert-featured > .cta-button {
     grid-column: 2;
     justify-self: start;
@@ -1628,10 +1628,12 @@ html.light .cert-link {
     }
 }
 
-@media (max-width: 768px) {
+/* Emblem above the text: three across on wide screens, one per row on phones.
+   The middle row stretches so the buttons line up across the row. */
+@media (min-width: 1025px), (max-width: 768px) {
     .cert-featured {
         grid-template-columns: 1fr;
-        grid-template-rows: none;
+        grid-template-rows: auto 1fr auto;
         justify-items: center;
         text-align: center;
         gap: 1.5rem;
@@ -1647,6 +1649,13 @@ html.light .cert-link {
         justify-content: center;
     }
 
+    /* Long IDs get their own line instead of breaking mid-string */
+    .cert-featured .cert-id code {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
     /* Beat the global mobile h3 size so titles stay in proportion to the cards */
     #certifications .cert-featured h3 {
         font-size: 1.4rem !important;
