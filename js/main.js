@@ -726,8 +726,17 @@ function initParticles() {
     // particles move exactly as fast as before on every screen.
     let lastDraw = performance.now();
     let frames = 0;
+    // Hold the field still while the page scrolls: redrawing a full-screen layer under moving
+    // content halved the scrolling frame rate on large screens. Time stops with it, so the
+    // particles carry on from where they were instead of jumping.
+    let lastScroll = -Infinity;
+    window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
     function animate(now) {
         requestAnimationFrame(animate);
+        if (now - lastScroll < 150) {
+            frames = 0;
+            return;
+        }
         frames++;
         if (now - lastDraw < 15) return;
         lastDraw = now;
