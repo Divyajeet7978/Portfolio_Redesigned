@@ -1391,6 +1391,14 @@ html.light .cta-button:hover {
     vertical-align: -0.05em;
 }
 
+.cert-issuer-neo4j {
+    fill: #3ba7ff;
+}
+
+html.light .cert-issuer-neo4j {
+    fill: #0a6190;
+}
+
 .cert-kicker {
     display: inline-flex;
     align-items: center;
@@ -1481,11 +1489,6 @@ html.light .cert-kicker {
 .cert-mark .brand-logo {
     width: 1.4rem;
     height: 1.4rem;
-}
-
-.cert-emblem .brand-logo {
-    width: 2.6rem;
-    height: 2.6rem;
 }
 
 .cert-mark-hackerrank {
