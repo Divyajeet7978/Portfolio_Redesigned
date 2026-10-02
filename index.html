@@ -840,11 +840,14 @@
                 </article>
 
                 <article class="cert-featured glass-card animate-on-scroll" style="animation-delay: 0.08s;">
-                    <div class="cert-emblem" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></div>
+                    <!-- Neo4j publishes no badge image, so this emblem is built around its logo -->
+                    <div class="cert-emblem cert-emblem-badge" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="none"><defs><linearGradient id="neoBadgeRim" x1="10" y1="2" x2="38" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5cc8ff"/><stop offset=".5" stop-color="#018bff"/><stop offset="1" stop-color="#014063"/></linearGradient></defs><circle cx="24" cy="24" r="23.5" fill="url(#neoBadgeRim)"/><circle cx="24" cy="24" r="19.6" stroke="#fff" stroke-opacity=".4" stroke-width=".5"/><g fill="#fff"><circle cx="24" cy="4.4" r="1.5"/><circle cx="33.8" cy="7.03" r="0.95"/><circle cx="40.97" cy="14.2" r="0.95"/><circle cx="43.6" cy="24" r="1.5"/><circle cx="40.97" cy="33.8" r="0.95"/><circle cx="33.8" cy="40.97" r="0.95"/><circle cx="24" cy="43.6" r="1.5"/><circle cx="14.2" cy="40.97" r="0.95"/><circle cx="7.03" cy="33.8" r="0.95"/><circle cx="4.4" cy="24" r="1.5"/><circle cx="7.03" cy="14.2" r="0.95"/><circle cx="14.2" cy="7.03" r="0.95"/></g><circle cx="24" cy="23.2" r="15.6" fill="#014063"/><circle cx="24" cy="24.6" r="15.2" fill="#EAF4FB"/><use href="#logo-neo4j" x="14.6" y="15.1" width="19" height="19" fill="#014063"/></svg>
+                    </div>
                     <div class="cert-featured-body">
                         <p class="cert-kicker"><i class="fas fa-check-circle"></i> Professional certification</p>
                         <h3>Neo4j Certified Professional</h3>
-                        <p class="cert-meta">Neo4j GraphAcademy &bull; Issued Sep 2026</p>
+                        <p class="cert-meta"><svg class="cert-issuer-logo cert-issuer-neo4j" aria-hidden="true"><use href="#logo-neo4j"/></svg>Neo4j GraphAcademy &bull; Issued&nbsp;Sep&nbsp;2026</p>
                         <p class="cert-id">Credential ID <code>46327d32-4193-4fb0-aa4a-783195f258bb</code></p>
                         <div class="flex flex-wrap gap-2 mt-4 cert-tags">
                             <span class="tag-pill">Neo4j</span>
