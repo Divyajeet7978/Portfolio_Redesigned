@@ -62,8 +62,8 @@ document.querySelectorAll('.mobile-link').forEach(link => {
 // Only initialize custom cursor on devices with a precise hovering pointer
 if (cursorDot && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.addEventListener('mousemove', (e) => {
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
+        // Move with transform, not left/top, so following the mouse never triggers layout
+        cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
         cursorDot.classList.add('active');
     });
 
@@ -624,14 +624,15 @@ function initBackToTop() {
 function initParticles() {
     const canvas = document.getElementById('particle-canvas');
     if (!canvas || reduceMotion) return;
-    const ctx = canvas.getContext('2d');
-
-    function onWindowResize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', onWindowResize, false);
-    onWindowResize();
+    // The canvas is opaque and paints the page background itself: a full-screen translucent
+    // canvas made the browser re-blend the whole page with it on every frame, which held the
+    // frame rate down on high-resolution, high-refresh screens
+    const ctx = canvas.getContext('2d', { alpha: false });
+    // Particles accumulate here, then go over the background the way the old CSS opacity laid them
+    const layer = document.createElement('canvas');
+    const layerCtx = layer.getContext('2d');
+    const bodyStyle = getComputedStyle(document.body);
+    const canvasStyle = getComputedStyle(canvas);
 
     // The same count on every screen: density depends only on count (the field is a fixed cube),
     // so phones show the same field as desktops, just cropped narrower
@@ -658,27 +659,29 @@ function initParticles() {
     let rotationX = 0;
     let rotationY = 0;
 
-    function animate() {
-        requestAnimationFrame(animate);
+    // Advance the field by `steps` display frames, then draw it
+    function draw(steps) {
         const w = canvas.width;
         const h = canvas.height;
         const focal = (h / 2) / halfFovTan;
         const sinY = Math.sin(rotationY), cosY = Math.cos(rotationY);
         const sinX = Math.sin(rotationX), cosX = Math.cos(rotationX);
 
-        ctx.clearRect(0, 0, w, h);
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = 0.8;
+        layerCtx.clearRect(0, 0, w, h);
+        layerCtx.globalCompositeOperation = 'lighter';
+        layerCtx.globalAlpha = 0.8;
 
         for (let i = 0; i < positions.length; i += 3) {
-            positions[i] += velocities[i];
-            positions[i + 1] += velocities[i + 1];
-            positions[i + 2] += velocities[i + 2];
+            if (steps) {
+                positions[i] += velocities[i] * steps;
+                positions[i + 1] += velocities[i + 1] * steps;
+                positions[i + 2] += velocities[i + 2] * steps;
 
-            // Boundary check with gentle bounce
-            if (positions[i] < -7.5 || positions[i] > 7.5) velocities[i] *= -0.8;
-            if (positions[i + 1] < -7.5 || positions[i + 1] > 7.5) velocities[i + 1] *= -0.8;
-            if (positions[i + 2] < -7.5 || positions[i + 2] > 7.5) velocities[i + 2] *= -0.8;
+                // Boundary check with gentle bounce
+                if (positions[i] < -7.5 || positions[i] > 7.5) velocities[i] *= -0.8;
+                if (positions[i + 1] < -7.5 || positions[i + 1] > 7.5) velocities[i + 1] *= -0.8;
+                if (positions[i + 2] < -7.5 || positions[i + 2] > 7.5) velocities[i + 2] *= -0.8;
+            }
 
             // Rotate around Y then X (Three.js 'XYZ' Euler order), then project
             const x = positions[i], y = positions[i + 1], z = positions[i + 2];
@@ -694,15 +697,44 @@ function initParticles() {
             const sy = h / 2 - (y2 * focal) / depth;
             // Skip particles outside the viewport (most of the field on narrow portrait screens)
             if (sx < -size || sx > w + size || sy < -size || sy > h + size) continue;
-            ctx.fillStyle = colors[i / 3];
-            ctx.fillRect(sx - size / 2, sy - size / 2, size, size);
+            layerCtx.fillStyle = colors[i / 3];
+            layerCtx.fillRect(sx - size / 2, sy - size / 2, size, size);
         }
 
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = bodyStyle.backgroundColor;
+        ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = parseFloat(canvasStyle.getPropertyValue('--particle-alpha'));
+        ctx.drawImage(layer, 0, 0);
+
         // Subtly rotate the particles
-        rotationY += 0.0003;
-        rotationX += 0.0001;
+        rotationY += 0.0003 * steps;
+        rotationX += 0.0001 * steps;
     }
-    animate();
+
+    function onWindowResize() {
+        canvas.width = layer.width = window.innerWidth;
+        canvas.height = layer.height = window.innerHeight;
+        // Resizing clears the canvas to black, so repaint it straight away
+        draw(0);
+    }
+    window.addEventListener('resize', onWindowResize, false);
+    onWindowResize();
+
+    // Redraw at most about 60 times a second, since redrawing on every frame of a 120 or 240 Hz
+    // screen overloads the GPU. Each redraw advances by the frames since the last one, so the
+    // particles move exactly as fast as before on every screen.
+    let lastDraw = performance.now();
+    let frames = 0;
+    function animate(now) {
+        requestAnimationFrame(animate);
+        frames++;
+        if (now - lastDraw < 15) return;
+        lastDraw = now;
+        draw(frames);
+        frames = 0;
+    }
+    requestAnimationFrame(animate);
 }
 
 // --- Initialize Everything ---

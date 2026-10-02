@@ -228,6 +228,8 @@ body::before {
 /* === CUSTOM CURSOR === */
 .cursor-dot {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 8px;
     height: 8px;
     background: var(--primary);
@@ -262,12 +264,20 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.15;
     pointer-events: none;
+    /* Particle strength, applied when drawing (see initParticles in main.js) */
+    --particle-alpha: 0.15;
 }
 
 html.light #particle-canvas {
-    opacity: 0.08;
+    --particle-alpha: 0.08;
+}
+
+/* Registered so the particle strength fades with a theme switch, as the opacity did */
+@property --particle-alpha {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0.15;
 }
 
 /* === TYPOGRAPHY === */
@@ -595,11 +605,14 @@ html.contrast .theme-toggle-button .fa-adjust {
     overflow: hidden;
 }
 
-/* Gradient orbs behind the hero */
+/* Gradient orbs behind the hero. Each is a radial gradient shaped like the 80px-blurred disc
+   it replaces (solid to 160px inside the edge, gone 160px outside), so the drift animation
+   only moves it instead of re-blurring it every frame. The padding is the blur's extra reach. */
 .hero-orb {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
+    box-sizing: content-box;
+    padding: 160px;
+    margin: -160px;
     opacity: 0.15;
     animation: orbFloat 20s ease-in-out infinite;
 }
@@ -607,7 +620,7 @@ html.contrast .theme-toggle-button .fa-adjust {
 .hero-orb-1 {
     width: 500px;
     height: 500px;
-    background: var(--primary);
+    background: radial-gradient(closest-side, var(--primary) 90px, transparent);
     top: 10%;
     left: 10%;
 }
@@ -615,7 +628,7 @@ html.contrast .theme-toggle-button .fa-adjust {
 .hero-orb-2 {
     width: 400px;
     height: 400px;
-    background: var(--secondary);
+    background: radial-gradient(closest-side, var(--secondary) 40px, transparent);
     bottom: 10%;
     right: 10%;
     animation-delay: -7s;
@@ -624,9 +637,10 @@ html.contrast .theme-toggle-button .fa-adjust {
 .hero-orb-3 {
     width: 300px;
     height: 300px;
-    background: var(--accent);
+    background: radial-gradient(closest-side, var(--accent), transparent);
     top: 50%;
     left: 50%;
+    margin: 0;
     translate: -50% -50%;
     animation-delay: -14s;
 }
@@ -910,10 +924,10 @@ html.light .cta-button:hover {
 }
 
 /* === GLASS CARD === */
+/* The tint over an opaque section colour looks like the old frosted glass (the particles
+   behind were too faint to show through the blur), without re-blurring every frame */
 .glass-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    background: linear-gradient(var(--bg-card), var(--bg-card)), var(--section-bg, var(--bg-primary));
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     transition: all var(--duration-base) var(--ease-out-expo);
@@ -936,7 +950,7 @@ html.light .cta-button:hover {
 
 .glass-card:hover {
     border-color: var(--border-color-hover);
-    background: var(--bg-card-hover);
+    background: linear-gradient(var(--bg-card-hover), var(--bg-card-hover)), var(--section-bg, var(--bg-primary));
     box-shadow: 0 20px 60px -20px var(--shadow-color);
 }
 
@@ -1160,7 +1174,8 @@ html.light .cta-button:hover {
 /* === SKILLS SECTION === */
 #skills {
     padding: 6rem 1.5rem;
-    background: var(--bg-secondary);
+    --section-bg: var(--bg-secondary);
+    background: var(--section-bg);
     position: relative;
     overflow: hidden;
 }
@@ -1252,11 +1267,12 @@ html.light .cta-button:hover {
     transform: rotate(180deg);
 }
 
-/* Decorative Shapes */
+/* Decorative Shapes: soft radial gradients in place of 60px-blurred blobs (see .hero-orb) */
 .decorative-shape {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
+    box-sizing: content-box;
+    padding: 120px;
+    margin: -120px;
     opacity: 0.06;
     z-index: 0;
     animation: morphShape 25s ease-in-out infinite alternate;
@@ -1267,7 +1283,7 @@ html.light .cta-button:hover {
     right: -5rem;
     width: 20rem;
     height: 20rem;
-    background: var(--primary);
+    background: radial-gradient(closest-side, var(--primary) 40px, transparent);
 }
 
 .decorative-shape-2 {
@@ -1275,19 +1291,17 @@ html.light .cta-button:hover {
     left: -5rem;
     width: 15rem;
     height: 15rem;
-    background: var(--secondary);
+    background: radial-gradient(closest-side, var(--secondary), transparent);
     animation-delay: -10s;
 }
 
 @keyframes morphShape {
     0% {
         transform: rotate(0deg) scale(1);
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
     }
 
     100% {
         transform: rotate(60deg) scale(1.15);
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
     }
 }
 
@@ -1323,7 +1337,8 @@ html.light .cta-button:hover {
     background:
         radial-gradient(circle at 0% 0%, rgba(1, 139, 255, 0.14), transparent 45%),
         radial-gradient(circle at 100% 100%, rgba(124, 92, 252, 0.14), transparent 50%),
-        var(--bg-card);
+        linear-gradient(var(--bg-card), var(--bg-card)),
+        var(--section-bg, var(--bg-primary));
 }
 
 .cert-featured:hover {
@@ -1651,7 +1666,8 @@ html.light .cert-link {
 /* === RESUME SECTION === */
 #resume {
     padding: 6rem 1.5rem;
-    background: var(--bg-secondary);
+    --section-bg: var(--bg-secondary);
+    background: var(--section-bg);
     position: relative;
     overflow: hidden;
 }
@@ -1665,7 +1681,8 @@ html.light .cert-link {
     background:
         radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.12), transparent 50%),
         radial-gradient(circle at 0% 100%, rgba(124, 92, 252, 0.16), transparent 55%),
-        var(--bg-card);
+        linear-gradient(var(--bg-card), var(--bg-card)),
+        var(--section-bg, var(--bg-primary));
 }
 
 /* The first page, tilted over a second sheet */
@@ -1840,7 +1857,8 @@ html.light .credential-icon-gold {
 /* === CONTACT SECTION === */
 #contact {
     padding: 6rem 1.5rem;
-    background: var(--bg-secondary);
+    --section-bg: var(--bg-secondary);
+    background: var(--section-bg);
     position: relative;
     overflow: hidden;
 }
