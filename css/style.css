@@ -1304,14 +1304,21 @@ html.light .cta-button:hover {
     font-size: 0.95rem;
 }
 
-/* Featured certification */
+/* Featured certifications, side by side */
+.cert-featured-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
 .cert-featured {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 2.25rem;
-    padding: 2.25rem 2.5rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    align-items: start;
+    gap: 1.5rem 1.75rem;
+    padding: 2rem;
     border-color: rgba(124, 92, 252, 0.25);
     background:
         radial-gradient(circle at 0% 0%, rgba(1, 139, 255, 0.14), transparent 45%),
@@ -1321,6 +1328,12 @@ html.light .cta-button:hover {
 
 .cert-featured:hover {
     border-color: rgba(124, 92, 252, 0.45);
+}
+
+/* Button under the text, level across both cards */
+.cert-featured > .cta-button {
+    grid-column: 2;
+    justify-self: start;
 }
 
 .cert-emblem {
@@ -1354,6 +1367,30 @@ html.light .cta-button:hover {
     }
 }
 
+/* Microsoft's own Applied Skills badge instead of the gradient disc */
+.cert-emblem-badge {
+    background: none;
+    box-shadow: none;
+}
+
+.cert-emblem-badge svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 20px rgba(0, 120, 212, 0.45));
+}
+
+.cert-emblem-badge::after {
+    border-color: rgba(0, 120, 212, 0.55);
+}
+
+.cert-issuer-logo {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.45em;
+    vertical-align: -0.05em;
+}
+
 .cert-kicker {
     display: inline-flex;
     align-items: center;
@@ -1371,7 +1408,7 @@ html.light .cert-kicker {
 }
 
 .cert-featured h3 {
-    font-size: 1.65rem;
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.25;
@@ -1553,6 +1590,10 @@ html.light .cert-link {
 }
 
 @media (max-width: 1024px) {
+    .cert-featured-row {
+        grid-template-columns: 1fr;
+    }
+
     .cert-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1561,10 +1602,16 @@ html.light .cert-link {
 @media (max-width: 768px) {
     .cert-featured {
         grid-template-columns: 1fr;
+        grid-template-rows: none;
         justify-items: center;
         text-align: center;
         gap: 1.5rem;
         padding: 2rem 1.5rem;
+    }
+
+    .cert-featured > .cta-button {
+        grid-column: auto;
+        justify-self: center;
     }
 
     .cert-featured .cert-tags {
