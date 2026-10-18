@@ -1028,6 +1028,31 @@ html.light .cta-button:hover {
     box-shadow: 0 0 0 4px var(--bg-primary), 0 0 20px rgba(124, 92, 252, 0.3);
 }
 
+.exp-points {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.exp-points li {
+    position: relative;
+    padding-left: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.exp-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--primary-light);
+}
+
 /* === PROJECTS SECTION === */
 
 /* Filter Tabs */
@@ -2142,6 +2167,19 @@ footer a:hover {
 
     .timeline-item {
         padding-left: 2.5rem;
+    }
+
+    .exp-card {
+        padding: 1.5rem 1.25rem !important;
+    }
+
+    .exp-points {
+        font-size: 0.9rem;
+        line-height: 1.55;
+    }
+
+    .exp-points li {
+        margin-bottom: 0.4rem;
     }
 
     .timeline-item::before {
