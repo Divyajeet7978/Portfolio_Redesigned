@@ -1691,6 +1691,46 @@ html.light .cert-link {
     }
 }
 
+/* Phones: shorter page without dropping content */
+@media (max-width: 768px) {
+    #portfolioGrid .glass-card > .relative {
+        height: 12rem;
+    }
+
+    .cert-featured {
+        gap: 1rem;
+        padding: 1.5rem 1.25rem;
+    }
+
+    .cert-emblem {
+        width: 4rem;
+        height: 4rem;
+        font-size: 1.6rem;
+    }
+
+    /* Three grid cards until "Show all" expands the rest */
+    .cert-grid:not(.expanded) .cert-card:nth-child(n+4) {
+        display: none;
+    }
+
+    .about-workspace {
+        display: none;
+    }
+
+    .contact-email {
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .contact-email i {
+        display: none;
+    }
+
+    footer a {
+        padding: 0.5rem 0.25rem;
+    }
+}
+
 /* === RESUME SECTION === */
 #resume {
     padding: 6rem 1.5rem;
