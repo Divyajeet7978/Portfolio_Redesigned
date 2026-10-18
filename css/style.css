@@ -1518,11 +1518,6 @@ html.light .cert-kicker {
     border-color: rgba(164, 53, 240, 0.3);
 }
 
-.cert-mark-coursera {
-    color: #4d8dff;
-    background: rgba(0, 86, 210, 0.14);
-    border-color: rgba(77, 141, 255, 0.3);
-}
 
 .cert-mark-neo4j {
     color: #3ba7ff;
@@ -1538,9 +1533,6 @@ html.light .cert-mark-udemy {
     color: #7e22ce;
 }
 
-html.light .cert-mark-coursera {
-    color: #0056d2;
-}
 
 html.light .cert-mark-neo4j {
     color: #0a6190;
