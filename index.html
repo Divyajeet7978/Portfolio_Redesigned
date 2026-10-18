@@ -303,8 +303,8 @@
                             <p class="opacity-80 mb-4 text-sm">Turns free-text bug reports into schema-validated triage
                                 records: category, severity, priority, environment, reproducibility, probable cause,
                                 and next step. A FastAPI service and React reviewer UI compare a base Qwen model with a
-                                LoRA fine-tune, backed by a group-safe data split and an evaluation harness that
-                                measures JSON validity, macro-F1, and per-field exact match.</p>
+                                LoRA fine-tune. On a 30-case benchmark the untuned base model returns 100% schema-valid
+                                JSON with 0.34 category macro-F1, the baseline the fine-tune has to beat.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="tag-pill">Python</span>
                                 <span class="tag-pill">PyTorch</span>
