@@ -600,7 +600,9 @@ html.contrast .theme-toggle-button .fa-adjust {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8rem 1.5rem 4rem;
+    /* The bottom padding reserves room for the absolutely positioned scroll indicator, so
+       zooming in (a shorter viewport) pushes the hero down instead of under it */
+    padding: 8rem 1.5rem 8rem;
     position: relative;
     overflow: hidden;
 }
@@ -2111,6 +2113,7 @@ footer a:hover {
 
     #home {
         padding-top: 4rem !important;
+        padding-bottom: 8rem !important;
         min-height: 100vh;
         min-height: 100dvh;
         align-items: center !important;
