@@ -1,106 +1,75 @@
-# <div align="center">✨ Divyajeet's Portfolio ✨</div>
+# Divyajeet Panda — Portfolio
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Version-1.5.0-blue" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
-  <img src="https://img.shields.io/badge/Status-Live-brightgreen" alt="Status">
-</div>
+Personal site for my work as a software engineer on backend and data systems.
 
-<br>
+**Live:** [divyajeet.netlify.app](https://divyajeet.netlify.app)
 
-<div align="center">
-
+![Version](https://img.shields.io/badge/Version-2.0.0-blue)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e1fcaf21-9354-40c6-8ec1-857f83a385c5/deploy-status)](https://app.netlify.com/sites/divyajeet/deploys)
 
-</div>
+## What's on the site
 
-## 🌟 Features
+- **Hero** with an interactive 3D avatar (Three.js + a `.glb` model) that follows the cursor
+- **About** and **What I do**: backend & data, graph & AI
+- **Experience** timeline
+- **Selected work**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, with live screenshots
+- **Certifications**: Microsoft Applied Skills, Neo4j, HackerRank and Udemy, with links to verify each one
+- **Resume** preview and PDF download
+- **Education & awards**, including the gold medal card that shows convocation photos on hover
+- **Contact** form (Netlify Forms) with an animated name heading, plus a back-to-top button
 
-- 🎨 **Modern Glassmorphism UI** with smooth animations
-- 🌓 **Theme Switcher** (Light/Dark/High Contrast)
-- 🚀 **Interactive 3D Particle Background**
-- 📱 **Fully Responsive** across all devices
-- ✉️ **Functional Contact Form** with validation
-- 🛠 **Project Showcase** with filtering capabilities
+The site uses a dark plum/lavender theme, Geist and Geist Mono fonts, and GSAP ScrollTrigger reveals. If the browser asks for reduced motion, the animations are turned off.
 
+## Stack
 
-+ Built with cutting-edge web technologies for optimal performance
+Plain HTML, CSS and JavaScript. Nothing gets built at deploy time.
 
+| Area | Used |
+|------|------|
+| Markup & styles | `index.html`, `css/site.css` |
+| Scripts | `js/site.js` (page behaviour), `js/avatar.js` (3D avatar) |
+| Libraries (self-hosted) | GSAP 3.12.5 + ScrollTrigger, Three.js + GLTFLoader |
+| Hosting | Netlify (auto-deploys from `main`), cache rules in `_headers` |
 
+## Running locally
 
-## 🛠 Technologies Used
-
-| Category        | Technologies                                                                 |
-|-----------------|------------------------------------------------------------------------------|
-| **Frontend**    | ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black) |
-| **Libraries**   | ![GSAP](https://img.shields.io/badge/-GSAP-88CE02?logo=greensock&logoColor=white) |
-| **Tools**       | ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white) ![VSCode](https://img.shields.io/badge/-VSCode-007ACC?logo=visual-studio-code&logoColor=white) |
-
-## 🎨 Design Highlights
-
-```mermaid
-graph TD
-    A[Glassmorphism] --> B(Frosted Glass Cards)
-    A --> C(Neon Glow Effects)
-    A --> D(Depth with Layering)
-    E[Animations] --> F(GSAP Smooth Transitions)
-    E --> G(Floating Elements)
-    E --> H(Scroll-triggered Effects)
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Modern web browser (Chrome, Firefox, Edge)
-- Node.js (for local development)
-
-### Installation
 ```bash
-# Clone the repository
-git clone https://github.com/Divyajeet7978/portfolio.git
-
-# Navigate to project directory
-cd portfolio
-
-# Open in browser (no build required)
-open index.html
+git clone https://github.com/Divyajeet7978/Portfolio_Redesigned.git
+cd Portfolio_Redesigned
+npx serve .   # or any static server
 ```
 
-## 📂 Project Structure
+Use a local server, not `file://`. The browser blocks the avatar model from loading over `file://`.
+
+## Project structure
+
 ```
-portfolio/
-├── index.html          # Main HTML file
-├── css/                # CSS styles (icons.css: Font Awesome subset)
-├── fonts/              # Self-hosted font subsets
-├── img/                # All project images
-├── js/                 # JavaScript files
-├── vendor/             # Self-hosted third-party scripts (GSAP)
-├── _headers            # Netlify cache headers
-└── README.md           # This documentation
+├── index.html
+├── css/site.css          # Design tokens, layout, animations
+├── js/site.js            # Reveals, nav, contact form, effects
+├── js/avatar.js          # Three.js avatar
+├── img/                  # Project images, photos, avatar.glb
+├── fonts/                # Self-hosted font subsets
+├── vendor/               # GSAP and Three.js
+├── Divyajeet_Panda_Resume.pdf
+└── _headers              # Netlify cache headers
 ```
 
-## 🌈 Color Palette
-| Color          | Hex                                                                |
-|----------------|--------------------------------------------------------------------|
-| Primary        | `#6366f1` |
-| Secondary      | `#a855f7` |
-| Accent         | `#ec4899` |
-| Dark Background| `#111827` |
-| Light Text     | `#f9fafb` |
+## Milestones
 
-## 📸 Screenshots
+### v1: glassmorphism build (up to September 2026)
+
+The previous version used an indigo/purple glassmorphism design and a light/dark theme switcher, with a particle canvas behind it.
 
 <div align="center">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/screenshot-light.webp" width="45%" alt="Light Theme">
-  <img src="https://github.com/Divyajeet7978/Portfolio_Redesigned/blob/main/img/screenshot-dark.webp" width="45%" alt="Dark Theme">  
+  <img src="img/screenshot-light.webp" width="45%" alt="Previous build, light theme">
+  <img src="img/screenshot-dark.webp" width="45%" alt="Previous build, dark theme">
 </div>
 
-## 📬 Contact
+### v2: current redesign (October 2026)
 
-Divyajeet Panda - divyajeetpanda@outlook.com
+Rebuilt with a dark plum/lavender look, a 3D avatar in the hero, edge-glow cards and rewritten copy. See it [live](https://divyajeet.netlify.app).
 
-Project Link: [https://github.com/Divyajeet7978/portfolio](https://github.com/Divyajeet7978/portfolio)
+## Contact
 
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=Divyajeet7978&label=Profile%20views&color=0e75b6&style=flat" alt="Divyajeet7978" /> 
-</div>
+divyajeetpanda@outlook.com
