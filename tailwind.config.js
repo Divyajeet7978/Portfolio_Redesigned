@@ -5,19 +5,19 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: '#6366f1',
-                    light: '#818cf8',
-                    dark: '#4f46e5',
+                    DEFAULT: 'rgb(var(--primary-rgb) / <alpha-value>)',
+                    light: 'rgb(var(--primary-light-rgb) / <alpha-value>)',
+                    dark: 'rgb(var(--primary-dark-rgb) / <alpha-value>)',
                 },
                 secondary: {
-                    DEFAULT: '#a855f7',
-                    light: '#c084fc',
-                    dark: '#9333ea',
+                    DEFAULT: 'rgb(var(--secondary-rgb) / <alpha-value>)',
+                    light: 'rgb(var(--secondary-light-rgb) / <alpha-value>)',
+                    dark: 'rgb(var(--secondary-dark-rgb) / <alpha-value>)',
                 },
                 accent: {
-                    DEFAULT: '#ec4899',
-                    light: '#f472b6',
-                    dark: '#db2777',
+                    DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
+                    light: 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+                    dark: 'rgb(var(--accent-dark-rgb) / <alpha-value>)',
                 }
             }
         },

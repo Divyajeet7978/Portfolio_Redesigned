@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="contrast">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Divyajeet Panda | Software Engineer — Backend & Data Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divyajeet Panda | Software Engineer, Backend & Data Systems</title>
 
     <!-- SEO & Meta -->
     <meta name="description"
         content="Portfolio of Divyajeet Panda, a Software Engineer with 3+ years in backend services, data systems and warehouse automation, working with Java/Spring Boot, Python, Neo4j and PostgreSQL.">
-    <meta name="keywords"
-        content="Divyajeet Panda, Software Engineer, Backend Developer, Data Systems, Neo4j, Cypher, PostgreSQL, Java, Spring Boot, Python, Portfolio">
     <meta name="author" content="Divyajeet Panda">
+    <meta name="theme-color" content="#0b080c">
+    <meta name="color-scheme" content="dark">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -26,1354 +26,573 @@
     <meta name="twitter:description"
         content="Portfolio of Divyajeet Panda, a Software Engineer with 3+ years in backend services, data systems and warehouse automation, working with Java/Spring Boot, Python, Neo4j and PostgreSQL.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Apply the saved theme before first paint -->
-    <script>try { var t = localStorage.getItem('portfolioTheme'); if (t === 'light' || t === 'dark' || t === 'contrast') document.documentElement.className = t; } catch (e) { }</script>
+    <!-- JS on: hide reveal targets until animated; first visit in a session: show the loader -->
+    <script>
+        (function (d) {
+            d.classList.add('js');
+            try {
+                var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (!calm && !sessionStorage.getItem('seenLoader')) d.classList.add('is-loading');
+            } catch (e) { }
+        })(document.documentElement);
+    </script>
 
-    <!-- Fonts (self-hosted) -->
-    <link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="css/icons.css">
+    <link rel="preload" href="fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Scripts (Deferred) -->
-    <!-- Tailwind CSS (Local Build) -->
-    <link href="css/tailwind.css" rel="stylesheet">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="vendor/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="vendor/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    <script src="vendor/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
+    <script src="vendor/three/three.min.js" defer></script>
+    <script src="vendor/three/GLTFLoader.js" defer></script>
+    <script src="js/site.js" defer></script>
+    <script src="js/avatar.js" defer></script>
 </head>
 
-<body class="transition-colors duration-500">
-    <!-- Particle Canvas Background -->
-    <canvas id="particle-canvas"></canvas>
+<body>
+    <a class="skip-link" href="#about">Skip to content</a>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-
-    <!-- Navigation -->
-    <nav id="mainNav">
-        <div class="nav-inner">
-            <a href="#home" class="nav-logo">Divyajeet Panda</a>
-            <div style="display:flex;align-items:center;gap:0.25rem;">
-                <div class="nav-links">
-                    <a href="#home" class="nav-link">Home</a>
-                    <a href="#work" class="nav-link">Work</a>
-                    <a href="#skills" class="nav-link">Skills</a>
-                    <a href="#certifications" class="nav-link">Certifications</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="#resume" class="nav-resume"><i class="fas fa-file-pdf"></i> Resume</a>
-                </div>
-                <button id="themeToggle" aria-label="Toggle theme" class="theme-toggle-button">
-                    <i class="fas fa-sun"></i>
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-adjust"></i>
-                </button>
-                <button id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-    <div id="mobileMenu">
-        <a href="#home" class="mobile-link">Home</a>
-        <a href="#work" class="mobile-link">Work</a>
-        <a href="#skills" class="mobile-link">Skills</a>
-        <a href="#certifications" class="mobile-link">Certifications</a>
-        <a href="#resume" class="mobile-link">Resume</a>
-        <a href="#about" class="mobile-link">About</a>
-        <a href="#contact" class="mobile-link">Contact</a>
-    </div>
-    <!-- Hero Section -->
-    <section id="home">
-        <!-- Gradient Orbs -->
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
-        <div class="hero-orb hero-orb-3"></div>
-
-        <!-- Content -->
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="pulse-dot"></span>
-                Available for opportunities
-            </div>
-
-            <h1 class="hero-title">
-                Building <span class="highlight gradient-text">Digital</span><br>Solutions That Matter
-            </h1>
-
-            <p class="hero-subtitle">
-                Software Engineer with 3+ years building backend services, data systems, and warehouse
-                automation — with Java/Spring Boot, Python, Neo4j, and PostgreSQL.
-            </p>
-
-            <div class="hero-actions">
-                <a href="#work" class="cta-button">
-                    <span>View My Work</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="#contact" class="cta-button-outline">
-                    <span>Get In Touch</span>
-                    <i class="fas fa-paper-plane"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- Work Section -->
-    <section id="work">
-        <div style="max-width: 72rem; margin: 0 auto;">
-            <div class="text-center animate-on-scroll">
-                <span class="section-label">Experience</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">My Career Journey</h2>
-            </div>
-
-            <!-- Experience Timeline -->
-            <div class="glass-card exp-card animate-on-scroll" style="padding: 2.5rem; max-width: 48rem; margin: 3rem auto 0;">
-                <div class="relative">
-                    <!-- Vimaan Robotics -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
-                        <div>
-                            <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Software Engineer
-                            </h4>
-                            <p
-                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary-light); margin-bottom: 1rem;">
-                                Vimaan Robotics &bull; Aug 2025 - Present &bull; Bengaluru, India
-                            </p>
-                            <ul class="exp-points">
-                                <li>Cut new-warehouse onboarding from <strong>2–3 days to under 1 day</strong> with a
-                                    <strong>Python</strong> configuration builder and UI.</li>
-                                <li>Configure facility-specific <strong>Cypher</strong> and <strong>SQL</strong> queries that turn
-                                    computer-vision scans into live inventory on client dashboards.</li>
-                                <li>Build reconciliation logic that flags mismatches, missing entries, and exceptions against
-                                    source records.</li>
-                                <li>Debug <strong>Java/Spring Boot</strong> services, graph pipelines, and dashboards; support
-                                    releases with log analysis and regression testing.</li>
-                            </ul>
-                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <span class="tag-pill">Neo4j</span>
-                                <span class="tag-pill">Cypher</span>
-                                <span class="tag-pill">PostgreSQL</span>
-                                <span class="tag-pill">Java/Spring Boot</span>
-                                <span class="tag-pill">Python</span>
-                                <span class="tag-pill">Warehouse Automation</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Previous Position -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
-                        <div>
-                            <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Senior
-                                Systems/Software Engineer</h4>
-                            <p
-                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary-light); margin-bottom: 1rem;">
-                                Cognizant Technology Solutions &bull; Sep 2022 - Jan 2025 &bull; Bengaluru, India
-                            </p>
-                            <ul class="exp-points">
-                                <li>Cut <strong>PostgreSQL</strong> query execution time by <strong>25%</strong> and improved overall
-                                    query performance by <strong>19%</strong>, earning the Cognizant Excellence Award.</li>
-                                <li>Shipped <strong>Python/FastAPI</strong> and <strong>Node.js</strong> microservices on
-                                    <strong>Docker</strong> and <strong>Kubernetes</strong> across AWS and Azure.</li>
-                                <li>Built <strong>REST</strong> and <strong>GraphQL</strong> APIs with <strong>OAuth 2.0/JWT</strong>,
-                                    rate limiting, and caching, plus <strong>Kafka</strong>/<strong>RabbitMQ</strong> event-driven workflows.</li>
-                                <li>Set up observability with <strong>Prometheus, Grafana</strong>, and <strong>ELK</strong>; mentored
-                                    junior engineers through code reviews.</li>
-                            </ul>
-                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <span class="tag-pill">Python/FastAPI</span>
-                                <span class="tag-pill">Node.js</span>
-                                <span class="tag-pill">Kubernetes</span>
-                                <span class="tag-pill">PostgreSQL</span>
-                                <span class="tag-pill">Kafka</span>
-                                <span class="tag-pill">AWS &amp; Azure</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-divider" style="margin: 6rem auto;"></div>
-
-            <!-- Projects Section -->
-            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
-                <span class="section-label">Portfolio</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Key Projects</h2>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="flex justify-center flex-wrap mb-12 gap-2 animate-on-scroll" style="animation-delay: 0.1s;">
-                <button class="tab-button active" data-filter="all">All Projects</button>
-                <button class="tab-button" data-filter="ai">AI/ML</button>
-                <button class="tab-button" data-filter="auto">Automation</button>
-                <button class="tab-button" data-filter="web">Web Development</button>
-            </div>
-
-            <!-- Masonry Grid with FLIP Animation -->
-            <div class="masonry-grid" id="portfolioGrid">
-
-                <!-- Olist Query Studio - AI/ML -->
-                <div class="masonry-item animate-on-scroll" data-category-ai style="animation-delay: 0.2s;">
-                    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
-                        <div class="relative overflow-hidden h-72 group">
-                            <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank"
-                                rel="noopener noreferrer" class="block h-full w-full">
-                                <img src="img/olist-query-studio.webp"
-                                    alt="Olist Query Studio answering how many orders were delivered, with the generated Cypher and result row"
-                                    width="960" height="585" loading="lazy" decoding="async"
-                                    class="w-full h-full object-cover object-left-top transition-transform duration-700 ease-in-out group-hover:scale-110">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                                    <div
-                                        class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                        <h3 class="text-xl font-semibold text-white mb-1">Olist Query Studio</h3>
-                                        <p class="text-sm text-white/80">Plain-English questions to Cypher</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold">Olist Query Studio</h3>
-                            <p class="opacity-75 text-sm mb-3">LLM &bull; Graph Analytics</p>
-                            <p class="opacity-80 mb-4 text-sm">A local workbench that turns plain-English analytics
-                                questions about the Olist e-commerce dataset into Cypher, runs them against Neo4j, and
-                                currently matches 82 of 112 verified benchmark questions (73%). A local Ollama model writes structured
-                                queries from the graph schema; a validator, an EXPLAIN check, and a read-only database
-                                account keep every query safe, with one automatic correction attempt on failure.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag-pill">Python</span>
-                                <span class="tag-pill">Neo4j</span>
-                                <span class="tag-pill">Cypher</span>
-                                <span class="tag-pill">Ollama</span>
-                                <span class="tag-pill">FastAPI</span>
-                                <span class="tag-pill">Streamlit</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bug2JSON - AI/ML -->
-                <div class="masonry-item animate-on-scroll" data-category-ai style="animation-delay: 0.2s;">
-                    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
-                        <div class="relative overflow-hidden h-72 group">
-                            <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank"
-                                rel="noopener noreferrer" class="block h-full w-full">
-                                <img src="img/bug2json.webp"
-                                    alt="Bug2JSON playground extracting a structured triage record from a login bug report"
-                                    width="1026" height="722" loading="lazy" decoding="async"
-                                    class="w-full h-full object-cover object-top transition-transform duration-700 ease-in-out group-hover:scale-110">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                                    <div
-                                        class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                        <h3 class="text-xl font-semibold text-white mb-1">Bug2JSON</h3>
-                                        <p class="text-sm text-white/80">Bug reports to validated JSON</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold">Bug2JSON</h3>
-                            <p class="opacity-75 text-sm mb-3">LLM Fine-Tuning &bull; Bug Triage</p>
-                            <p class="opacity-80 mb-4 text-sm">Turns free-text bug reports into schema-validated triage
-                                records: category, severity, priority, environment, reproducibility, probable cause,
-                                and next step. A FastAPI service and React reviewer UI compare a base Qwen model with a
-                                LoRA fine-tune. On a 30-case benchmark the untuned base model returns 100% schema-valid
-                                JSON with 0.34 category macro-F1, the baseline the fine-tune has to beat.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag-pill">Python</span>
-                                <span class="tag-pill">PyTorch</span>
-                                <span class="tag-pill">LoRA / PEFT</span>
-                                <span class="tag-pill">FastAPI</span>
-                                <span class="tag-pill">React</span>
-                                <span class="tag-pill">TypeScript</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- AI Resume Analyzer - AI/Web (in progress, no public repo yet) -->
-                <div class="masonry-item animate-on-scroll" data-category-ai data-category-web
-                    style="animation-delay: 0.2s;">
-                    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
-                        <div class="relative overflow-hidden h-64">
-                            <div class="project-cover" aria-hidden="true">
-                                <span class="project-cover-icon"><i class="fas fa-file-alt"></i></span>
-                                <span class="project-cover-label">ATS-style feedback</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <h3 class="text-xl font-semibold">AI Resume Analyzer</h3>
-                                    <p class="opacity-75 text-sm">Full Stack &bull; AI</p>
-                                </div>
-                                <span class="tag-pill">In Progress</span>
-                            </div>
-                            <p class="opacity-80 mb-4 text-sm">A full-stack web app that compares PDF/DOCX resumes with
-                                job descriptions or job links and returns ATS-style feedback, keyword gaps, and
-                                improvement suggestions. Built as a monorepo with a Next.js frontend, an
-                                Express/TypeScript API, shared Zod schemas, Supabase authentication, and analysis
-                                history, combining OpenAI-assisted feedback with deterministic scoring and heuristic
-                                fallbacks.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag-pill">Next.js</span>
-                                <span class="tag-pill">TypeScript</span>
-                                <span class="tag-pill">Express.js</span>
-                                <span class="tag-pill">Supabase</span>
-                                <span class="tag-pill">OpenAI API</span>
-                                <span class="tag-pill">Zod</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ethereal Command - Web (in progress, no public repo yet) -->
-                <div class="masonry-item animate-on-scroll" data-category-web style="animation-delay: 0.2s;">
-                    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
-                        <div class="relative overflow-hidden h-64">
-                            <div class="project-cover project-cover-alt" aria-hidden="true">
-                                <span class="project-cover-icon"><i class="fas fa-tachometer-alt"></i></span>
-                                <span class="project-cover-label">Live system telemetry</span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <h3 class="text-xl font-semibold">Ethereal Command</h3>
-                                    <p class="opacity-75 text-sm">System Telemetry Dashboard</p>
-                                </div>
-                                <span class="tag-pill">In Progress</span>
-                            </div>
-                            <p class="opacity-80 mb-4 text-sm">A local system monitoring dashboard. An Express backend
-                                polls CPU, RAM, GPU, storage, thermal, battery, process, network, and socket telemetry
-                                behind cached API endpoints, and a React/Vite UI renders live cards, time-series charts,
-                                process tables, and network and storage views, with confirmed process termination
-                                through the API.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag-pill">React</span>
-                                <span class="tag-pill">TypeScript</span>
-                                <span class="tag-pill">Vite</span>
-                                <span class="tag-pill">Tailwind CSS</span>
-                                <span class="tag-pill">Express.js</span>
-                                <span class="tag-pill">Recharts</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sort-Downloads - Automation -->
-                <div class="masonry-item animate-on-scroll" data-category-auto style="animation-delay: 0.2s;">
-                    <div class="glass-card p-0 overflow-hidden hover-multi-effect">
-                        <div class="relative overflow-hidden h-72 group">
-                            <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank"
-                                rel="noopener noreferrer" class="block h-full w-full">
-                                <img src="img/sort-downloads.webp"
-                                    alt="Sort-Downloads previewing where each file will be filed" width="960"
-                                    height="764" loading="lazy" decoding="async"
-                                    class="w-full h-full object-cover object-top transition-transform duration-700 ease-in-out group-hover:scale-110">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                                    <div
-                                        class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                        <h3 class="text-xl font-semibold text-white mb-1">Sort-Downloads</h3>
-                                        <p class="text-sm text-white/80">Python CLI with a rich preview</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold">Sort-Downloads</h3>
-                            <p class="opacity-75 text-sm mb-3">Python &bull; CLI &bull; Automation</p>
-                            <p class="opacity-80 mb-4 text-sm">A command-line tool I use daily to keep my Downloads
-                                folder tidy. It files every loose download into category, extension, and month folders
-                                and sends exact duplicates (same size and MD5) to the Recycle Bin, after a
-                                colour-coded preview of every move. Ported from my PowerShell script, with a parity
-                                test proving both versions file everything identically.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag-pill">Python</span>
-                                <span class="tag-pill">Rich</span>
-                                <span class="tag-pill">PowerShell</span>
-                                <span class="tag-pill">pytest</span>
-                                <span class="tag-pill">CLI</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-28 px-4 relative overflow-hidden">
-        <div class="section-divider absolute top-0 left-0 right-0"></div>
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
-                <span class="section-label">Expertise</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Technical Skills</h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Left Column -->
-                <div class="space-y-8">
-                    <!-- Core Competencies -->
-                    <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.1s;">
-                        <h3 class="text-xl font-semibold mb-6 text-center heading-font">Core Competencies</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- Python -->
-                            <div class="text-center">
-                                <div class="radial-progress mx-auto text-primary hover:text-primary-light transition-colors cursor-pointer"
-                                    style="--value:95;"
-                                    data-tooltip="FastAPI, pytest, automation tooling">
-                                    95%
-                                </div>
-                                <h4 class="mt-4 font-medium text-lg">Python</h4>
-                            </div>
-                            <!-- Java & JavaScript -->
-                            <div class="text-center">
-                                <div class="radial-progress mx-auto text-secondary hover:text-secondary-light transition-colors cursor-pointer"
-                                    style="--value:90;"
-                                    data-tooltip="Java, Spring Boot, TypeScript, React, Next.js, Node.js">
-                                    90%
-                                </div>
-                                <h4 class="mt-4 font-medium text-lg">Java & JS</h4>
-                            </div>
-                            <!-- Databases -->
-                            <div class="text-center">
-                                <div class="radial-progress mx-auto text-accent hover:text-accent-light transition-colors cursor-pointer"
-                                    style="--value:90;"
-                                    data-tooltip="PostgreSQL, Neo4j/Cypher, MySQL, Graph Data Modeling">
-                                    90%
-                                </div>
-                                <h4 class="mt-4 font-medium text-lg">Databases</h4>
-                            </div>
-                            <!-- DevOps -->
-                            <div class="text-center">
-                                <div class="radial-progress mx-auto text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
-                                    style="--value:85;"
-                                    data-tooltip="Docker, Kubernetes, CI/CD, Git">
-                                    85%
-                                </div>
-                                <h4 class="mt-4 font-medium text-lg">DevOps</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tools & Technologies -->
-                    <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="text-xl font-semibold mb-6 text-center heading-font">Tools & Technologies</h3>
-                        <div class="flex flex-wrap justify-center gap-4">
-                            <!-- Python -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-primary/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="FastAPI, pytest, automation tooling">
-                                <i
-                                    class="fab fa-python text-3xl mb-1 text-primary group-hover:text-primary-light transition-colors"></i>
-                                <span class="text-xs opacity-70">Python</span>
-                            </div>
-                            <!-- React -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-secondary/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="React hooks, context API, Next.js">
-                                <i
-                                    class="fab fa-react text-3xl mb-1 text-secondary group-hover:text-secondary-light transition-colors"></i>
-                                <span class="text-xs opacity-70">React</span>
-                            </div>
-                            <!-- Docker -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-purple-500/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="Containerization, Docker Compose">
-                                <i
-                                    class="fab fa-docker text-3xl mb-1 text-purple-500 group-hover:text-purple-400 transition-colors"></i>
-                                <span class="text-xs opacity-70">Docker</span>
-                            </div>
-                            <!-- Git -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-orange-500/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="Version control, GitHub, GitLab">
-                                <i
-                                    class="fab fa-git-alt text-3xl mb-1 text-orange-500 group-hover:text-orange-400 transition-colors"></i>
-                                <span class="text-xs opacity-70">Git</span>
-                            </div>
-                            <!-- Java -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-red-500/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="Backend Development, Spring Boot">
-                                <i
-                                    class="fab fa-java text-3xl mb-1 text-red-500 group-hover:text-red-400 transition-colors"></i>
-                                <span class="text-xs opacity-70">Java</span>
-                            </div>
-                            <!-- Neo4j -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-blue-500/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="Graph Database, Cypher Query Language">
-                                <i
-                                    class="fas fa-project-diagram text-3xl mb-1 text-blue-500 group-hover:text-blue-400 transition-colors"></i>
-                                <span class="text-xs opacity-70">Neo4j</span>
-                            </div>
-                            <!-- PostgreSQL -->
-                            <div class="skill-tool text-center p-3 w-20 h-20 flex flex-col justify-center items-center bg-[var(--glass-bg)] rounded-xl hover:bg-sky-500/10 transition-colors duration-300 group cursor-pointer"
-                                data-tooltip="Query optimization, data modeling">
-                                <i
-                                    class="fas fa-database text-3xl mb-1 text-sky-500 group-hover:text-sky-400 transition-colors"></i>
-                                <span class="text-xs opacity-70">PostgreSQL</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column -->
-                <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.3s;">
-                    <h3 class="text-xl font-semibold mb-6 text-center heading-font">Technical Skills Breakdown</h3>
-                    <div class="accordion space-y-2">
-                        <!-- Programming Languages -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-3">
-                                        <span class="font-bold">1</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">Programming Languages</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">Java and Python for backend services, with SQL and Cypher for
-                                        relational and graph data work.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">Python</span>
-                                        <span class="tag-pill">JavaScript</span>
-                                        <span class="tag-pill">TypeScript</span>
-                                        <span class="tag-pill">Java</span>
-                                        <span class="tag-pill">SQL</span>
-                                        <span class="tag-pill">Cypher</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Frameworks -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mr-3">
-                                        <span class="font-bold">2</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">Frameworks & Libraries</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">Backend frameworks for production services, plus React for the
-                                        dashboards and tools built on top of them.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">Spring
-                                            Boot</span>
-                                        <span class="tag-pill">FastAPI</span>
-                                        <span class="tag-pill">Node.js</span>
-                                        <span class="tag-pill">REST APIs</span>
-                                        <span class="tag-pill">GraphQL</span>
-                                        <span class="tag-pill">React</span>
-                                        <span class="tag-pill">Next.js</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Databases -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center mr-3">
-                                        <span class="font-bold">3</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">Databases</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">Relational and graph databases, with a focus on query
-                                        optimization and data modeling.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">PostgreSQL</span>
-                                        <span class="tag-pill">Neo4j</span>
-                                        <span class="tag-pill">MySQL</span>
-                                        <span class="tag-pill">Graph Data Modeling</span>
-                                        <span class="tag-pill">Graph Data Science</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- DevOps -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center mr-3">
-                                        <span class="font-bold">4</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">DevOps</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">Containerized services and the pipelines that build, test, and
-                                        ship them.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">Docker</span>
-                                        <span class="tag-pill">Kubernetes</span>
-                                        <span class="tag-pill">CI/CD</span>
-                                        <span class="tag-pill">Git</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Messaging & Observability -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-indigo-400/10 text-indigo-400 flex items-center justify-center mr-3">
-                                        <span class="font-bold">5</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">Messaging & Observability</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">Event-driven messaging, plus the dashboards and log analysis
-                                        that keep production systems debuggable.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">Kafka</span>
-                                        <span class="tag-pill">RabbitMQ</span>
-                                        <span class="tag-pill">Grafana</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- AI & LLMs -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-3">
-                                        <span class="font-bold">6</span>
-                                    </div>
-                                    <h5 class="font-semibold text-lg">AI &amp; LLMs</h5>
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <div>
-                                    <p class="py-4 opacity-80">AI agents on Microsoft's platforms and LLMs grounded in graph
-                                        data, from Neo4j GenAI to local text-to-Cypher.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="tag-pill">AI Agents</span>
-                                        <span class="tag-pill">Microsoft Foundry</span>
-                                        <span class="tag-pill">Copilot Studio</span>
-                                        <span class="tag-pill">Neo4j GenAI</span>
-                                        <span class="tag-pill">Ollama</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Decorative Shapes -->
-        <div class="decorative-shape decorative-shape-1"></div>
-        <div class="decorative-shape decorative-shape-2"></div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications" class="py-28 px-4 relative overflow-hidden">
-        <!-- Issuer logos (Simple Icons, CC0) and Microsoft's Applied Skills badge, reused by the cards below -->
-        <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <!-- Icons used across the page -->
+    <svg width="0" height="0" class="sprite" aria-hidden="true">
+        <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57l-.02-2.04c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></symbol>
+        <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.59-6.64 7.59H.47l8.6-9.83L0 1.15h7.59l5.25 6.93zm-1.29 19.5h2.04L6.49 3.24H4.3z"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></symbol>
+        <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h6"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    </svg>
+    <svg width="0" height="0" class="sprite" aria-hidden="true">
             <symbol id="logo-neo4j" viewBox="0 0 24 24"><path d="M9.629 13.227c-.593 0-1.139.2-1.58.533l-2.892-1.976a2.61 2.61 0 0 0 .101-.711 2.633 2.633 0 0 0-2.629-2.629A2.632 2.632 0 0 0 0 11.073a2.632 2.632 0 0 0 2.629 2.629c.593 0 1.139-.2 1.579-.533L7.1 15.145c-.063.226-.1.465-.1.711 0 .247.037.484.1.711l-2.892 1.976a2.608 2.608 0 0 0-1.579-.533A2.632 2.632 0 0 0 0 20.639a2.632 2.632 0 0 0 2.629 2.629 2.632 2.632 0 0 0 2.629-2.629c0-.247-.037-.485-.101-.711l2.892-1.976c.441.333.987.533 1.58.533a2.633 2.633 0 0 0 2.629-2.629c0-1.45-1.18-2.629-2.629-2.629ZM16.112.732c-4.72 0-7.888 2.748-7.888 8.082v3.802a3.525 3.525 0 0 1 3.071.008v-3.81c0-3.459 1.907-5.237 4.817-5.237s4.817 1.778 4.817 5.237v8.309H24V8.814C24 3.448 20.832.732 16.112.732Z"/></symbol>
             <symbol id="logo-hackerrank" viewBox="0 0 24 24"><path d="M0 0v24h24V0zm9.95 8.002h1.805c.061 0 .111.05.111.111v7.767c0 .061-.05.111-.11.111H9.95c-.061 0-.111-.05-.111-.11v-2.87H7.894v2.87c0 .06-.05.11-.11.11H5.976a.11.11 0 01-.11-.11V8.112c0-.06.05-.11.11-.11h1.806c.061 0 .11.05.11.11v2.869H9.84v-2.87c0-.06.05-.11.11-.11zm2.999 0h5.778c.061 0 .111.05.111.11v7.767a.11.11 0 01-.11.112h-5.78a.11.11 0 01-.11-.11V8.111c0-.06.05-.11.11-.11z"/></symbol>
             <symbol id="logo-udemy" viewBox="0 0 24 24"><path d="M12 0L5.81 3.573v3.574l6.189-3.574 6.191 3.574V3.573zM5.81 10.148v8.144c0 1.85.589 3.243 1.741 4.234S10.177 24 11.973 24s3.269-.482 4.448-1.474c1.179-.991 1.768-2.439 1.768-4.314v-8.064h-3.242v7.85c0 2.036-1.509 3.055-2.948 3.055-1.428 0-2.947-.991-2.947-3.027v-7.878z"/></symbol>
             <defs><linearGradient id="msBadgeA" x1="47.356" x2="22.231" y1="40.303" y2="9.413" gradientUnits="userSpaceOnUse"><stop stop-color="#003067"/><stop offset=".2" stop-color="#003F7C"/><stop offset=".47" stop-color="#004F90"/><stop offset=".74" stop-color="#00589D"/><stop offset="1" stop-color="#005BA1"/></linearGradient><linearGradient id="msBadgeB" x1="37.949" x2="4.429" y1="7.054" y2="34.258" gradientUnits="userSpaceOnUse"><stop offset=".15" stop-color="#50E6FF"/><stop offset=".692" stop-color="#0078D4"/></linearGradient><linearGradient id="msBadgeC" x1="39.585" x2="-10.479" y1="-21.511" y2="32.087" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#50E6FF"/><stop offset=".623" stop-color="#0078D4"/></linearGradient></defs>
             <symbol id="badge-ms-applied" viewBox="0 0 48 48"><path fill="#0062AD" d="M24 40c8.837 0 16-7.163 16-16S32.837 8 24 8 8 15.163 8 24s7.163 16 16 16Z"/><path fill="url(#msBadgeA)" d="M24 40c8.837 0 16-7.163 16-16S32.837 8 24 8 8 15.163 8 24s7.163 16 16 16Z"/><path fill="#E9F0F8" d="M24 42c8.837 0 16-7.163 16-16s-7.163-16-16-16S8 17.163 8 26s7.163 16 16 16Z"/><path fill="url(#msBadgeB)" d="M22.922 16.388a1.243 1.243 0 0 1 2.281 0l1.776 4.04a.63.63 0 0 0 .541.39l4.44.373a1.252 1.252 0 0 1 .692 2.202l-3.32 2.76a.64.64 0 0 0-.213.658l1.003 4.154a1.252 1.252 0 0 1-1.838 1.376l-3.95-2.264a.648.648 0 0 0-.649 0l-3.95 2.264a1.243 1.243 0 0 1-1.83-1.376l1.004-4.154a.665.665 0 0 0-.222-.657l-3.32-2.761a1.253 1.253 0 0 1 .701-2.202l4.439-.373a.656.656 0 0 0 .55-.39l1.865-4.04Z"/><path fill="url(#msBadgeC)" d="M47.4 22.87a2.001 2.001 0 0 0-.18-2l-1.63-2.27a2 2 0 0 1-.37-1.3l.19-2.79a2 2 0 0 0-.91-1.81l-2.34-1.53a2.08 2.08 0 0 1-.81-1.08l-.83-2.67a2 2 0 0 0-1.5-1.36l-2.73-.59a2 2 0 0 1-1.15-.71L33.4 2.57a2 2 0 0 0-1.89-.73l-2.76.45a2.05 2.05 0 0 1-1.33-.25L25.01.63a2 2 0 0 0-2 0L20.6 2.04a2.05 2.05 0 0 1-1.33.25l-2.76-.45a2 2 0 0 0-1.89.73l-1.74 2.19a2 2 0 0 1-1.15.71L9 6.06a2 2 0 0 0-1.5 1.36l-.83 2.67a2.08 2.08 0 0 1-.81 1.08L3.52 12.7a2 2 0 0 0-.91 1.81l.19 2.79a2 2 0 0 1-.37 1.3L.8 20.87a2 2 0 0 0-.18 2l1.18 2.54a2 2 0 0 1 .13 1.34l-.7 2.71a2 2 0 0 0 .55 1.94l2 1.94a2 2 0 0 1 .6 1.21l.33 2.78a2 2 0 0 0 1.22 1.61l2.58 1.07a2 2 0 0 1 1 .91l1.31 2.48a2 2 0 0 0 1.72 1.06l2.79.07a2 2 0 0 1 1.26.49l2.12 1.83a2 2 0 0 0 2 .37l2.63-.94a2 2 0 0 1 1.36 0l2.63.94a2 2 0 0 0 2-.37l2.12-1.83a2 2 0 0 1 1.26-.49l2.79-.07a2 2 0 0 0 1.72-1.06l1.28-2.53c.217-.411.57-.733 1-.91l2.58-1.07a2 2 0 0 0 1.22-1.61l.33-2.78c.053-.461.265-.89.6-1.21l2-1.94a2 2 0 0 0 .55-1.94l-.7-2.71a2 2 0 0 1 .13-1.34l1.19-2.49ZM24 40.02a16 16 0 1 1 16-16 16 16 0 0 1-16 15.97v.03Z"/></symbol>
         </svg>
-        <div class="section-divider absolute top-0 left-0 right-0"></div>
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
-                <span class="section-label">Credentials</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Licenses &amp; Certifications</h2>
-                <p class="cert-intro">11 credentials from Microsoft, Neo4j, HackerRank, and Udemy. Each one
-                    links to the issuer's page, so you can verify it yourself.</p>
-            </div>
 
-            <!-- Featured: Microsoft Applied Skills and Neo4j professional certification -->
-            <div class="cert-featured-row">
-                <article class="cert-featured glass-card animate-on-scroll">
-                    <div class="cert-emblem cert-emblem-badge" aria-hidden="true">
-                        <svg viewBox="0 0 48 48"><use href="#badge-ms-applied"/></svg>
-                    </div>
-                    <div class="cert-featured-body">
-                        <p class="cert-kicker"><i class="fas fa-check-circle"></i> Applied skill &bull; Lab-assessed</p>
-                        <h3>Enhance agents with autonomous capabilities</h3>
-                        <p class="cert-meta"><svg class="cert-issuer-logo" viewBox="0 0 23 23" aria-hidden="true"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#7fba00" d="M12 1h10v10H12z"/><path fill="#00a4ef" d="M1 12h10v10H1z"/><path fill="#ffb900" d="M12 12h10v10H12z"/></svg>Microsoft &bull; Issued Oct 2026</p>
-                        <p class="cert-id">Credential ID <code>E2571D68A27B29EE</code></p>
-                        <div class="flex flex-wrap gap-2 mt-4 cert-tags">
-                            <span class="tag-pill">Autonomous Agents</span>
-                            <span class="tag-pill">Copilot Studio</span>
-                            <span class="tag-pill">Agent Flows</span>
-                        </div>
-                    </div>
-                    <a href="https://learn.microsoft.com/users/divyajeetpanda-6626/credentials/e2571d68a27b29ee"
-                        target="_blank" rel="noopener noreferrer" class="cta-button"
-                        aria-label="Show credential: Microsoft Applied Skills, Enhance agents with autonomous capabilities (opens in a new tab)">
-                        <span>Show credential</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </article>
-
-                <article class="cert-featured glass-card animate-on-scroll" style="animation-delay: 0.08s;">
-                    <div class="cert-emblem cert-emblem-badge" aria-hidden="true">
-                        <svg viewBox="0 0 48 48"><use href="#badge-ms-applied"/></svg>
-                    </div>
-                    <div class="cert-featured-body">
-                        <p class="cert-kicker"><i class="fas fa-check-circle"></i> Applied skill &bull; Lab-assessed</p>
-                        <h3>Get started developing agents in Microsoft Foundry</h3>
-                        <p class="cert-meta"><svg class="cert-issuer-logo" viewBox="0 0 23 23" aria-hidden="true"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#7fba00" d="M12 1h10v10H12z"/><path fill="#00a4ef" d="M1 12h10v10H1z"/><path fill="#ffb900" d="M12 12h10v10H12z"/></svg>Microsoft &bull; Issued Oct 2026</p>
-                        <p class="cert-id">Credential ID <code>9DF07DC5B9B7E5C8</code></p>
-                        <div class="flex flex-wrap gap-2 mt-4 cert-tags">
-                            <span class="tag-pill">AI Agents</span>
-                            <span class="tag-pill">Microsoft Foundry</span>
-                            <span class="tag-pill">Azure AI</span>
-                        </div>
-                    </div>
-                    <a href="https://learn.microsoft.com/users/divyajeetpanda-6626/credentials/9df07dc5b9b7e5c8"
-                        target="_blank" rel="noopener noreferrer" class="cta-button"
-                        aria-label="Show credential: Microsoft Applied Skills, Get started developing agents in Microsoft Foundry (opens in a new tab)">
-                        <span>Show credential</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </article>
-
-                <article class="cert-featured glass-card animate-on-scroll" style="animation-delay: 0.16s;">
-                    <!-- Neo4j publishes no badge image, so this emblem is built around its logo -->
-                    <div class="cert-emblem cert-emblem-badge" aria-hidden="true">
-                        <svg viewBox="0 0 48 48" fill="none"><defs><linearGradient id="neoBadgeRim" x1="10" y1="2" x2="38" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5cc8ff"/><stop offset=".5" stop-color="#018bff"/><stop offset="1" stop-color="#014063"/></linearGradient></defs><circle cx="24" cy="24" r="23.5" fill="url(#neoBadgeRim)"/><circle cx="24" cy="24" r="19.6" stroke="#fff" stroke-opacity=".4" stroke-width=".5"/><g fill="#fff"><circle cx="24" cy="4.4" r="1.5"/><circle cx="33.8" cy="7.03" r="0.95"/><circle cx="40.97" cy="14.2" r="0.95"/><circle cx="43.6" cy="24" r="1.5"/><circle cx="40.97" cy="33.8" r="0.95"/><circle cx="33.8" cy="40.97" r="0.95"/><circle cx="24" cy="43.6" r="1.5"/><circle cx="14.2" cy="40.97" r="0.95"/><circle cx="7.03" cy="33.8" r="0.95"/><circle cx="4.4" cy="24" r="1.5"/><circle cx="7.03" cy="14.2" r="0.95"/><circle cx="14.2" cy="7.03" r="0.95"/></g><circle cx="24" cy="23.2" r="15.6" fill="#014063"/><circle cx="24" cy="24.6" r="15.2" fill="#EAF4FB"/><use href="#logo-neo4j" x="14.6" y="15.1" width="19" height="19" fill="#014063"/></svg>
-                    </div>
-                    <div class="cert-featured-body">
-                        <p class="cert-kicker"><i class="fas fa-check-circle"></i> Professional certification</p>
-                        <h3>Neo4j Certified Professional</h3>
-                        <p class="cert-meta"><svg class="cert-issuer-logo cert-issuer-neo4j" aria-hidden="true"><use href="#logo-neo4j"/></svg>Neo4j GraphAcademy &bull; Issued&nbsp;Sep&nbsp;2026</p>
-                        <p class="cert-id">Credential ID <code>46327d32-4193-4fb0-aa4a-783195f258bb</code></p>
-                        <div class="flex flex-wrap gap-2 mt-4 cert-tags">
-                            <span class="tag-pill">Neo4j</span>
-                            <span class="tag-pill">Cypher</span>
-                            <span class="tag-pill">Graph Data Modeling</span>
-                        </div>
-                    </div>
-                    <a href="https://graphacademy.neo4j.com/c/46327d32-4193-4fb0-aa4a-783195f258bb" target="_blank"
-                        rel="noopener noreferrer" class="cta-button"
-                        aria-label="Show credential: Neo4j Certified Professional (opens in a new tab)">
-                        <span>Show credential</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </article>
-            </div>
-
-            <!-- All certifications, newest first -->
-            <div class="cert-grid" id="certGrid">
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Neo4j Graph Data Science Certification</h3>
-                            <p class="cert-issuer">Neo4j GraphAcademy</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>e6240ee2-8919-4eaa-9a4c-f79ea1cdadd3</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Oct 2026</span>
-                        <a href="https://graphacademy.neo4j.com/c/e6240ee2-8919-4eaa-9a4c-f79ea1cdadd3/"
-                            target="_blank" rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Neo4j Graph Data Science Certification, Neo4j GraphAcademy (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.08s;">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-neo4j" aria-hidden="true"><svg class="brand-logo"><use href="#logo-neo4j"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Neo4j &amp; Generative AI Certification</h3>
-                            <p class="cert-issuer">Neo4j GraphAcademy</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>4e059228-d7d5-4a43-807f-e14b159fb882</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Oct 2026</span>
-                        <a href="https://graphacademy.neo4j.com/c/4e059228-d7d5-4a43-807f-e14b159fb882/"
-                            target="_blank" rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Neo4j and Generative AI Certification, Neo4j GraphAcademy (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.16s;">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Software Engineer</h3>
-                            <p class="cert-issuer">HackerRank</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>100faca13c71</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Feb 2025</span>
-                        <a href="https://www.hackerrank.com/certificates/100faca13c71" target="_blank"
-                            rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Software Engineer, HackerRank (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Frontend Developer (React)</h3>
-                            <p class="cert-issuer">HackerRank</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>74ed9a0c1c0f</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Feb 2025</span>
-                        <a href="https://www.hackerrank.com/certificates/74ed9a0c1c0f" target="_blank"
-                            rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Frontend Developer (React), HackerRank (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.08s;">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Python</h3>
-                            <p class="cert-issuer">HackerRank</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>96642ed6d320</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Feb 2025</span>
-                        <a href="https://www.hackerrank.com/certificates/96642ed6d320" target="_blank"
-                            rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Python, HackerRank (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card glass-card hover-multi-effect animate-on-scroll" style="animation-delay: 0.16s;">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-hackerrank" aria-hidden="true"><svg class="brand-logo"><use href="#logo-hackerrank"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">SQL (Advanced)</h3>
-                            <p class="cert-issuer">HackerRank</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>f4ce264ba59a</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Dec 2024</span>
-                        <a href="https://www.hackerrank.com/certificates/f4ce264ba59a" target="_blank"
-                            rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: SQL (Advanced), HackerRank (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <!-- Revealed by "Show all" -->
-                <article class="cert-card cert-extra glass-card hover-multi-effect">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Modern JavaScript From The Beginning 2.0 (2024)</h3>
-                            <p class="cert-issuer">Udemy</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>UC-e58c0833-ac32-4b73-910e-0bb1d58560fd</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Aug 2024</span>
-                        <a href="https://www.udemy.com/certificate/UC-e58c0833-ac32-4b73-910e-0bb1d58560fd/"
-                            target="_blank" rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Modern JavaScript From The Beginning 2.0, Udemy (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-                <article class="cert-card cert-extra glass-card hover-multi-effect">
-                    <div class="cert-card-head">
-                        <span class="cert-mark cert-mark-udemy" aria-hidden="true"><svg class="brand-logo"><use href="#logo-udemy"/></svg></span>
-                        <div>
-                            <h3 class="cert-title">Advanced SQL: MySQL Data Analysis &amp; Business Intelligence</h3>
-                            <p class="cert-issuer">Udemy</p>
-                        </div>
-                    </div>
-                    <p class="cert-id">Credential ID <code>UC-ae8fcb3e-c5f2-4d47-8de8-931c4fa2d75d</code></p>
-                    <div class="cert-foot">
-                        <span class="cert-date">Mar 2023</span>
-                        <a href="https://www.udemy.com/certificate/UC-ae8fcb3e-c5f2-4d47-8de8-931c4fa2d75d/"
-                            target="_blank" rel="noopener noreferrer" class="cert-link"
-                            aria-label="Show credential: Advanced SQL, MySQL Data Analysis and Business Intelligence, Udemy (opens in a new tab)">Show
-                            credential <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </article>
-            </div>
-
-            <div class="cert-more">
-                <button type="button" id="certToggle" class="cta-button-outline" aria-expanded="false"
-                    aria-controls="certGrid">
-                    <span>Show all 8 certifications</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </div>
+    <!-- Intro screen, first visit per session only -->
+    <div class="loader" aria-hidden="true">
+        <div class="loader-marquee">
+            <span>Backend systems &middot; Data pipelines &middot; Graph databases &middot; Backend systems &middot; Data pipelines &middot; Graph databases &middot;&nbsp;</span>
+            <span>Backend systems &middot; Data pipelines &middot; Graph databases &middot; Backend systems &middot; Data pipelines &middot; Graph databases &middot;&nbsp;</span>
         </div>
-    </section>
+        <div class="loader-pill"><span class="loader-count">0</span><span class="loader-pct">%</span></div>
+    </div>
 
-    <!-- Resume Section -->
-    <section id="resume" class="py-28 px-4 relative overflow-hidden">
-        <div class="section-divider absolute top-0 left-0 right-0"></div>
-        <div class="max-w-5xl mx-auto">
-            <div class="glass-card resume-card animate-on-scroll">
-                <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="resume-preview"
-                    aria-label="Open the resume PDF (opens in a new tab)">
-                    <img src="img/resume-preview.webp" alt="First page of Divyajeet Panda's resume" width="480"
-                        height="679" loading="lazy" decoding="async">
-                </a>
-                <div class="resume-body">
-                    <span class="section-label">Resume</span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                        style="font-family: var(--font-heading); letter-spacing: -0.03em;">Take my resume with you</h2>
-                    <p class="mb-6">A two-page summary of my experience, projects, education, and certifications,
-                        ready to share with your team.</p>
-                    <ul class="resume-highlights">
-                        <li class="tag-pill">3+ years in backend &amp; data systems</li>
-                        <li class="tag-pill">Java/Spring Boot &bull; Python &bull; Neo4j &bull; PostgreSQL</li>
-                        <li class="tag-pill">Gold Medalist, M.Sc. IT</li>
+    <!-- Soft light around the edges of the screen -->
+    <div class="edge-glow" aria-hidden="true">
+        <span class="edge-glow-a"></span>
+        <span class="edge-glow-b"></span>
+    </div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <!-- Fixed frame: initials, email, navigation, social rail, resume link -->
+    <header class="topbar">
+        <a href="#home" class="topbar-mark" aria-label="Divyajeet Panda, back to top">DP</a>
+        <a href="mailto:divyajeetpanda@outlook.com" class="topbar-email">divyajeetpanda@outlook.com</a>
+        <nav class="topbar-nav" aria-label="Primary">
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#resume" class="topbar-resume">Resume</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <ul class="rail" aria-label="Profiles">
+        <li><a href="https://github.com/Divyajeet7978" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)"><svg><use href="#i-github"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/in/divyajeet-panda-23480a213/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)"><svg><use href="#i-linkedin"/></svg></a></li>
+        <li><a href="https://x.com/divyajeetpanda9" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)"><svg><use href="#i-x"/></svg></a></li>
+        <li><a href="https://www.hackerrank.com/profile/divyajeetpanda" target="_blank" rel="noopener noreferrer" aria-label="HackerRank (opens in a new tab)"><svg><use href="#logo-hackerrank"/></svg></a></li>
+    </ul>
+
+    <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="resume-tab">Resume <svg aria-hidden="true"><use href="#i-doc"/></svg></a>
+
+    <main>
+        <!-- Hero and About share one sticky stage, so the portrait can travel from the centre to the left -->
+        <div class="intro">
+            <div class="stage" aria-hidden="true">
+                <!-- Phase 3 swaps this frame for the 3D avatar -->
+                <div class="portrait-wrap">
+                    <div class="portrait" id="avatarStage">
+                        <canvas id="avatarCanvas" class="avatar-canvas" aria-hidden="true"></canvas>
+                        <img src="img/portrait.webp" srcset="img/portrait-480.webp 480w, img/portrait.webp 809w"
+                            sizes="(max-width: 767px) 72vw, 30vw" alt="Divyajeet Panda" width="809" height="1011" fetchpriority="high"
+                            decoding="async" class="portrait-img">
+                    </div>
+                </div>
+            </div>
+
+            <section id="home" class="hero" aria-label="Introduction">
+                <div class="hero-left" data-hero>
+                    <p class="hero-hello">Hello! I'm</p>
+                    <h1 class="hero-name">Divyajeet<br>Panda</h1>
+                </div>
+                <div class="hero-right" data-hero>
+                    <p class="hero-kicker">A software engineer for</p>
+                    <p class="hero-role">
+                        <span class="sr-only">backend, data and graph systems</span>
+                        <span class="hero-role-words" aria-hidden="true">
+                            <span>Backend</span>
+                            <span>Data</span>
+                            <span>Graph</span>
+                            <span>Backend</span>
+                        </span>
+                    </p>
+                    <p class="hero-kicker hero-kicker-end">systems</p>
+                </div>
+                <p class="hero-status" data-hero><span class="pulse" aria-hidden="true"></span> Available for opportunities</p>
+            </section>
+
+            <section id="about" class="about">
+                <div class="about-copy">
+                    <h2 class="label">About me</h2>
+                    <p class="about-lead" data-words>I'm a software engineer with 3+ years in backend services and data
+                        systems. At Vimaan Robotics I write the Cypher and SQL that turn computer-vision scans into live
+                        warehouse inventory. Before that, at Cognizant, I built Python and Node.js services and cut
+                        PostgreSQL query time by 25%.</p>
+                    <p class="about-more" data-reveal>I like being able to prove a system works. Olist Query Studio runs
+                        every generated query through a read-only account and reports its real benchmark score, and
+                        Sort-Downloads has a parity test against the PowerShell script it replaced.</p>
+                    <p class="about-more" data-reveal>Away from the keyboard I shoot photos and video, read fiction and
+                        fantasy, and travel whenever I can.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- What I do -->
+        <section class="whatido" aria-labelledby="whatido-title">
+            <h2 id="whatido-title" class="whatido-title" data-reveal>What<br><span>I do</span></h2>
+            <div class="whatido-boxes">
+                <article class="bracket-box hover-multi-effect" data-reveal>
+                    <span class="bracket" aria-hidden="true"></span>
+                    <h3>Backend &amp; data</h3>
+                    <p class="box-sub">Services, queries, pipelines</p>
+                    <p>Java/Spring Boot and Python services, PostgreSQL and Neo4j data models, the Cypher and SQL behind
+                        live dashboards, and the reconciliation checks that flag anything that doesn't match the source
+                        records.</p>
+                    <p class="box-label">Skillset &amp; tools</p>
+                    <ul class="chips">
+                        <li>Java</li><li>Spring Boot</li><li>Python</li><li>FastAPI</li><li>Node.js</li>
+                        <li>PostgreSQL</li><li>Neo4j</li><li>Cypher</li><li>Kafka</li><li>RabbitMQ</li>
+                        <li>Docker</li><li>Kubernetes</li><li>AWS</li><li>Azure</li><li>Prometheus</li><li>Grafana</li>
                     </ul>
-                    <div class="resume-actions">
-                        <a href="Divyajeet_Panda_Resume.pdf" download class="cta-button">
-                            <span>Download PDF</span>
-                            <i class="fas fa-download"></i>
+                </article>
+                <article class="bracket-box hover-multi-effect" data-reveal>
+                    <span class="bracket" aria-hidden="true"></span>
+                    <h3>Graph &amp; AI</h3>
+                    <p class="box-sub">LLMs grounded in real data</p>
+                    <p>Language models that work from graph data: text-to-Cypher with local models, Neo4j Graph Data
+                        Science and GenAI, agents built on Microsoft Foundry and Copilot Studio, and LoRA fine-tuning
+                        measured against a baseline.</p>
+                    <p class="box-label">Skillset &amp; tools</p>
+                    <ul class="chips">
+                        <li>Neo4j GDS</li><li>Ollama</li><li>PyTorch</li><li>LoRA / PEFT</li><li>Microsoft Foundry</li>
+                        <li>Copilot Studio</li><li>Streamlit</li><li>React</li><li>TypeScript</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Career -->
+        <section class="career" aria-labelledby="career-title">
+            <h2 id="career-title" class="section-title center" data-reveal>My career &amp;<br><em>experience</em></h2>
+            <div class="career-list">
+                <div class="career-line" aria-hidden="true"><span class="career-line-fill"></span></div>
+
+                <article class="career-row" data-reveal>
+                    <div class="career-role">
+                        <h3>Software Engineer</h3>
+                        <p>Vimaan Robotics &middot; Bengaluru</p>
+                    </div>
+                    <p class="career-year">NOW<span>Aug 2025 – Present</span></p>
+                    <ul class="career-points">
+                        <li>Cut new-warehouse onboarding from 2–3 days to under 1 day with a Python configuration
+                            builder and UI.</li>
+                        <li>Configure facility-specific Cypher and SQL that turn computer-vision scans into live
+                            inventory on client dashboards.</li>
+                        <li>Build reconciliation logic that flags mismatches, missing entries, and exceptions against
+                            source records.</li>
+                        <li>Debug Java/Spring Boot services, graph pipelines, and dashboards; support releases with
+                            log analysis and regression testing.</li>
+                    </ul>
+                </article>
+
+                <article class="career-row" data-reveal>
+                    <div class="career-role">
+                        <h3>Senior Systems/Software Engineer</h3>
+                        <p>Cognizant &middot; Bengaluru</p>
+                    </div>
+                    <p class="career-year">2022<span>Sep 2022 – Jan 2025</span></p>
+                    <ul class="career-points">
+                        <li>Cut PostgreSQL query execution time by 25% and improved overall query performance by 19%,
+                            earning the Cognizant Excellence Award.</li>
+                        <li>Shipped Python/FastAPI and Node.js microservices on Docker and Kubernetes across AWS and
+                            Azure.</li>
+                        <li>Built REST and GraphQL APIs with OAuth 2.0/JWT, rate limiting, and caching, plus
+                            Kafka/RabbitMQ event-driven workflows.</li>
+                        <li>Set up observability with Prometheus, Grafana, and ELK; mentored junior engineers through
+                            code reviews.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Work: pinned horizontal scroll on wide screens, a grid everywhere else -->
+        <section id="work" class="work" aria-labelledby="work-title">
+            <h2 id="work-title" class="section-title work-title">My <em>Work</em></h2>
+            <div class="work-viewport">
+                <div class="work-track">
+                    <article class="work-panel hover-multi-effect">
+                        <div class="work-head">
+                            <p class="work-num">01</p>
+                            <div class="work-name">
+                                <h3>Olist Query Studio</h3>
+                                <p>LLM &middot; Graph analytics</p>
+                            </div>
+                        </div>
+                        <p class="box-label">Tools and features</p>
+                        <p class="work-tools">Python, Neo4j, Cypher, Ollama, FastAPI, Streamlit</p>
+                        <p class="work-desc">Turns plain-English analytics questions about the Olist e-commerce dataset into Cypher and runs them against Neo4j. A local Ollama model writes the queries from the graph schema; a validator, an EXPLAIN check and a read-only account keep every query safe.</p>
+                        <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Matches 82 of 112 verified benchmark questions (73%)</p>
+                        <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                            <img src="img/olist-query-studio.webp" alt="Olist Query Studio answering how many orders were delivered, with the generated Cypher and result row" width="960" height="585" loading="lazy"
+                                decoding="async" style="object-position: left top;">
+                            <span class="work-overlay"><strong>Olist Query Studio</strong>Plain-English questions to Cypher</span>
                         </a>
-                        <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="cta-button-outline">
-                            <span>View online</span>
-                            <i class="fas fa-eye"></i>
+                        <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="text-link"
+                            aria-label="View Olist Query Studio code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </article>
+                    <article class="work-panel hover-multi-effect">
+                        <div class="work-head">
+                            <p class="work-num">02</p>
+                            <div class="work-name">
+                                <h3>Bug2JSON</h3>
+                                <p>LLM fine-tuning &middot; Bug triage</p>
+                            </div>
+                        </div>
+                        <p class="box-label">Tools and features</p>
+                        <p class="work-tools">Python, PyTorch, LoRA / PEFT, FastAPI, React, TypeScript</p>
+                        <p class="work-desc">Turns free-text bug reports into schema-validated triage records: category, severity, priority, environment, reproducibility, probable cause and next step. A FastAPI service and a React reviewer UI compare a base Qwen model with a LoRA fine-tune against that baseline.</p>
+                        <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Base-model baseline: 100% schema-valid JSON, 0.34 category macro-F1</p>
+                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                            <img src="img/bug2json.webp" alt="Bug2JSON playground extracting a structured triage record from a login bug report" width="1026" height="722" loading="lazy"
+                                decoding="async" style="object-position: center top;">
+                            <span class="work-overlay"><strong>Bug2JSON</strong>Bug reports to validated JSON</span>
                         </a>
-                    </div>
-                    <p class="resume-meta"><i class="fas fa-file-pdf"></i> PDF &bull; 2 pages &bull; 8 KB</p>
+                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="text-link"
+                            aria-label="View Bug2JSON code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </article>
+                    <article class="work-panel hover-multi-effect">
+                        <div class="work-head">
+                            <p class="work-num">03</p>
+                            <div class="work-name">
+                                <h3>Sort-Downloads</h3>
+                                <p>Python &middot; CLI &middot; Automation</p>
+                            </div>
+                        </div>
+                        <p class="box-label">Tools and features</p>
+                        <p class="work-tools">Python, Rich, PowerShell, pytest</p>
+                        <p class="work-desc">A command-line tool I use daily. It files every loose download by category, extension and month, and sends exact duplicates (same size and MD5) to the Recycle Bin after a colour-coded preview of every move.</p>
+                        <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Parity test: files everything exactly as the PowerShell original</p>
+                        <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                            <img src="img/sort-downloads.webp" alt="Sort-Downloads previewing where each file will be filed" width="960" height="764" loading="lazy"
+                                decoding="async" style="object-position: center top;">
+                            <span class="work-overlay"><strong>Sort-Downloads</strong>Python CLI with a rich preview</span>
+                        </a>
+                        <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="text-link"
+                            aria-label="View Sort-Downloads code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </article>
+                    <article class="work-panel hover-multi-effect">
+                        <div class="work-head">
+                            <p class="work-num">04</p>
+                            <div class="work-name">
+                                <h3>AI Resume Analyzer</h3>
+                                <p>Full stack &middot; AI</p>
+                            </div>
+                        </div>
+                        <p class="box-label">Tools and features</p>
+                        <p class="work-tools">Next.js, TypeScript, Express.js, Supabase, OpenAI API, Zod</p>
+                        <p class="work-desc">Compares PDF/DOCX resumes with job descriptions and returns ATS-style feedback, keyword gaps and suggestions. A Next.js frontend and an Express/TypeScript API share Zod schemas, with Supabase auth and OpenAI-assisted feedback backed by deterministic scoring.</p>
+                        <p class="work-status">In progress &middot; repository not public yet</p>
+                        <div class="work-media work-cover" aria-hidden="true"><span>ATS-style feedback</span></div>
+                        
+                    </article>
+                    <article class="work-panel hover-multi-effect">
+                        <div class="work-head">
+                            <p class="work-num">05</p>
+                            <div class="work-name">
+                                <h3>Ethereal Command</h3>
+                                <p>System telemetry dashboard</p>
+                            </div>
+                        </div>
+                        <p class="box-label">Tools and features</p>
+                        <p class="work-tools">React, TypeScript, Vite, Tailwind CSS, Express.js, Recharts</p>
+                        <p class="work-desc">A local system-monitoring dashboard. An Express backend polls CPU, RAM, GPU, storage, thermal, network and process telemetry behind cached endpoints, and a React/Vite UI renders live cards, time-series charts and process tables.</p>
+                        <p class="work-status">In progress &middot; repository not public yet</p>
+                        <div class="work-media work-cover" aria-hidden="true"><span>Live system telemetry</span></div>
+                        
+                    </article>
+                    <article class="work-panel work-more">
+                        <h3>Want to see more?</h3>
+                        <p>Everything else I've built, including experiments and older work, is on GitHub.</p>
+                        <a href="https://github.com/Divyajeet7978" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-accent">See all on GitHub <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </article>
                 </div>
             </div>
+        </section>
+
+        <!-- Certifications -->
+        <section id="certifications" class="certs" aria-labelledby="certs-title">
+            <div class="certs-head">
+                <h2 id="certs-title" class="section-title" data-reveal>Certifi<em>cations</em></h2>
+                <p data-reveal>11 credentials from Microsoft, Neo4j, HackerRank, and Udemy. Each one links to the
+                    issuer's page, so you can verify it yourself.</p>
+            </div>
+
+            <div class="cert-featured">
+                <article class="cert-card hover-multi-effect" data-reveal>
+                    <svg class="cert-badge" viewBox="0 0 48 48" aria-hidden="true"><use href="#badge-ms-applied"/></svg>
+                    <p class="cert-kind">Applied skill &middot; Lab-assessed</p>
+                    <h3>Enhance agents with autonomous capabilities</h3>
+                    <p class="cert-meta"><svg class="issuer" viewBox="0 0 23 23" aria-hidden="true"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#7fba00" d="M12 1h10v10H12z"/><path fill="#00a4ef" d="M1 12h10v10H1z"/><path fill="#ffb900" d="M12 12h10v10H12z"/></svg>Microsoft &middot; Oct 2026</p>
+                    <p class="cert-id">ID <code>E2571D68A27B29EE</code></p>
+                    <a href="https://learn.microsoft.com/users/divyajeetpanda-6626/credentials/e2571d68a27b29ee"
+                        target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Show credential: Microsoft Applied Skills, Enhance agents with autonomous capabilities (opens in a new tab)">Show
+                        credential <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </article>
+                <article class="cert-card hover-multi-effect" data-reveal>
+                    <svg class="cert-badge" viewBox="0 0 48 48" aria-hidden="true"><use href="#badge-ms-applied"/></svg>
+                    <p class="cert-kind">Applied skill &middot; Lab-assessed</p>
+                    <h3>Get started developing agents in Microsoft Foundry</h3>
+                    <p class="cert-meta"><svg class="issuer" viewBox="0 0 23 23" aria-hidden="true"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#7fba00" d="M12 1h10v10H12z"/><path fill="#00a4ef" d="M1 12h10v10H1z"/><path fill="#ffb900" d="M12 12h10v10H12z"/></svg>Microsoft &middot; Oct 2026</p>
+                    <p class="cert-id">ID <code>9DF07DC5B9B7E5C8</code></p>
+                    <a href="https://learn.microsoft.com/users/divyajeetpanda-6626/credentials/9df07dc5b9b7e5c8"
+                        target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Show credential: Microsoft Applied Skills, Get started developing agents in Microsoft Foundry (opens in a new tab)">Show
+                        credential <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </article>
+                <article class="cert-card hover-multi-effect" data-reveal>
+                    <svg class="cert-badge" viewBox="0 0 48 48" fill="none" aria-hidden="true"><defs><linearGradient id="neoBadgeRim" x1="10" y1="2" x2="38" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5cc8ff"/><stop offset=".5" stop-color="#018bff"/><stop offset="1" stop-color="#014063"/></linearGradient></defs><circle cx="24" cy="24" r="23.5" fill="url(#neoBadgeRim)"/><circle cx="24" cy="24" r="19.6" stroke="#fff" stroke-opacity=".4" stroke-width=".5"/><g fill="#fff"><circle cx="24" cy="4.4" r="1.5"/><circle cx="33.8" cy="7.03" r="0.95"/><circle cx="40.97" cy="14.2" r="0.95"/><circle cx="43.6" cy="24" r="1.5"/><circle cx="40.97" cy="33.8" r="0.95"/><circle cx="33.8" cy="40.97" r="0.95"/><circle cx="24" cy="43.6" r="1.5"/><circle cx="14.2" cy="40.97" r="0.95"/><circle cx="7.03" cy="33.8" r="0.95"/><circle cx="4.4" cy="24" r="1.5"/><circle cx="7.03" cy="14.2" r="0.95"/><circle cx="14.2" cy="7.03" r="0.95"/></g><circle cx="24" cy="23.2" r="15.6" fill="#014063"/><circle cx="24" cy="24.6" r="15.2" fill="#EAF4FB"/><use href="#logo-neo4j" x="14.6" y="15.1" width="19" height="19" fill="#014063"/></svg>
+                    <p class="cert-kind">Professional certification</p>
+                    <h3>Neo4j Certified Professional</h3>
+                    <p class="cert-meta"><svg class="issuer" aria-hidden="true"><use href="#logo-neo4j"/></svg>Neo4j GraphAcademy &middot; Sep 2026</p>
+                    <p class="cert-id">ID <code>46327d32-4193-4fb0-aa4a-783195f258bb</code></p>
+                    <a href="https://graphacademy.neo4j.com/c/46327d32-4193-4fb0-aa4a-783195f258bb" target="_blank"
+                        rel="noopener noreferrer" class="text-link"
+                        aria-label="Show credential: Neo4j Certified Professional (opens in a new tab)">Show credential
+                        <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </article>
+            </div>
+
+            <ul class="cert-list" id="certList">
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-neo4j"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Neo4j Graph Data Science Certification</h3>
+                        <p>Neo4j GraphAcademy &middot; ID <code>e6240ee2-8919-4eaa-9a4c-f79ea1cdadd3</code></p>
+                    </div>
+                    <p class="cert-date">Oct 2026</p>
+                    <a href="https://graphacademy.neo4j.com/c/e6240ee2-8919-4eaa-9a4c-f79ea1cdadd3/" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Neo4j Graph Data Science Certification, Neo4j GraphAcademy (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-neo4j"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Neo4j &amp; Generative AI Certification</h3>
+                        <p>Neo4j GraphAcademy &middot; ID <code>4e059228-d7d5-4a43-807f-e14b159fb882</code></p>
+                    </div>
+                    <p class="cert-date">Oct 2026</p>
+                    <a href="https://graphacademy.neo4j.com/c/4e059228-d7d5-4a43-807f-e14b159fb882/" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Neo4j and Generative AI Certification, Neo4j GraphAcademy (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-hackerrank"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Software Engineer</h3>
+                        <p>HackerRank &middot; ID <code>100faca13c71</code></p>
+                    </div>
+                    <p class="cert-date">Feb 2025</p>
+                    <a href="https://www.hackerrank.com/certificates/100faca13c71" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Software Engineer, HackerRank (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-hackerrank"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Frontend Developer (React)</h3>
+                        <p>HackerRank &middot; ID <code>74ed9a0c1c0f</code></p>
+                    </div>
+                    <p class="cert-date">Feb 2025</p>
+                    <a href="https://www.hackerrank.com/certificates/74ed9a0c1c0f" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Frontend Developer (React), HackerRank (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-hackerrank"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Python</h3>
+                        <p>HackerRank &middot; ID <code>96642ed6d320</code></p>
+                    </div>
+                    <p class="cert-date">Feb 2025</p>
+                    <a href="https://www.hackerrank.com/certificates/96642ed6d320" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Python, HackerRank (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-hackerrank"/></svg>
+                    <div class="cert-row-main">
+                        <h3>SQL (Advanced)</h3>
+                        <p>HackerRank &middot; ID <code>f4ce264ba59a</code></p>
+                    </div>
+                    <p class="cert-date">Dec 2024</p>
+                    <a href="https://www.hackerrank.com/certificates/f4ce264ba59a" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: SQL (Advanced), HackerRank (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect cert-extra">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-udemy"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Modern JavaScript From The Beginning 2.0</h3>
+                        <p>Udemy &middot; ID <code>UC-e58c0833-ac32-4b73-910e-0bb1d58560fd</code></p>
+                    </div>
+                    <p class="cert-date">Aug 2024</p>
+                    <a href="https://www.udemy.com/certificate/UC-e58c0833-ac32-4b73-910e-0bb1d58560fd/" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Modern JavaScript From The Beginning 2.0, Udemy (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+                <li class="cert-row hover-multi-effect cert-extra">
+                    <svg class="issuer" aria-hidden="true"><use href="#logo-udemy"/></svg>
+                    <div class="cert-row-main">
+                        <h3>Advanced SQL: MySQL Data Analysis &amp; Business Intelligence</h3>
+                        <p>Udemy &middot; ID <code>UC-ae8fcb3e-c5f2-4d47-8de8-931c4fa2d75d</code></p>
+                    </div>
+                    <p class="cert-date">Mar 2023</p>
+                    <a href="https://www.udemy.com/certificate/UC-ae8fcb3e-c5f2-4d47-8de8-931c4fa2d75d/" target="_blank" rel="noopener noreferrer" class="text-link"
+                        aria-label="Verify: Advanced SQL: MySQL Data Analysis and Business Intelligence, Udemy (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-ghost cert-toggle" id="certToggle" aria-expanded="false"
+                aria-controls="certList">Show all certifications</button>
+        </section>
+
+        <!-- Resume -->
+        <section id="resume" class="resume" aria-labelledby="resume-title">
+            <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="resume-preview hover-multi-effect"
+                aria-label="Open the resume PDF (opens in a new tab)" data-reveal>
+                <img src="img/resume-preview.webp" alt="First page of Divyajeet Panda's resume" width="480" height="679"
+                    loading="lazy" decoding="async">
+            </a>
+            <div class="resume-copy">
+                <h2 id="resume-title" class="section-title" data-reveal>Res<em>ume</em></h2>
+                <p data-reveal>A two-page summary of my experience, projects, education, and certifications, ready to
+                    share with your team.</p>
+                <ul class="resume-points" data-reveal>
+                    <li>3+ years in backend &amp; data systems</li>
+                    <li>Java/Spring Boot &middot; Python &middot; Neo4j &middot; PostgreSQL</li>
+                    <li>Gold Medalist, M.Sc. IT</li>
+                </ul>
+                <div class="btn-row" data-reveal>
+                    <a href="Divyajeet_Panda_Resume.pdf" download class="btn btn-accent">Download PDF <svg aria-hidden="true"><use href="#i-download"/></svg></a>
+                    <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">View online <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <p class="resume-meta" data-reveal>PDF &middot; 2 pages &middot; 8 KB</p>
+            </div>
+        </section>
+
+        <!-- Education & awards -->
+        <section class="edu" aria-labelledby="edu-title">
+            <h2 id="edu-title" class="section-title" data-reveal>Education &amp; <em>awards</em></h2>
+            <div class="edu-cols">
+                <div>
+                    <h3 class="label">Education</h3>
+                    <ul class="edu-list">
+                        <li class="hover-multi-effect" data-reveal>
+                            <p class="edu-year">2023 – 2025</p>
+                            <h4>M.Sc. in Information Technology</h4>
+                            <p>Ravenshaw University, Cuttack</p>
+                            <p class="edu-note">CGPA 8.20 &middot; Gold Medalist</p>
+                        </li>
+                        <li class="hover-multi-effect" data-reveal>
+                            <p class="edu-year">2019 – 2022</p>
+                            <h4>B.Sc. in Information Technology and Management</h4>
+                            <p>Ravenshaw University, Cuttack</p>
+                            <p class="edu-note">CGPA 8.68</p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="label">Honors &amp; awards</h3>
+                    <ul class="edu-list">
+                        <li class="hover-multi-effect" data-reveal>
+                            <h4>Gold Medalist, M.Sc. IT</h4>
+                            <p>Ravenshaw University; medal presented by the President of India at the university
+                                convocation.</p>
+                        </li>
+                        <li class="hover-multi-effect" data-reveal>
+                            <h4>Cognizant Excellence Award</h4>
+                            <p>For measurable improvements in database query performance and system efficiency.</p>
+                        </li>
+                        <li class="hover-multi-effect" data-reveal>
+                            <h4>Grade A Research</h4>
+                            <p>Final-year research on advanced data security methodologies.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact -->
+    <footer id="contact" class="contact" aria-labelledby="contact-title">
+        <div class="btn-row contact-cta" data-reveal>
+            <a href="mailto:divyajeetpanda@outlook.com" class="btn btn-accent">Email me <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Resume <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-    </section>
+        <h2 id="contact-title" class="contact-name" data-reveal>Divyajeet Panda</h2>
 
-    <!-- About Section -->
-    <section id="about" class="py-28 px-4 relative overflow-hidden">
-        <div class="section-divider absolute top-0 left-0 right-0"></div>
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
-                <span class="section-label">Behind the Code</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">About Me</h2>
+        <div class="contact-grid">
+            <dl class="contact-info" data-reveal>
+                <dt>Email</dt>
+                <dd><a href="mailto:divyajeetpanda@outlook.com">divyajeetpanda@outlook.com</a></dd>
+                <dt>Location</dt>
+                <dd>Odisha, India &middot; open to remote</dd>
+            </dl>
+
+            <div data-reveal>
+                <p class="contact-label">Social</p>
+                <ul class="social-list">
+                    <li><a href="https://github.com/Divyajeet7978" target="_blank" rel="noopener noreferrer">GitHub <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+                    <li><a href="https://www.linkedin.com/in/divyajeet-panda-23480a213/" target="_blank" rel="noopener noreferrer">LinkedIn <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+                    <li><a href="https://x.com/divyajeetpanda9" target="_blank" rel="noopener noreferrer">X <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+                    <li><a href="https://www.hackerrank.com/profile/divyajeetpanda" target="_blank" rel="noopener noreferrer">HackerRank <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+                </ul>
             </div>
 
-            <div class="space-y-24">
-                <!-- Philosophy Section -->
-                <div class="zigzag-item flex flex-col lg:flex-row items-center gap-12 animate-on-scroll">
-                    <div class="lg:w-1/2 relative order-1 lg:order-1">
-                        <div class="glass-card p-2 rounded-3xl inline-block hover-multi-effect">
-                            <img src="img/me.webp" alt="Profile" width="1100" height="1100" loading="lazy" decoding="async"
-                                class="w-full h-auto rounded-2xl aspect-square object-cover transition-transform duration-700 hover:scale-105">
-                        </div>
-                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-xl -z-10">
-                        </div>
-                    </div>
-                    <div class="lg:w-1/2 order-2 lg:order-2">
-                        <h3 class="text-2xl font-bold mb-5 heading-font">My Development Philosophy</h3>
-                        <p class="mb-4 opacity-80">I believe in building software that solves real problems efficiently.
-                            My approach combines clean code principles with practical solutions, always considering
-                            performance, security, and maintainability. I focus on creating systems that are not just
-                            functional but also scalable and easy to extend.</p>
-                        <p class="opacity-80 mb-6">Good software should be like a well-oiled machine - it works
-                            seamlessly, requires minimal maintenance, and can adapt to changing requirements. I strive
-                            to write code that my future self and other developers will thank me for.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="tag-pill">Clean Code</span>
-                            <span class="tag-pill">Scalability</span>
-                            <span class="tag-pill">Security</span>
-                        </div>
-                    </div>
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="company" class="contact-form"
+                id="contactForm" novalidate data-reveal>
+                <input type="hidden" name="form-name" value="contact">
+                <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+                <p class="contact-label">Or leave a message</p>
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required autocomplete="name" class="hover-multi-effect">
                 </div>
-
-                <!-- Process Section -->
-                <div class="zigzag-item flex flex-col lg:flex-row-reverse items-center gap-12 animate-on-scroll">
-                    <div class="lg:w-1/2 relative order-1 lg:order-2 about-workspace">
-                        <div class="glass-card p-2 rounded-3xl inline-block hover-multi-effect">
-                            <img src="img/wrk.webp" alt="Workspace" width="1100" height="1100" loading="lazy" decoding="async"
-                                class="w-full h-auto rounded-2xl aspect-square object-cover transition-transform duration-700 hover:scale-105">
-                        </div>
-                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-secondary/10 rounded-full blur-xl -z-10"></div>
-                    </div>
-                    <div class="lg:w-1/2 order-2 lg:order-1">
-                        <h3 class="text-2xl font-bold mb-5 heading-font">Development Process</h3>
-                        <p class="mb-4 opacity-80">My methodology starts with understanding the problem deeply, followed
-                            by designing robust solutions. I believe in iterative development, continuous testing, and
-                            frequent feedback loops. Working in Agile environments has taught me the value of
-                            adaptability and clear communication.</p>
-                        <p class="opacity-80 mb-6">I approach each project with a focus on delivering value early and
-                            often. By breaking down complex problems into manageable pieces and validating each
-                            component, I ensure the final product meets both technical and business requirements.</p>
-                        <div class="flex items-center space-x-4">
-                            <div class="flex items-center">
-                                <div
-                                    class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-2">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <span class="text-sm">Analysis</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div
-                                    class="w-8 h-8 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mr-2">
-                                    <i class="fas fa-drafting-compass"></i>
-                                </div>
-                                <span class="text-sm">Design</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div
-                                    class="w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center mr-2">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <span class="text-sm">Implement</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" class="hover-multi-effect">
                 </div>
-
-                <!-- Education & Honors -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="glass-card p-8 hover-multi-effect animate-on-scroll">
-                        <h3 class="text-2xl font-bold mb-6 heading-font">Education</h3>
-                        <ul class="credential-list">
-                            <li class="credential-item">
-                                <span class="credential-icon"><i class="fas fa-graduation-cap"></i></span>
-                                <div>
-                                    <h4>M.Sc. in Information Technology</h4>
-                                    <p class="credential-meta">Ravenshaw University, Cuttack &bull; 2023 - 2025</p>
-                                    <p>CGPA 8.20 &bull; Gold Medalist</p>
-                                </div>
-                            </li>
-                            <li class="credential-item">
-                                <span class="credential-icon"><i class="fas fa-graduation-cap"></i></span>
-                                <div>
-                                    <h4>B.Sc. in Information Technology and Management</h4>
-                                    <p class="credential-meta">Ravenshaw University, Cuttack &bull; 2019 - 2022</p>
-                                    <p>CGPA 8.68</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.1s;">
-                        <h3 class="text-2xl font-bold mb-6 heading-font">Honors &amp; Awards</h3>
-                        <ul class="credential-list">
-                            <li class="credential-item">
-                                <span class="credential-icon credential-icon-gold"><i class="fas fa-medal"></i></span>
-                                <div>
-                                    <h4>Gold Medalist, M.Sc. IT</h4>
-                                    <p>Ravenshaw University; medal presented by the President of India at the
-                                        university convocation.</p>
-                                </div>
-                            </li>
-                            <li class="credential-item">
-                                <span class="credential-icon"><i class="fas fa-trophy"></i></span>
-                                <div>
-                                    <h4>Cognizant Excellence Award</h4>
-                                    <p>For measurable improvements in database query performance and system
-                                        efficiency.</p>
-                                </div>
-                            </li>
-                            <li class="credential-item">
-                                <span class="credential-icon"><i class="fas fa-star"></i></span>
-                                <div>
-                                    <h4>Grade A Research</h4>
-                                    <p>Final-year research on advanced data security methodologies.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required class="hover-multi-effect"></textarea>
                 </div>
-
-                <!-- Fun Facts -->
-                <div class="glass-card p-8 hover-multi-effect animate-on-scroll">
-                    <h3 class="text-2xl font-bold mb-8 text-center heading-font">Beyond Coding</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-camera text-2xl text-primary"></i>
-                            </div>
-                            <h4 class="font-medium">Photo/Videography</h4>
-                            <p class="text-sm opacity-70">Capturing moments</p>
-                        </div>
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-robot text-2xl text-secondary"></i>
-                            </div>
-                            <h4 class="font-medium">AI Research</h4>
-                            <p class="text-sm opacity-70">Exploring new frontiers</p>
-                        </div>
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-book text-2xl text-accent"></i>
-                            </div>
-                            <h4 class="font-medium">Reading</h4>
-                            <p class="text-sm opacity-70">Fictional and Fantasy</p>
-                        </div>
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-plane text-2xl text-purple-500"></i>
-                            </div>
-                            <h4 class="font-medium">Travel</h4>
-                            <p class="text-sm opacity-70">A lot</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-28 px-4 relative overflow-hidden">
-        <div class="section-divider absolute top-0 left-0 right-0"></div>
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center animate-on-scroll" style="margin-bottom: 3rem;">
-                <span class="section-label">Get in Touch</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text"
-                    style="font-family: var(--font-heading); letter-spacing: -0.03em;">Let's Connect</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Contact Information -->
-                <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.1s;">
-                    <h3 class="text-xl font-semibold mb-6 heading-font">Contact Information</h3>
-                    <div class="space-y-6">
-                        <!-- Email -->
-                        <div class="flex items-start space-x-4 group">
-                            <div
-                                class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary text-xl group-hover:bg-primary/20 transition-colors">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm opacity-70">Email</p>
-                                <a href="mailto:divyajeetpanda@outlook.com"
-                                    class="contact-email hover:text-primary transition-colors flex items-center">
-                                    divyajeetpanda@outlook.com
-                                    <i class="fas fa-external-link-alt text-xs ml-2 opacity-70"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Location -->
-                        <div class="flex items-start space-x-4 group">
-                            <div
-                                class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 text-accent text-xl group-hover:bg-accent/20 transition-colors">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm opacity-70">Location</p>
-                                <p>Odisha, India (Open to remote)</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="mt-10 pt-6 border-t border-[var(--glass-border)]">
-                        <h4 class="font-medium mb-4 heading-font">Connect With Me</h4>
-                        <div class="flex space-x-4">
-                            <a href="https://www.linkedin.com/in/divyajeet-panda-23480a213/" aria-label="LinkedIn"
-                                class="social-icon-link hover-multi-effect">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="https://github.com/Divyajeet7978" aria-label="GitHub"
-                                class="social-icon-link hover-multi-effect">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://x.com/divyajeetpanda9" aria-label="Twitter"
-                                class="social-icon-link hover-multi-effect">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="https://www.hackerrank.com/profile/divyajeetpanda" aria-label="Hacker Rank"
-                                class="social-icon-link hover-multi-effect">
-                                <i class="fab fa-hackerrank"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="glass-card p-8 hover-multi-effect animate-on-scroll" style="animation-delay: 0.2s;">
-                    <form name="contact" method="POST" data-netlify="true" id="contactForm" class="space-y-6">
-                        <input type="hidden" name="form-name" value="contact">
-                        <!-- Name Field -->
-                        <div class="form-group">
-                            <label for="name" class="block mb-2 font-medium text-sm opacity-80">Name</label>
-                            <div class="relative">
-                                <input type="text" id="name" name="name" required autocomplete="name"
-                                    class="form-input hover-multi-effect pl-10" placeholder="Your Name">
-                                <div
-                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-secondary)]">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                            </div>
-                            <div class="text-xs text-red-500 mt-1 hidden" id="nameError">Please enter your name</div>
-                        </div>
-
-                        <!-- Email Field -->
-                        <div class="form-group">
-                            <label for="email" class="block mb-2 font-medium text-sm opacity-80">Email</label>
-                            <div class="relative">
-                                <input type="email" id="email" name="email" required autocomplete="email"
-                                    class="form-input hover-multi-effect pl-10" placeholder="your.email@example.com">
-                                <div
-                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-secondary)]">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                            </div>
-                            <div class="text-xs text-red-500 mt-1 hidden" id="emailError">Please enter a valid email
-                            </div>
-                        </div>
-
-                        <!-- Subject Field -->
-                        <div class="form-group">
-                            <label for="subject" class="block mb-2 font-medium text-sm opacity-80">Subject</label>
-                            <div class="relative">
-                                <select id="subject" name="subject" required
-                                    class="form-input hover-multi-effect appearance-none pl-10 pr-8">
-                                    <option value="" disabled selected>Select a subject...</option>
-                                    <option value="Project Inquiry">Project Inquiry</option>
-                                    <option value="Job Opportunity">Job Opportunity</option>
-                                    <option value="Collaboration">Collaboration</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                                <div
-                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-secondary)]">
-                                    <i class="fas fa-tag"></i>
-                                </div>
-                                <div
-                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[var(--text-secondary)]">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Message Field -->
-                        <div class="form-group">
-                            <label for="message" class="block mb-2 font-medium text-sm opacity-80">Message</label>
-                            <div class="relative">
-                                <textarea id="message" name="message" rows="5" required
-                                    class="form-input hover-multi-effect pl-10"
-                                    placeholder="How can I help?"></textarea>
-                                <div class="absolute left-3 top-3 text-[var(--text-secondary)]">
-                                    <i class="fas fa-comment-dots"></i>
-                                </div>
-                            </div>
-                            <div class="text-xs text-red-500 mt-1 hidden" id="messageError">Please enter your message
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="cta-button w-full flex items-center justify-center">
-                            <span id="submitText">Send Message</span>
-                            <i class="fas fa-paper-plane ml-2"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
+                <button type="submit" class="btn btn-accent">Send message <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+                <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
         </div>
 
-        <!-- Decorative Shapes -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-16 px-4 border-t border-[var(--glass-border)] bg-[var(--bg-start)]">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                <!-- Logo & Tagline -->
-                <div class="text-center md:text-left">
-                    <a href="#home"
-                        class="text-2xl font-bold gradient-text heading-font hover:opacity-90 transition-opacity">Divyajeet
-                        Panda</a>
-                    <p class="mt-1 opacity-70 text-sm">Software Engineer &bull; Backend &amp; Data Systems</p>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                    <a href="#home" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-home mr-1 text-xs opacity-60"></i> Home
-                    </a>
-                    <a href="#work" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-briefcase mr-1 text-xs opacity-60"></i> Work
-                    </a>
-                    <a href="#skills" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-code mr-1 text-xs opacity-60"></i> Skills
-                    </a>
-                    <a href="#certifications" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-certificate mr-1 text-xs opacity-60"></i> Certifications
-                    </a>
-                    <a href="#resume" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-file-pdf mr-1 text-xs opacity-60"></i> Resume
-                    </a>
-                    <a href="#about" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-user mr-1 text-xs opacity-60"></i> About
-                    </a>
-                    <a href="#contact" class="text-sm hover:text-primary transition-colors flex items-center">
-                        <i class="fas fa-envelope mr-1 text-xs opacity-60"></i> Contact
-                    </a>
-                </div>
-            </div>
-
-            <!-- Copyright & Legal -->
-            <div
-                class="border-t border-[var(--glass-border)] mt-10 pt-8 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
-                <p class="text-xs opacity-60 mb-4 sm:mb-0">&copy; <span id="currentYear"></span> Divyajeet Panda. All rights
-                    reserved.</p>
-            </div>
+        <div class="contact-foot">
+            <p>Designed and built by <span class="accent">Divyajeet Panda</span></p>
+            <p>&copy; <span id="year">2026</span></p>
         </div>
     </footer>
-
-    <!-- Success Message Container -->
-    <div id="successMessageContainer" class="fixed bottom-24 right-8 z-50 pointer-events-none"></div>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" aria-label="Back to top"
-        class="fixed bottom-8 right-8 w-12 h-12 rounded-full glass-card flex items-center justify-center hover-multi-effect z-40 opacity-0 invisible transition-all duration-300">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <script src="js/main.js" defer></script>
 </body>
 
 </html>
