@@ -90,6 +90,7 @@
     var targetYaw = 0;
     var targetPitch = 0;
     var scrollBiasYaw = 0;
+    var restYaw = 0;
     var isHovered = false;
     var nodTime = 0;
 
@@ -125,6 +126,18 @@
                 var idleAction = mixer.clipAction(gltf.animations[0]);
                 idleAction.setEffectiveTimeScale(0.9);
                 idleAction.play();
+                mixer.update(0);
+            }
+
+            // The idle pose turns the hips away from the camera. Undo half by turning the model
+            // and the other half in the head chain (spine + neck + head weights sum to 1.5),
+            // so the head faces the viewer at rest and turns equally far either way.
+            var hips = avatar.getObjectByName('Hips');
+            if (hips) {
+                avatar.updateMatrixWorld(true);
+                var hipsYaw = new THREE.Euler().setFromQuaternion(hips.getWorldQuaternion(new THREE.Quaternion()), 'YXZ').y;
+                avatar.rotation.y = -hipsYaw / 2;
+                restYaw = -hipsYaw / 2 / 1.5;
             }
 
             avatar.position.set(0, 0, 0);
@@ -155,7 +168,7 @@
         var nx = (e.clientX / window.innerWidth) * 2 - 1;
         var ny = (e.clientY / window.innerHeight) * 2 - 1;
 
-        targetYaw = -nx * 0.42;
+        targetYaw = nx * 0.42;
         targetPitch = ny * 0.22;
 
         mouseIdleTimer = setTimeout(function () {
@@ -183,7 +196,7 @@
         var nx = (touch.clientX / window.innerWidth) * 2 - 1;
         var ny = (touch.clientY / window.innerHeight) * 2 - 1;
 
-        targetYaw = -nx * 0.42;
+        targetYaw = nx * 0.42;
         targetPitch = ny * 0.22;
 
         mouseIdleTimer = setTimeout(function () {
@@ -204,7 +217,7 @@
                 if (e.gamma !== null && e.beta !== null) {
                     var tiltX = Math.max(-25, Math.min(25, e.gamma)) / 25;
                     var tiltY = Math.max(-20, Math.min(35, e.beta - 40)) / 25;
-                    targetYaw = -tiltX * 0.32;
+                    targetYaw = tiltX * 0.32;
                     targetPitch = tiltY * 0.16;
                 }
             }, { passive: true });
@@ -279,7 +292,7 @@
             mixer.update(delta);
         }
 
-        var combinedTargetYaw = (isMouseActive ? targetYaw : 0) + scrollBiasYaw;
+        var combinedTargetYaw = restYaw + (isMouseActive ? targetYaw : 0) + scrollBiasYaw;
         var combinedTargetPitch = (isMouseActive ? targetPitch : 0);
 
         var ease = 0.08;
