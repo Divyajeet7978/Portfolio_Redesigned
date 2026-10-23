@@ -80,6 +80,10 @@
     if (cursor && finePointer && !reduceMotion) {
         var mx = 0, my = 0, cx = 0, cy = 0, running = false;
         var follow = function () {
+            if (window.innerWidth < 1024) {
+                cursor.classList.remove('is-on');
+                return;
+            }
             cx += (mx - cx) * 0.2;
             cy += (my - cy) * 0.2;
             cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
@@ -87,6 +91,11 @@
             if (running) requestAnimationFrame(follow);
         };
         document.addEventListener('pointermove', function (e) {
+            // Never show custom cursor on mobile view or touch/pen inputs
+            if (window.innerWidth < 1024 || e.pointerType === 'touch' || e.pointerType === 'pen') {
+                cursor.classList.remove('is-on');
+                return;
+            }
             mx = e.clientX;
             my = e.clientY;
             cursor.classList.add('is-on');
@@ -99,6 +108,12 @@
         document.documentElement.addEventListener('pointerleave', function () {
             cursor.classList.remove('is-on');
         });
+        window.addEventListener('touchstart', function () {
+            cursor.classList.remove('is-on');
+        }, { passive: true });
+        window.addEventListener('resize', function () {
+            if (window.innerWidth < 1024) cursor.classList.remove('is-on');
+        }, { passive: true });
     }
 
     // --- Certifications: show all ---
@@ -230,7 +245,36 @@
         });
 
         mm.add('(max-width: 1023px)', function () {
-            gsap.set('.about-lead .w', { opacity: 1 });
+            // About: words light up dynamically on mobile as user reads down
+            gsap.to('.about-lead .w', {
+                opacity: 1,
+                stagger: 0.04,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.about-lead',
+                    start: 'top 85%',
+                    end: 'bottom 45%',
+                    scrub: true
+                }
+            });
+
+            // Work panels: sleek scroll entrance on mobile
+            gsap.utils.toArray('.work-panel').forEach(function (panel) {
+                gsap.fromTo(panel,
+                    { opacity: 0.35, y: 28 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: 'top 92%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
         });
 
         // Fonts and images change heights, so measure again once they're in

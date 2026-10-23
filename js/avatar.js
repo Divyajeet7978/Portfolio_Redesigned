@@ -172,9 +172,52 @@
         });
     }
 
+    // Touch Tracking for mobile (iPhone / touchscreens)
+    function onTouchMove(e) {
+        if (!isVisible || isFastScrolling || !e.touches || e.touches.length === 0) return;
+        var touch = e.touches[0];
+        isMouseActive = true;
+        clearTimeout(mouseIdleTimer);
+
+        var nx = (touch.clientX / window.innerWidth) * 2 - 1;
+        var ny = (touch.clientY / window.innerHeight) * 2 - 1;
+
+        targetYaw = -nx * 0.42;
+        targetPitch = ny * 0.22;
+
+        mouseIdleTimer = setTimeout(function () {
+            isMouseActive = false;
+            targetYaw = 0;
+            targetPitch = 0;
+        }, 2200);
+    }
+
+    if (!reduceMotion) {
+        window.addEventListener('touchmove', onTouchMove, { passive: true });
+        window.addEventListener('touchstart', onTouchMove, { passive: true });
+
+        // Device tilt parallax (gyroscope on mobile)
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function (e) {
+                if (!isVisible || isFastScrolling || isMouseActive) return;
+                if (e.gamma !== null && e.beta !== null) {
+                    var tiltX = Math.max(-25, Math.min(25, e.gamma)) / 25;
+                    var tiltY = Math.max(-20, Math.min(35, e.beta - 40)) / 25;
+                    targetYaw = -tiltX * 0.32;
+                    targetPitch = tiltY * 0.16;
+                }
+            }, { passive: true });
+        }
+    }
+
+    // Interactive nod on click or tap
     container.addEventListener('click', function () {
         nodTime = performance.now();
     });
+    container.addEventListener('touchstart', function () {
+        nodTime = performance.now();
+    }, { passive: true });
+
     container.addEventListener('mouseenter', function () { isHovered = true; });
     container.addEventListener('mouseleave', function () { isHovered = false; });
 
