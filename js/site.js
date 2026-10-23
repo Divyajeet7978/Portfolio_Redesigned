@@ -75,6 +75,17 @@
         });
     }
 
+    // --- Back-to-top button: shows once the hero is off screen ---
+    var toTop = document.querySelector('.to-top');
+    var hero = document.getElementById('home');
+    if (toTop && hero && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            toTop.classList.toggle('is-on', !entries[0].isIntersecting);
+        }).observe(hero);
+    } else if (toTop) {
+        toTop.classList.add('is-on');
+    }
+
     // --- Cursor dot ---
     var cursor = document.querySelector('.cursor');
     if (cursor && finePointer && !reduceMotion) {
@@ -115,6 +126,417 @@
             if (window.innerWidth < 1024) cursor.classList.remove('is-on');
         }, { passive: true });
     }
+
+    // --- Dot grid behind the hero: dots light up near the cursor, fast moves and clicks nudge them ---
+    // Redraws only while the pointer moves or dots are settling, so it costs nothing when idle.
+    function initDotGrid() {
+        var canvas = document.querySelector('.dot-grid');
+        if (!canvas || !canvas.getContext) return;
+        var ctx = canvas.getContext('2d');
+
+        var DOT = 3, GAP = 30, PROXIMITY = 130, SHOCK_RADIUS = 220, SHOCK_STRENGTH = 3;
+        var BASE = [45, 38, 51], ACTIVE = [157, 107, 255];
+        // Underdamped spring: pushed dots overshoot slightly and settle in about a second
+        var STIFFNESS = 60, DAMPING = 9;
+
+        var dots = [], width = 0, height = 0, top = 0;
+        var mouse = { x: -1e4, y: -1e4, lastX: 0, lastY: 0, lastTime: 0 };
+        var visible = true, frame = 0, lastFrame = 0;
+        // The resting grid is painted once here; each frame copies it and redraws only the lit and moving dots
+        var base = document.createElement('canvas');
+        var baseCtx = base.getContext('2d');
+
+        function layout() {
+            var dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = canvas.clientWidth;
+            height = canvas.clientHeight;
+            canvas.width = base.width = width * dpr;
+            canvas.height = base.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            baseCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            top = canvas.getBoundingClientRect().top + window.scrollY;
+
+            var step = DOT + GAP;
+            var cols = Math.floor((width + GAP) / step);
+            var rows = Math.floor((height + GAP) / step);
+            var x0 = (width - (step * cols - GAP)) / 2 + DOT / 2;
+            var y0 = (height - (step * rows - GAP)) / 2 + DOT / 2;
+            dots = [];
+            for (var r = 0; r < rows; r++) {
+                for (var c = 0; c < cols; c++) {
+                    dots.push({ cx: x0 + c * step, cy: y0 + r * step, ox: 0, oy: 0, vx: 0, vy: 0, moving: false });
+                }
+            }
+            baseCtx.clearRect(0, 0, width, height);
+            baseCtx.fillStyle = 'rgb(' + BASE.join(',') + ')';
+            baseCtx.beginPath();
+            dots.forEach(function (d) {
+                baseCtx.moveTo(d.cx + DOT / 2, d.cy);
+                baseCtx.arc(d.cx, d.cy, DOT / 2, 0, Math.PI * 2);
+            });
+            baseCtx.fill();
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(base, 0, 0, width, height);
+            var lit = [];
+            ctx.fillStyle = 'rgb(' + BASE.join(',') + ')';
+            ctx.beginPath();
+            dots.forEach(function (d) {
+                var dx = d.cx - mouse.x, dy = d.cy - mouse.y;
+                if (!d.moving && (Math.abs(dx) > PROXIMITY || Math.abs(dy) > PROXIMITY)) return;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > PROXIMITY && !d.moving) return;
+                // Erase the resting copy; neighbours are GAP apart, so the square never touches them
+                ctx.clearRect(Math.floor(d.cx - DOT), Math.floor(d.cy - DOT), DOT * 2 + 2, DOT * 2 + 2);
+                if (dist <= PROXIMITY) return lit.push([d, 1 - dist / PROXIMITY]);
+                ctx.moveTo(d.cx + d.ox + DOT / 2, d.cy + d.oy);
+                ctx.arc(d.cx + d.ox, d.cy + d.oy, DOT / 2, 0, Math.PI * 2);
+            });
+            ctx.fill();
+            lit.forEach(function (item) {
+                var d = item[0], t = item[1];
+                ctx.fillStyle = 'rgb(' + BASE.map(function (v, i) { return Math.round(v + (ACTIVE[i] - v) * t); }).join(',') + ')';
+                ctx.beginPath();
+                ctx.arc(d.cx + d.ox, d.cy + d.oy, DOT / 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function tick(now) {
+            frame = 0;
+            var dt = Math.min((now - lastFrame) / 1000, 1 / 30);
+            lastFrame = now;
+            var settling = false;
+            dots.forEach(function (d) {
+                if (!d.moving) return;
+                d.vx += (-STIFFNESS * d.ox - DAMPING * d.vx) * dt;
+                d.vy += (-STIFFNESS * d.oy - DAMPING * d.vy) * dt;
+                d.ox += d.vx * dt;
+                d.oy += d.vy * dt;
+                if (Math.abs(d.ox) + Math.abs(d.oy) < 0.1 && Math.abs(d.vx) + Math.abs(d.vy) < 1) {
+                    d.ox = d.oy = d.vx = d.vy = 0;
+                    d.moving = false;
+                } else {
+                    settling = true;
+                }
+            });
+            draw();
+            if (settling) requestDraw();
+        }
+
+        function requestDraw() {
+            if (frame) return;
+            lastFrame = performance.now();
+            frame = requestAnimationFrame(tick);
+        }
+
+        function push(d, vx, vy) {
+            if (reduceMotion || d.moving) return;
+            d.vx = vx;
+            d.vy = vy;
+            d.moving = true;
+        }
+
+        window.addEventListener('mousemove', function (e) {
+            if (!visible) return;
+            mouse.x = e.clientX;
+            mouse.y = e.clientY + window.scrollY - top;
+
+            // A quick flick pushes nearby dots away, in the direction of travel
+            var now = performance.now();
+            if (now - mouse.lastTime >= 50) {
+                var elapsed = mouse.lastTime ? now - mouse.lastTime : 16;
+                var vx = (e.clientX - mouse.lastX) / elapsed * 1000;
+                var vy = (e.clientY - mouse.lastY) / elapsed * 1000;
+                var speed = Math.sqrt(vx * vx + vy * vy);
+                if (speed > 5000) {
+                    vx *= 5000 / speed;
+                    vy *= 5000 / speed;
+                    speed = 5000;
+                }
+                if (speed > 100) {
+                    dots.forEach(function (d) {
+                        var dx = d.cx - mouse.x, dy = d.cy - mouse.y;
+                        if (dx * dx + dy * dy < PROXIMITY * PROXIMITY) push(d, dx + vx * 0.005, dy + vy * 0.005);
+                    });
+                }
+                mouse.lastTime = now;
+                mouse.lastX = e.clientX;
+                mouse.lastY = e.clientY;
+            }
+            requestDraw();
+        }, { passive: true });
+
+        // A click sends a ripple through the dots around it
+        window.addEventListener('click', function (e) {
+            if (!visible) return;
+            var x = e.clientX, y = e.clientY + window.scrollY - top;
+            dots.forEach(function (d) {
+                var dx = d.cx - x, dy = d.cy - y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < SHOCK_RADIUS) {
+                    var f = (1 - dist / SHOCK_RADIUS) * SHOCK_STRENGTH;
+                    push(d, dx * f, dy * f);
+                }
+            });
+            requestDraw();
+        });
+
+        root.addEventListener('mouseleave', function () {
+            mouse.x = mouse.y = -1e4;
+            requestDraw();
+        });
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                visible = entries[0].isIntersecting;
+            }).observe(canvas);
+        }
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(layout).observe(canvas);
+        } else {
+            window.addEventListener('resize', layout);
+        }
+        layout();
+    }
+
+    initDotGrid();
+
+    // --- Falling stars behind the contact section: small dots drift down and fade out, then start again ---
+    // Animates only while the section is on screen.
+    function initStarFall() {
+        var canvas = document.querySelector('.star-fall');
+        if (!canvas || !canvas.getContext) return;
+        var ctx = canvas.getContext('2d');
+        var stars = [], width = 0, height = 0, frame = 0, visible = false;
+
+        function layout() {
+            var dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = canvas.clientWidth;
+            height = canvas.clientHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            // About 100 stars on a 1440x900 area, each falling one section height in 10 to 20 seconds
+            var count = Math.round(width * height / 13000);
+            stars = [];
+            for (var i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: (Math.random() * 3 + 1) / 2,
+                    alpha: Math.random(),
+                    duration: Math.random() * 10 + 10,
+                    phase: Math.random()
+                });
+            }
+            draw(performance.now());
+        }
+
+        function draw(now) {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgb(234, 229, 236)';
+            stars.forEach(function (s) {
+                var p = reduceMotion ? 0 : (now / 1000 / s.duration + s.phase) % 1;
+                ctx.globalAlpha = s.alpha * (1 - p);
+                ctx.beginPath();
+                ctx.arc(s.x, s.y + p * height, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        function loop(now) {
+            draw(now);
+            frame = visible ? requestAnimationFrame(loop) : 0;
+        }
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                visible = entries[0].isIntersecting;
+                if (visible && !frame && !reduceMotion) frame = requestAnimationFrame(loop);
+            }).observe(canvas);
+        }
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(layout).observe(canvas);
+        } else {
+            window.addEventListener('resize', layout);
+        }
+        layout();
+    }
+
+    initStarFall();
+
+    // --- Light streaks behind the career section: large flaring stars, swirled into curved streaks that pulse ---
+    // One small WebGL shader, capped at 30 fps and only running while the section is on screen.
+    function initLightStreaks() {
+        var canvas = document.querySelector('.light-streaks');
+        if (!canvas) return;
+        var gl = canvas.getContext('webgl', { antialias: false, depth: false, powerPreference: 'low-power' });
+        if (!gl) return;
+
+        var vertex = 'attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }';
+        var fragment = [
+            '#ifdef GL_FRAGMENT_PRECISION_HIGH',
+            'precision highp float;',
+            '#else',
+            'precision mediump float;',
+            '#endif',
+            'uniform vec2 res;',
+            'uniform float t;',
+            'float hash(vec2 p) {',
+            '    p = fract(p * vec2(233.34, 851.73));',
+            '    p += dot(p, p + 23.45);',
+            '    return fract(p.x * p.y);',
+            '}',
+            // A soft point of light with a thin cross of rays; the swirl later bends the rays into streaks
+            'float flare(vec2 p, float rays) {',
+            '    float d = length(p);',
+            '    float xy = abs(p.x * p.y);',
+            '    float m = 0.1 / d + rays * (max(0.0, 1.0 - xy * 500.0) + 0.3 * max(0.0, 1.0 - xy * 1000.0));',
+            '    return m * smoothstep(1.0, 0.2, d);',
+            '}',
+            // One layer of sparse, large stars on a hashed grid; each pulses on its own phase
+            'vec3 layer(vec2 uv) {',
+            '    vec3 col = vec3(0.0);',
+            '    uv *= 0.04;',
+            '    vec2 cell = fract(uv) - 0.5;',
+            '    vec2 id = floor(uv);',
+            '    for (int y = -1; y <= 1; y++) {',
+            '        for (int x = -1; x <= 1; x++) {',
+            '            vec2 o = vec2(float(x), float(y));',
+            '            float n = hash(id + o);',
+            '            float size = fract(n * 345.32);',
+            '            vec2 pos = cell - o - vec2(n, fract(n * 34.0)) + 0.5;',
+            '            float star = flare(pos, smoothstep(0.85, 1.0, size));',
+            '            star *= 0.7 + 0.3 * sin(t * 2.0 + n * 3.1416);',
+            '            vec3 tint = mix(vec3(0.76, 0.64, 1.0), vec3(0.52, 0.30, 1.0), fract(n * 7.13));',
+            '            col += star * size * tint * smoothstep(0.8, 1.0, size);',
+            '        }',
+            '    }',
+            '    return col;',
+            '}',
+            'void main() {',
+            '    vec2 uv = (gl_FragCoord.xy - 0.5 * res) / res.y;',
+            // Swirl centre sits off the lower left, so the streaks sweep diagonally across the section
+            '    vec2 shift = vec2(0.5 * res.x / res.y, 0.5) * 3.0;',
+            '    uv = (uv + shift) * 2.0;',
+            '    float slow = t * 0.02;',
+            '    float a = slow + length(uv);',
+            '    uv *= mat2(cos(a), -sin(a), sin(a), cos(a));',
+            '    vec3 col = vec3(0.0);',
+            // Four layers drift towards the viewer and fade in and out as they pass
+            '    for (float i = 0.0; i < 1.0; i += 0.25) {',
+            '        float depth = fract(i + slow);',
+            '        float scale = mix(20.0, 0.5, depth);',
+            '        float fade = depth * smoothstep(1.0, 0.9, depth);',
+            '        col += layer(uv * scale + i * 454.23 + shift) * fade;',
+            '    }',
+            '    col = clamp(col, 0.0, 1.0);',
+            '    gl_FragColor = vec4(col, max(col.r, max(col.g, col.b)));',
+            '}'
+        ].join('\n');
+
+        function compile(type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+        var program = gl.createProgram();
+        gl.attachShader(program, compile(gl.VERTEX_SHADER, vertex));
+        gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragment));
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+        gl.useProgram(program);
+
+        // One triangle that covers the whole canvas
+        gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+        var loc = gl.getAttribLocation(program, 'p');
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+        var resLoc = gl.getUniformLocation(program, 'res');
+        var timeLoc = gl.getUniformLocation(program, 't');
+
+        var visible = false, frame = 0, last = 0;
+        var start = performance.now() - Math.random() * 60000;
+
+        function draw(now) {
+            gl.uniform1f(timeLoc, (now - start) / 1000);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+
+        function loop(now) {
+            frame = visible ? requestAnimationFrame(loop) : 0;
+            if (now - last < 1000 / 30) return;
+            last = now;
+            draw(now);
+        }
+
+        function layout() {
+            // CSS pixels are enough: the streaks are soft, and this keeps the fill cost low on dense screens
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.uniform2f(resLoc, canvas.width, canvas.height);
+            draw(performance.now());
+        }
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                visible = entries[0].isIntersecting;
+                if (visible && !frame && !reduceMotion) frame = requestAnimationFrame(loop);
+            }).observe(canvas);
+        }
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(layout).observe(canvas);
+        } else {
+            window.addEventListener('resize', layout);
+        }
+        layout();
+    }
+
+    initLightStreaks();
+
+    // --- Edge glow and ring: while the hero stage is on screen, step their CSS animations 60 times a second ---
+    // They drift a few pixels a second, so the steps can't be seen, but every display frame of them repaints the hero.
+    // Elsewhere the browser runs them off the main thread for free, so they play normally there.
+    function stepAmbient() {
+        var stage = document.querySelector('.stage');
+        if (reduceMotion || !stage || !document.getAnimations || !('IntersectionObserver' in window)) return;
+        var names = ['drift-a', 'drift-b', 'ring-float', 'ring-spin'];
+        var anims = document.getAnimations().filter(function (a) { return names.indexOf(a.animationName) !== -1; });
+        if (!anims.length) return;
+        var frame = 0, origin = 0, last = 0, starts = [];
+
+        function tick(now) {
+            if (now - last >= 1000 / 60 - 1) {
+                last = now;
+                anims.forEach(function (a, i) { a.currentTime = starts[i] + now - origin; });
+            }
+            frame = requestAnimationFrame(tick);
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+                origin = performance.now();
+                last = 0;
+                starts = anims.map(function (a) { a.pause(); return a.currentTime; });
+                if (!frame) frame = requestAnimationFrame(tick);
+            } else {
+                cancelAnimationFrame(frame);
+                frame = 0;
+                anims.forEach(function (a) { a.play(); });
+            }
+        }).observe(stage);
+    }
+
+    stepAmbient();
 
     // --- Certifications: show all ---
     var certToggle = document.getElementById('certToggle');

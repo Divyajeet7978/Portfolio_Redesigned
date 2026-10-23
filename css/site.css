@@ -525,6 +525,41 @@ code {
     letter-spacing: 0.5em;
 }
 
+.to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 5.25rem;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(11, 8, 12, 0.75);
+    color: var(--muted);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+
+.to-top.is-on {
+    opacity: 1;
+    visibility: visible;
+}
+
+.to-top svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.to-top:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+    transform: translateY(-3px);
+}
+
 main,
 .contact {
     position: relative;
@@ -534,6 +569,20 @@ main,
 /* ---------- Hero + About (shared stage) ---------- */
 .intro {
     position: relative;
+}
+
+/* Dot grid behind the hero, faded out towards the bottom */
+.dot-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.7;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
 }
 
 .stage {
@@ -568,7 +617,6 @@ main,
     width: min(30vw, 28rem);
     height: min(82svh, 46rem);
     overflow: hidden;
-    border-radius: 14rem 14rem 0 0;
     pointer-events: auto;
     /* Melt the photo's edges into the page */
     -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
@@ -587,9 +635,10 @@ main,
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 0 1px rgba(194, 164, 255, 0.25), inset 0 30px 60px -30px rgba(var(--glow), 0.6);
-    background: linear-gradient(to bottom, transparent 65%, var(--bg) 98%);
+    /* Dissolve the cropped legs into the page; feathered at the sides so the dot grid doesn't stop in a hard edge */
+    background: linear-gradient(to bottom, transparent 62%, var(--bg) 96%);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
     pointer-events: none;
     z-index: 3;
 }
@@ -626,7 +675,45 @@ main,
     height: min(46vw, 44rem);
     transform: translateX(-50%);
     border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(var(--glow), 0.35), rgba(var(--glow), 0.08) 60%, transparent);
+    background: radial-gradient(closest-side, rgba(var(--glow), 0.2), rgba(var(--glow), 0.05) 60%, transparent);
+}
+
+/* Faint squiggly ring behind the upper body: turns slowly and floats; fades out towards the bottom */
+.ring {
+    position: absolute;
+    left: 50%;
+    top: 44%;
+    width: 128%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 82%);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 82%);
+    animation: ring-float 7s ease-in-out infinite alternate;
+}
+
+.ring-line {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: rgba(194, 164, 255, 0.28);
+    stroke-width: 1.5;
+    animation: ring-spin 60s linear infinite;
+}
+
+.ring-line path {
+    vector-effect: non-scaling-stroke;
+}
+
+@keyframes ring-float {
+    from { transform: translateY(-0.6rem); }
+    to { transform: translateY(0.6rem); }
+}
+
+@keyframes ring-spin {
+    to { transform: rotate(360deg); }
 }
 
 .hero {
@@ -854,9 +941,24 @@ main,
 
 /* ---------- Career ---------- */
 .career {
+    position: relative;
     padding: 8rem var(--gutter);
     max-width: 80rem;
     margin: 0 auto;
+}
+
+/* Slow curved light streaks behind the career timeline, full-bleed and faded at the top and bottom */
+.light-streaks {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 100%;
+    translate: -50% 0;
+    z-index: -1;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
 }
 
 .career-list {
@@ -1524,6 +1626,18 @@ main,
     border-top: 1px solid var(--line);
 }
 
+/* Falling stars behind the contact content, faded in from the top edge */
+.star-fall {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%);
+    mask-image: linear-gradient(to bottom, transparent, #000 20%);
+}
+
 .contact-cta {
     justify-content: center;
 }
@@ -1728,6 +1842,11 @@ main,
         display: none;
     }
 
+    .to-top {
+        right: 1.25rem;
+        bottom: 1.25rem;
+    }
+
     .topbar-resume {
         display: inline;
     }
@@ -1765,7 +1884,6 @@ main,
         width: min(72vw, 19.5rem);
         height: auto;
         aspect-ratio: 4 / 5;
-        border-radius: 10rem 10rem 0 0;
     }
 
     .hero {
