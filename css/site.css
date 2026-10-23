@@ -1489,6 +1489,17 @@ main,
     color: var(--muted);
 }
 
+.edu-list .is-gold {
+    border-color: rgba(212, 175, 95, 0.75);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .edu-list .is-gold:hover {
+        border-color: rgb(212, 175, 95);
+        box-shadow: 0 24px 60px -24px rgba(212, 175, 95, 0.4);
+    }
+}
+
 .edu-list .edu-note {
     color: var(--text);
 }
