@@ -1651,6 +1651,32 @@ main,
     text-transform: uppercase;
 }
 
+.name-layers {
+    display: inline-grid;
+}
+
+.name-back,
+.name-mid,
+.name-front {
+    grid-area: 1 / 1;
+}
+
+.name-back {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(194, 164, 255, 0.35);
+    translate: 0.11em 0.07em;
+}
+
+.name-mid {
+    color: rgb(var(--glow));
+    translate: 0.055em 0.035em;
+}
+
+/* Translated copies paint above plain text, so the front copy needs positioning to stay on top */
+.name-front {
+    position: relative;
+}
+
 .contact-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.4fr);

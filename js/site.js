@@ -371,6 +371,83 @@
 
     initStarFall();
 
+    // --- Layered name in the contact section: arrives spread apart and springs together as you scroll in; ---
+    // hovering fans the layers out again, wider the nearer the cursor is to the top left. Without JS (or with
+    // reduced motion) the CSS keeps a small static offset instead.
+    function initNameLayers() {
+        var name = document.querySelector('.contact-name');
+        if (!name || reduceMotion || !('IntersectionObserver' in window)) return;
+        var layers = name.querySelector('.name-layers');
+        var back = name.querySelector('.name-back');
+        var mid = name.querySelector('.name-mid');
+        // Full spread of the back layer, in em; the middle layer moves half as far
+        var MAX_X = 0.3, MAX_Y = 0.22;
+        var STIFFNESS = 140, DAMPING = 16;
+
+        var x = MAX_X, y = MAX_Y, vx = 0, vy = 0;
+        var hover = null, visible = false, frame = 0, last = 0, start = 0, end = 1;
+
+        function measure() {
+            var top = name.getBoundingClientRect().top + window.scrollY;
+            var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            // Spread while the name enters at the bottom, fully assembled once it is 60% of the way up (or at the page end)
+            start = top - window.innerHeight;
+            end = Math.min(start + window.innerHeight * 0.6, maxScroll);
+        }
+
+        function tick(now) {
+            var dt = Math.min((now - last) / 1000, 1 / 30);
+            last = now;
+            var spread = 1 - Math.min(1, Math.max(0, (window.scrollY - start) / Math.max(1, end - start)));
+            var tx = MAX_X * spread, ty = MAX_Y * spread;
+            if (hover) {
+                tx = Math.max(tx, MAX_X * (1.1 - 0.6 * hover.x));
+                ty = Math.max(ty, MAX_Y * (1.1 - 0.6 * hover.y));
+            }
+            vx += (STIFFNESS * (tx - x) - DAMPING * vx) * dt;
+            vy += (STIFFNESS * (ty - y) - DAMPING * vy) * dt;
+            x += vx * dt;
+            y += vy * dt;
+            back.style.translate = x + 'em ' + y + 'em';
+            mid.style.translate = x / 2 + 'em ' + y / 2 + 'em';
+            // Stop once the layers come to rest; scrolling or the pointer wakes it again
+            var settled = Math.abs(tx - x) + Math.abs(ty - y) < 0.0005 && Math.abs(vx) + Math.abs(vy) < 0.005;
+            frame = settled ? 0 : requestAnimationFrame(tick);
+        }
+
+        function wake() {
+            if (!visible || frame) return;
+            last = performance.now();
+            frame = requestAnimationFrame(tick);
+        }
+
+        layers.addEventListener('pointermove', function (e) {
+            if (e.pointerType !== 'mouse') return;
+            var r = layers.getBoundingClientRect();
+            hover = { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
+            wake();
+        });
+        layers.addEventListener('pointerleave', function () {
+            hover = null;
+            wake();
+        });
+        window.addEventListener('scroll', wake, { passive: true });
+
+        new IntersectionObserver(function (entries) {
+            visible = entries[0].isIntersecting;
+            if (visible) {
+                measure();
+                wake();
+            } else {
+                cancelAnimationFrame(frame);
+                frame = 0;
+            }
+        }).observe(name);
+        window.addEventListener('resize', measure, { passive: true });
+    }
+
+    initNameLayers();
+
     // --- Light streaks behind the career section: large flaring stars, swirled into curved streaks that pulse ---
     // One small WebGL shader, capped at 30 fps and only running while the section is on screen.
     function initLightStreaks() {
