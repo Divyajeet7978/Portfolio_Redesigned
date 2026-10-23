@@ -138,19 +138,16 @@
                     </p>
                     <p class="hero-kicker hero-kicker-end">systems</p>
                 </div>
-                <p class="hero-status" data-hero><span class="pulse" aria-hidden="true"></span> Available for opportunities</p>
             </section>
 
             <section id="about" class="about">
                 <div class="about-copy">
                     <h2 class="label">About me</h2>
-                    <p class="about-lead" data-words>I'm a software engineer with 3+ years in backend services and data
-                        systems. At Vimaan Robotics I write the Cypher and SQL that turn computer-vision scans into live
-                        warehouse inventory. Before that, at Cognizant, I built Python and Node.js services and cut
-                        PostgreSQL query time by 25%.</p>
-                    <p class="about-more" data-reveal>I like being able to prove a system works. Olist Query Studio runs
-                        every generated query through a read-only account and reports its real benchmark score, and
-                        Sort-Downloads has a parity test against the PowerShell script it replaced.</p>
+                    <p class="about-lead" data-words>I build backend and data systems. At Vimaan
+                        Robotics I write the Cypher and SQL that turn computer-vision scans into live
+                        warehouse inventory. When those numbers don't match the source records, my checks
+                        are what flag it. Before that I spent over two years at Cognizant building Python
+                        and Node.js services.</p>
                     <p class="about-more" data-reveal>Away from the keyboard I shoot photos and video, read fiction and
                         fantasy, and travel whenever I can.</p>
                 </div>
@@ -165,9 +162,8 @@
                     <span class="bracket" aria-hidden="true"></span>
                     <h3>Backend &amp; data</h3>
                     <p class="box-sub">Services, queries, pipelines</p>
-                    <p>Java/Spring Boot and Python services, PostgreSQL and Neo4j data models, the Cypher and SQL behind
-                        live dashboards, and the reconciliation checks that flag anything that doesn't match the source
-                        records.</p>
+                    <p>Java/Spring Boot and Python services on PostgreSQL and Neo4j, and the Cypher and
+                        SQL behind live client dashboards.</p>
                     <p class="box-label">Skillset &amp; tools</p>
                     <ul class="chips">
                         <li>Java</li><li>Spring Boot</li><li>Python</li><li>FastAPI</li><li>Node.js</li>
@@ -178,10 +174,9 @@
                 <article class="bracket-box hover-multi-effect" data-reveal>
                     <span class="bracket" aria-hidden="true"></span>
                     <h3>Graph &amp; AI</h3>
-                    <p class="box-sub">LLMs grounded in real data</p>
-                    <p>Language models that work from graph data: text-to-Cypher with local models, Neo4j Graph Data
-                        Science and GenAI, agents built on Microsoft Foundry and Copilot Studio, and LoRA fine-tuning
-                        measured against a baseline.</p>
+                    <p class="box-sub">LLMs, agents, fine-tuning</p>
+                    <p>Text-to-Cypher with local models, so answers come from the data instead of the
+                        model's memory. Agents on Microsoft Foundry and Copilot Studio. Structured output from small local models, with schema checks and a LoRA training pipeline.</p>
                     <p class="box-label">Skillset &amp; tools</p>
                     <ul class="chips">
                         <li>Neo4j GDS</li><li>Ollama</li><li>PyTorch</li><li>LoRA / PEFT</li><li>Microsoft Foundry</li>
@@ -193,7 +188,7 @@
 
         <!-- Career -->
         <section class="career" aria-labelledby="career-title">
-            <h2 id="career-title" class="section-title center" data-reveal>My career &amp;<br><em>experience</em></h2>
+            <h2 id="career-title" class="section-title center" data-reveal>Where I've<br><em>worked</em></h2>
             <div class="career-list">
                 <div class="career-line" aria-hidden="true"><span class="career-line-fill"></span></div>
 
@@ -237,7 +232,7 @@
 
         <!-- Work: pinned horizontal scroll on wide screens, a grid everywhere else -->
         <section id="work" class="work" aria-labelledby="work-title">
-            <h2 id="work-title" class="section-title work-title">My <em>Work</em></h2>
+            <h2 id="work-title" class="section-title work-title">Selected <em>work</em></h2>
             <div class="work-viewport">
                 <div class="work-track">
                     <article class="work-panel hover-multi-effect">
@@ -265,13 +260,13 @@
                             <p class="work-num">02</p>
                             <div class="work-name">
                                 <h3>Bug2JSON</h3>
-                                <p>LLM fine-tuning &middot; Bug triage</p>
+                                <p>LLM &middot; Bug triage</p>
                             </div>
                         </div>
                         <p class="box-label">Tools and features</p>
                         <p class="work-tools">Python, PyTorch, LoRA / PEFT, FastAPI, React, TypeScript</p>
-                        <p class="work-desc">Turns free-text bug reports into schema-validated triage records: category, severity, priority, environment, reproducibility, probable cause and next step. A FastAPI service and a React reviewer UI compare a base Qwen model with a LoRA fine-tune against that baseline.</p>
-                        <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Base-model baseline: 100% schema-valid JSON, 0.34 category macro-F1</p>
+                        <p class="work-desc">Turns free-text bug reports into schema-validated triage records, from category and severity to a suggested next step. A FastAPI service runs a local Qwen 2.5 model and replaces any claim the report doesn't support with “unknown”, and a React UI keeps the JSON in view for review. A LoRA fine-tuning pipeline is in place.</p>
+                        <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>30 of 30 benchmark responses schema-valid</p>
                         <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
                             <img src="img/bug2json.webp" alt="Bug2JSON playground extracting a structured triage record from a login bug report" width="1026" height="722" loading="lazy"
                                 decoding="async" style="object-position: center top;">
@@ -479,8 +474,8 @@
             </a>
             <div class="resume-copy">
                 <h2 id="resume-title" class="section-title" data-reveal>Res<em>ume</em></h2>
-                <p data-reveal>A two-page summary of my experience, projects, education, and certifications, ready to
-                    share with your team.</p>
+                <p data-reveal>Two pages covering my experience, projects, education and
+                    certifications.</p>
                 <ul class="resume-points" data-reveal>
                     <li>3+ years in backend &amp; data systems</li>
                     <li>Java/Spring Boot &middot; Python &middot; Neo4j &middot; PostgreSQL</li>
@@ -533,11 +528,11 @@
                         </li>
                         <li class="hover-multi-effect" data-reveal>
                             <h4>Cognizant Excellence Award</h4>
-                            <p>For measurable improvements in database query performance and system efficiency.</p>
+                            <p>For cutting PostgreSQL query execution time by 25%.</p>
                         </li>
                         <li class="hover-multi-effect" data-reveal>
                             <h4>Grade A Research</h4>
-                            <p>Final-year research on advanced data security methodologies.</p>
+                            <p>An emotion-detection model I built with OpenCV for my final-year project.</p>
                         </li>
                     </ul>
                 </div>
