@@ -27,11 +27,18 @@ function applyTheme(theme) {
         localStorage.setItem('portfolioTheme', theme);
     } catch (e) { /* storage unavailable (private mode) */ }
     currentThemeIndex = themes.indexOf(theme);
+    updateThemeLabel();
 
     // End transition
     setTimeout(() => {
         html.classList.remove('theme-transitioning');
     }, 1000);
+}
+
+function updateThemeLabel() {
+    const current = themes[currentThemeIndex];
+    const next = themes[(currentThemeIndex + 1) % themes.length];
+    themeToggleButton.setAttribute('aria-label', `Theme: ${current}. Switch to ${next}`);
 }
 
 function cycleTheme() {
@@ -67,7 +74,7 @@ if (cursorDot && window.matchMedia('(hover: hover) and (pointer: fine)').matches
         cursorDot.classList.add('active');
     });
 
-    const hoverElements = document.querySelectorAll('a, button, .hover-multi-effect, .tab-button, .radial-progress');
+    const hoverElements = document.querySelectorAll('a, button, .hover-multi-effect, .tab-button');
     hoverElements.forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.classList.add('hovering'));
         el.addEventListener('mouseleave', () => cursorDot.classList.remove('hovering'));
@@ -111,7 +118,7 @@ if (typeof gsap !== 'undefined') {
                         duration: reduceMotion ? 0 : 0.8,
                         scrollTo: {
                             y: targetPosition,
-                            autoKill: false
+                            autoKill: true
                         },
                         ease: "power3.inOut",
                         onStart: () => {
@@ -191,8 +198,10 @@ if (typeof gsap !== 'undefined') {
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 // Update active button
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+                tabButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn === button);
+                    btn.setAttribute('aria-pressed', String(btn === button));
+                });
 
                 const filter = button.getAttribute('data-filter');
 
@@ -247,6 +256,8 @@ if (typeof gsap !== 'undefined') {
             });
         });
     }
+} else {
+    document.querySelectorAll('.animate-on-scroll').forEach(el => { el.style.opacity = 1; });
 }
 
 
@@ -256,7 +267,7 @@ function initTooltips() {
 
     // Create tooltip element
     const tooltip = document.createElement('div');
-    tooltip.className = 'tooltip hidden fixed z-50 px-3 py-2 text-sm rounded-lg bg-[var(--bg-end)] border border-[var(--glass-border)] shadow-lg max-w-xs';
+    tooltip.className = 'tooltip hidden fixed z-50 max-w-xs';
     document.body.appendChild(tooltip);
 
     tooltipElements.forEach(el => {
@@ -347,7 +358,7 @@ function initAccordions() {
                 content.style.maxHeight = content.offsetHeight + 'px';
                 gsap.to(content, {
                     maxHeight: 0,
-                    duration: 0.6,
+                    duration: reduceMotion ? 0 : 0.6,
                     ease: "power2.out",
                     overwrite: true
                 });
@@ -355,39 +366,12 @@ function initAccordions() {
                 item.classList.add('active');
                 gsap.to(content, {
                     maxHeight: content.scrollHeight,
-                    duration: 0.6,
+                    duration: reduceMotion ? 0 : 0.6,
                     ease: "power2.out",
                     overwrite: true,
                     // Release the cap once open so content reflow can't clip it
                     onComplete: () => { content.style.maxHeight = 'none'; }
                 });
-            }
-        });
-    });
-}
-
-// --- Radial Progress Animation ---
-function animateRadialProgress() {
-    const radialBars = document.querySelectorAll('.radial-progress');
-
-    radialBars.forEach(bar => {
-        const value = bar.style.getPropertyValue('--value') || 0;
-        bar.style.setProperty('--value', '0');
-        bar.textContent = '0%';
-
-        gsap.to(bar, {
-            '--value': value,
-            duration: reduceMotion ? 0 : 1.5,
-            delay: 0.3,
-            // No overshooting ease: the label must never read above the real value
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: bar,
-                start: "top 85%"
-            },
-            onUpdate: () => {
-                const currentValue = bar.style.getPropertyValue('--value');
-                bar.textContent = `${Math.round(currentValue)}%`;
             }
         });
     });
@@ -402,15 +386,18 @@ function animateTimeline() {
         const line = item.querySelector('::before');
 
         // Animate dot
-        gsap.from(dot, {
-            scale: 0,
-            scrollTrigger: {
-                trigger: item,
-                start: "top 80%"
-            },
-            duration: 0.6,
-            ease: "back.out(1.7)"
-        });
+        if (!reduceMotion) {
+            gsap.from(dot, {
+                scale: 0.6,
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%"
+                },
+                duration: 0.4,
+                ease: "power3.out"
+            });
+        }
 
         // Animate line
         ScrollTrigger.create({
@@ -532,7 +519,7 @@ function initContactForm() {
 
         // Change button state
         submitButton.disabled = true;
-        submitText.textContent = "Sending...";
+        submitText.textContent = "Sending…";
         submitButton.querySelector('i').classList.add('fa-spin');
 
         try {
@@ -545,13 +532,13 @@ function initContactForm() {
             if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
 
             // Show success message
-            showSuccessMessage("Message sent successfully!");
+            showSuccessMessage("Message sent");
 
             // Reset form
             contactForm.reset();
 
             // Change button to success state
-            submitText.textContent = "Sent!";
+            submitText.textContent = "Sent";
             submitButton.querySelector('i').classList.remove('fa-paper-plane', 'fa-spin');
             submitButton.querySelector('i').classList.add('fa-check');
 
@@ -563,7 +550,7 @@ function initContactForm() {
                 submitButton.querySelector('i').classList.add('fa-paper-plane');
             }, 2000);
         } catch (error) {
-            showSuccessMessage("Failed to send message. Please try again.", true);
+            showSuccessMessage("Message not sent. Check your connection and try again, or email divyajeetpanda@outlook.com.", true);
             submitButton.disabled = false;
             submitText.textContent = submitTextOriginal;
             submitButton.querySelector('i').classList.remove('fa-spin');
@@ -584,15 +571,16 @@ function showSuccessMessage(message, isError = false) {
 
     successMessageContainer.appendChild(msgDiv);
 
-    // Remove after a few seconds
+    // Remove after a few seconds; errors stay longer so the address can be copied
     setTimeout(() => {
         gsap.to(msgDiv, {
             opacity: 0,
             y: 10,
-            duration: 0.5,
+            duration: reduceMotion ? 0 : 0.2,
+            ease: 'power2.out',
             onComplete: () => msgDiv.remove()
         });
-    }, 3500);
+    }, isError ? 10000 : 3500);
 }
 
 // --- Back to Top Button ---
@@ -611,9 +599,9 @@ function initBackToTop() {
 
     backToTopButton.addEventListener('click', () => {
         gsap.to(window, {
-            duration: 1,
-            scrollTo: 0,
-            ease: "power2.inOut"
+            duration: reduceMotion ? 0 : 0.6,
+            scrollTo: { y: 0, autoKill: true },
+            ease: "power3.inOut"
         });
     });
 }
@@ -750,10 +738,10 @@ function initParticles() {
 
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
+    updateThemeLabel();
     initTooltips();
     initAccordions();
-    animateRadialProgress();
-    animateTimeline();
+    if (typeof gsap !== 'undefined') animateTimeline();
     initCertifications();
     initContactForm();
     initBackToTop();
@@ -769,24 +757,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Small delay prevents transition skipping
         requestAnimationFrame(() => {
             cycleTheme();
-        });
-    });
-
-    // Add subtle animation to footer links
-    gsap.utils.toArray('footer a').forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            gsap.to(link, {
-                y: -2,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-        link.addEventListener('mouseleave', () => {
-            gsap.to(link, {
-                y: 0,
-                duration: 0.3,
-                ease: "power2.out"
-            });
         });
     });
 });
