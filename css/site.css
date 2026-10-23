@@ -1500,6 +1500,55 @@ main,
     }
 }
 
+/* Gold medal card: the convocation photos open up on hover (always shown without a mouse) */
+.award-photos {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.55s var(--ease), opacity 0.4s var(--ease), margin-top 0.55s var(--ease);
+}
+
+.award-photos-inner {
+    display: grid;
+    grid-template-columns: 1.43fr 0.71fr;
+    gap: 0.6rem;
+    max-width: 27rem;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.award-photos img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(212, 175, 95, 0.35);
+    transform: scale(1.06);
+    transition: transform 0.7s var(--ease);
+}
+
+.is-gold:hover .award-photos {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 1.1rem;
+}
+
+.is-gold:hover .award-photos img {
+    transform: none;
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+    .award-photos {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        margin-top: 1.1rem;
+    }
+
+    .award-photos img {
+        transform: none;
+    }
+}
+
 .edu-list .edu-note {
     color: var(--text);
 }
