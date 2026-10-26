@@ -94,7 +94,7 @@
         <a href="mailto:divyajeetpanda@outlook.com" class="topbar-email">divyajeetpanda@outlook.com</a>
         <nav class="topbar-nav" aria-label="Primary">
             <a href="#about">About</a>
-            <a href="#work">Work</a>
+            <a href="#work">Projects</a>
             <a href="#resume" class="topbar-resume">Resume</a>
             <a href="#contact">Contact</a>
         </nav>
@@ -242,105 +242,178 @@
 
         <!-- Work: pinned horizontal scroll on wide screens, a grid everywhere else -->
         <section id="work" class="work" aria-labelledby="work-title">
-            <h2 id="work-title" class="section-title work-title">Selected <em>work</em></h2>
-            <div class="work-viewport">
-                <div class="work-track">
-                    <article class="work-panel hover-multi-effect">
-                        <div class="work-head">
-                            <p class="work-num">01</p>
-                            <div class="work-name">
-                                <h3>Olist Query Studio</h3>
-                                <p>LLM &middot; Graph analytics</p>
-                            </div>
+            <h2 id="work-title" class="section-title work-title">Personal <em>projects</em></h2>
+            <div class="work-grid">
+                <!-- Sticky index on wide screens: the big number and name of the project in view -->
+                <div class="work-index" aria-hidden="true">
+                    <div class="work-index-inner">
+                        <div class="work-bignum">
+                            <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
                         </div>
-                        <p class="box-label">Tools and features</p>
-                        <p class="work-tools">Python, Neo4j, Cypher, Ollama, FastAPI, Streamlit</p>
-                        <p class="work-desc">Turns plain-English analytics questions about the Olist e-commerce dataset into Cypher and runs them against Neo4j. A local Ollama model writes the queries from the graph schema; a validator, an EXPLAIN check and a read-only account keep every query safe.</p>
+                        <ul class="work-names">
+                            <li>Olist Query Studio</li>
+                            <li>Bug2JSON</li>
+                            <li>Sort-Downloads</li>
+                            <li>AI Resume Analyzer</li>
+                            <li>Ethereal Command</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="work-list">
+                    <article class="project" aria-labelledby="proj-olist">
+                        <p class="label project-num">01</p>
+                        <div class="project-head">
+                            <h3 id="proj-olist">Olist Query Studio</h3>
+                            <span class="project-tag">LLM &middot; Graph analytics</span>
+                        </div>
+                        <p class="project-pitch">Turns plain-English analytics questions about the Olist e-commerce dataset into Cypher and runs them against Neo4j.</p>
+                        <h4 class="label project-label">What I built</h4>
+                        <ul class="project-points">
+                            <li>Query generation from the graph schema with a local Ollama model</li>
+                            <li>A validator, an EXPLAIN check and a read-only account on every query</li>
+                        </ul>
                         <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Matches 82 of 112 verified benchmark questions (73%)</p>
-                        <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                        <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
                             <img src="img/olist-query-studio.webp" alt="Olist Query Studio answering how many orders were delivered, with the generated Cypher and result row" width="960" height="585" loading="lazy"
                                 decoding="async" style="object-position: left top;">
                             <span class="work-overlay"><strong>Olist Query Studio</strong>Plain-English questions to Cypher</span>
                         </a>
+                        <details class="project-detail">
+                            <summary>The technical detail<span aria-hidden="true">+</span></summary>
+                            <div class="project-detail-body">
+                                <h4 class="label project-label">Technologies</h4>
+                                <ul class="project-pills">
+                                    <li>Python</li><li>Neo4j</li><li>Cypher</li><li>Ollama</li><li>FastAPI</li><li>Streamlit</li>
+                                </ul>
+                                <h4 class="label project-label">How it works</h4>
+                                <p>A local Ollama model writes the queries from the graph schema; a validator, an EXPLAIN check and a read-only account keep every query safe.</p>
+                            </div>
+                        </details>
                         <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="text-link"
                             aria-label="View Olist Query Studio code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                     </article>
-                    <article class="work-panel hover-multi-effect">
-                        <div class="work-head">
-                            <p class="work-num">02</p>
-                            <div class="work-name">
-                                <h3>Bug2JSON</h3>
-                                <p>LLM &middot; Bug triage</p>
-                            </div>
+                    <article class="project" aria-labelledby="proj-bug2json">
+                        <p class="label project-num">02</p>
+                        <div class="project-head">
+                            <h3 id="proj-bug2json">Bug2JSON</h3>
+                            <span class="project-tag">LLM &middot; Bug triage</span>
                         </div>
-                        <p class="box-label">Tools and features</p>
-                        <p class="work-tools">Python, PyTorch, LoRA / PEFT, FastAPI, React, TypeScript</p>
-                        <p class="work-desc">Turns free-text bug reports into schema-validated triage records, from category and severity to a suggested next step. A FastAPI service runs a local Qwen 2.5 model and replaces any claim the report doesn't support with “unknown”, and a React UI keeps the JSON in view for review. A LoRA fine-tuning pipeline is in place.</p>
+                        <p class="project-pitch">Turns free-text bug reports into schema-validated triage records, from category and severity to a suggested next step.</p>
+                        <h4 class="label project-label">What I built</h4>
+                        <ul class="project-points">
+                            <li>A FastAPI service running a local Qwen 2.5 model</li>
+                            <li>Guardrails that mark anything the report doesn't support as &ldquo;unknown&rdquo;</li>
+                            <li>A React review UI that keeps the JSON in view</li>
+                        </ul>
                         <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>30 of 30 benchmark responses schema-valid</p>
-                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
                             <img src="img/bug2json.webp" alt="Bug2JSON playground extracting a structured triage record from a login bug report" width="1026" height="722" loading="lazy"
                                 decoding="async" style="object-position: center top;">
                             <span class="work-overlay"><strong>Bug2JSON</strong>Bug reports to validated JSON</span>
                         </a>
+                        <details class="project-detail">
+                            <summary>The technical detail<span aria-hidden="true">+</span></summary>
+                            <div class="project-detail-body">
+                                <h4 class="label project-label">Technologies</h4>
+                                <ul class="project-pills">
+                                    <li>Python</li><li>PyTorch</li><li>LoRA / PEFT</li><li>FastAPI</li><li>React</li><li>TypeScript</li>
+                                </ul>
+                                <h4 class="label project-label">How it works</h4>
+                                <p>A FastAPI service runs a local Qwen 2.5 model and replaces any claim the report doesn't support with &ldquo;unknown&rdquo;, and a React UI keeps the JSON in view for review. A LoRA fine-tuning pipeline is in place.</p>
+                            </div>
+                        </details>
                         <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="text-link"
                             aria-label="View Bug2JSON code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                     </article>
-                    <article class="work-panel hover-multi-effect">
-                        <div class="work-head">
-                            <p class="work-num">03</p>
-                            <div class="work-name">
-                                <h3>Sort-Downloads</h3>
-                                <p>Python &middot; CLI &middot; Automation</p>
-                            </div>
+                    <article class="project" aria-labelledby="proj-sort">
+                        <p class="label project-num">03</p>
+                        <div class="project-head">
+                            <h3 id="proj-sort">Sort-Downloads</h3>
+                            <span class="project-tag">Python &middot; CLI &middot; Automation</span>
                         </div>
-                        <p class="box-label">Tools and features</p>
-                        <p class="work-tools">Python, Rich, PowerShell, pytest</p>
-                        <p class="work-desc">A command-line tool I use daily. It files every loose download by category, extension and month, and sends exact duplicates (same size and MD5) to the Recycle Bin after a colour-coded preview of every move.</p>
+                        <p class="project-pitch">A command-line tool I use daily that files every loose download by category, extension and month.</p>
+                        <h4 class="label project-label">What I built</h4>
+                        <ul class="project-points">
+                            <li>Filing rules by category, extension and month</li>
+                            <li>Exact-duplicate detection by size and MD5, sent to the Recycle Bin</li>
+                            <li>A colour-coded preview of every move before it runs</li>
+                        </ul>
                         <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>Parity test: files everything exactly as the PowerShell original</p>
-                        <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="work-media" tabindex="-1" aria-hidden="true">
+                        <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
                             <img src="img/sort-downloads.webp" alt="Sort-Downloads previewing where each file will be filed" width="960" height="764" loading="lazy"
                                 decoding="async" style="object-position: center top;">
                             <span class="work-overlay"><strong>Sort-Downloads</strong>Python CLI with a rich preview</span>
                         </a>
+                        <details class="project-detail">
+                            <summary>The technical detail<span aria-hidden="true">+</span></summary>
+                            <div class="project-detail-body">
+                                <h4 class="label project-label">Technologies</h4>
+                                <ul class="project-pills">
+                                    <li>Python</li><li>Rich</li><li>PowerShell</li><li>pytest</li>
+                                </ul>
+                                <h4 class="label project-label">How it works</h4>
+                                <p>It files every loose download by category, extension and month, and sends exact duplicates (same size and MD5) to the Recycle Bin after a colour-coded preview of every move.</p>
+                            </div>
+                        </details>
                         <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="text-link"
                             aria-label="View Sort-Downloads code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                     </article>
-                    <article class="work-panel hover-multi-effect">
-                        <div class="work-head">
-                            <p class="work-num">04</p>
-                            <div class="work-name">
-                                <h3>AI Resume Analyzer</h3>
-                                <p>Full stack &middot; AI</p>
-                            </div>
+                    <article class="project" aria-labelledby="proj-resume">
+                        <p class="label project-num">04</p>
+                        <div class="project-head">
+                            <h3 id="proj-resume">AI Resume Analyzer</h3>
+                            <span class="project-tag">Full stack &middot; AI</span>
                         </div>
-                        <p class="box-label">Tools and features</p>
-                        <p class="work-tools">Next.js, TypeScript, Express.js, Supabase, OpenAI API, Zod</p>
-                        <p class="work-desc">Compares PDF/DOCX resumes with job descriptions and returns ATS-style feedback, keyword gaps and suggestions. A Next.js frontend and an Express/TypeScript API share Zod schemas, with Supabase auth and OpenAI-assisted feedback backed by deterministic scoring.</p>
+                        <p class="project-pitch">Compares PDF/DOCX resumes with job descriptions and returns ATS-style feedback, keyword gaps and suggestions.</p>
+                        <h4 class="label project-label">What I built</h4>
+                        <ul class="project-points">
+                            <li>A Next.js frontend and an Express/TypeScript API that share Zod schemas</li>
+                            <li>Supabase auth</li>
+                            <li>OpenAI-assisted feedback backed by deterministic scoring</li>
+                        </ul>
                         <p class="work-status">In progress &middot; repository not public yet</p>
                         <div class="work-media work-cover" aria-hidden="true"><span>ATS-style feedback</span></div>
-                        
-                    </article>
-                    <article class="work-panel hover-multi-effect">
-                        <div class="work-head">
-                            <p class="work-num">05</p>
-                            <div class="work-name">
-                                <h3>Ethereal Command</h3>
-                                <p>System telemetry dashboard</p>
+                        <details class="project-detail">
+                            <summary>The technical detail<span aria-hidden="true">+</span></summary>
+                            <div class="project-detail-body">
+                                <h4 class="label project-label">Technologies</h4>
+                                <ul class="project-pills">
+                                    <li>Next.js</li><li>TypeScript</li><li>Express.js</li><li>Supabase</li><li>OpenAI API</li><li>Zod</li>
+                                </ul>
+                                <h4 class="label project-label">How it works</h4>
+                                <p>A Next.js frontend and an Express/TypeScript API share Zod schemas, with Supabase auth and OpenAI-assisted feedback backed by deterministic scoring.</p>
                             </div>
+                        </details>
+                    </article>
+                    <article class="project" aria-labelledby="proj-ethereal">
+                        <p class="label project-num">05</p>
+                        <div class="project-head">
+                            <h3 id="proj-ethereal">Ethereal Command</h3>
+                            <span class="project-tag">System telemetry dashboard</span>
                         </div>
-                        <p class="box-label">Tools and features</p>
-                        <p class="work-tools">React, TypeScript, Vite, Tailwind CSS, Express.js, Recharts</p>
-                        <p class="work-desc">A local system-monitoring dashboard. An Express backend polls CPU, RAM, GPU, storage, thermal, network and process telemetry behind cached endpoints, and a React/Vite UI renders live cards, time-series charts and process tables.</p>
+                        <p class="project-pitch">A local system-monitoring dashboard for CPU, RAM, GPU, storage, thermal, network and process telemetry.</p>
+                        <h4 class="label project-label">What I built</h4>
+                        <ul class="project-points">
+                            <li>An Express backend that polls telemetry behind cached endpoints</li>
+                            <li>A React/Vite UI with live cards, time-series charts and process tables</li>
+                        </ul>
                         <p class="work-status">In progress &middot; repository not public yet</p>
                         <div class="work-media work-cover" aria-hidden="true"><span>Live system telemetry</span></div>
-                        
+                        <details class="project-detail">
+                            <summary>The technical detail<span aria-hidden="true">+</span></summary>
+                            <div class="project-detail-body">
+                                <h4 class="label project-label">Technologies</h4>
+                                <ul class="project-pills">
+                                    <li>React</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Express.js</li><li>Recharts</li>
+                                </ul>
+                                <h4 class="label project-label">How it works</h4>
+                                <p>An Express backend polls CPU, RAM, GPU, storage, thermal, network and process telemetry behind cached endpoints, and a React/Vite UI renders live cards, time-series charts and process tables.</p>
+                            </div>
+                        </details>
                     </article>
-                    <article class="work-panel work-more">
-                        <h3>Want to see more?</h3>
-                        <p>Everything else I've built, including experiments and older work, is on GitHub.</p>
-                        <a href="https://github.com/Divyajeet7978" target="_blank" rel="noopener noreferrer"
-                            class="btn btn-accent">See all on GitHub <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-                    </article>
+                    <p class="work-more">Everything else I've built, including experiments and older work, is on GitHub.
+                        <a href="https://github.com/Divyajeet7978" target="_blank" rel="noopener noreferrer" class="text-link">See all on GitHub <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </p>
                 </div>
             </div>
         </section>

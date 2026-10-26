@@ -75,6 +75,27 @@
         });
     }
 
+    // --- Projects: light up the one crossing the middle of the screen, and its number in the sticky index ---
+    var work = document.querySelector('.work');
+    var projects = document.querySelectorAll('.project');
+    if (work && projects.length && 'IntersectionObserver' in window) {
+        var bigNums = work.querySelectorAll('.work-bignum span');
+        var projectNames = work.querySelectorAll('.work-names li');
+        var setActiveProject = function (index) {
+            [projects, bigNums, projectNames].forEach(function (list) {
+                list.forEach(function (el, i) { el.classList.toggle('is-active', i === index); });
+            });
+        };
+        setActiveProject(0);
+        var projectSpy = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) setActiveProject(Array.prototype.indexOf.call(projects, entry.target));
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+        projects.forEach(function (p) { projectSpy.observe(p); });
+        work.classList.add('is-tracking');
+    }
+
     // --- Back-to-top button: shows once the hero is off screen ---
     var toTop = document.querySelector('.to-top');
     var hero = document.getElementById('home');
@@ -709,36 +730,7 @@
                 scrollTrigger: { trigger: '.about-lead', start: 'top 75%', end: 'bottom 45%', scrub: true }
             });
 
-            // Work: pin the section and slide the panels sideways
-            var track = document.querySelector('.work-track');
-            var viewport = document.querySelector('.work-viewport');
-            var distance = function () { return Math.max(0, track.scrollWidth - viewport.clientWidth); };
-            var slide = gsap.to(track, {
-                x: function () { return -distance(); },
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.work',
-                    start: 'top top',
-                    end: function () { return '+=' + distance(); },
-                    pin: true,
-                    scrub: 0.6,
-                    invalidateOnRefresh: true
-                }
-            });
-
-            // Keyboard users: bring a focused panel into view by scrolling the page, not the clipped track
-            var onFocus = function (e) {
-                var panel = e.target.closest('.work-panel');
-                var st = slide.scrollTrigger;
-                if (!panel || !st) return;
-                document.querySelector('.work').scrollLeft = 0;
-                var progress = Math.min(1, panel.offsetLeft / Math.max(1, distance()));
-                window.scrollTo({ top: st.start + progress * (st.end - st.start), behavior: 'instant' });
-            };
-            track.addEventListener('focusin', onFocus);
-
             return function () {
-                track.removeEventListener('focusin', onFocus);
                 root.classList.remove('is-wide');
             };
         });
@@ -757,8 +749,8 @@
                 }
             });
 
-            // Work panels: sleek scroll entrance on mobile
-            gsap.utils.toArray('.work-panel').forEach(function (panel) {
+            // Projects: sleek scroll entrance on mobile
+            gsap.utils.toArray('.project').forEach(function (panel) {
                 gsap.fromTo(panel,
                     { opacity: 0.35, y: 28 },
                     {
