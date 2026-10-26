@@ -100,6 +100,7 @@
     var isWaving = false;
     var waveArmed = true;
     var WAVE_LOOPS = 1;
+    var lookAtViewer = false; // set by the "Hello" hover: face the visitor for the length of the wave
 
     // Load Avatar
     var loader = new THREE.GLTFLoader();
@@ -155,6 +156,7 @@
                         idleAction.reset().play();
                         waveAction.crossFadeTo(idleAction, 0.4, false);
                         isWaving = false;
+                        lookAtViewer = false;
                     });
                 }
                 mixer.update(0);
@@ -264,6 +266,16 @@
         scrollBiasYaw = -0.22 * progress;
     };
 
+    // Hovering (or tapping) "Hello! I'm" in the hero: the model turns to face the visitor and waves once
+    var hello = document.querySelector('.hero-hello');
+    if (hello && !reduceMotion) {
+        hello.addEventListener('pointerenter', function () {
+            if (!waveAction || isWaving) return;
+            lookAtViewer = true;
+            startWave();
+        });
+    }
+
     // Fast scroll detection: pause WebGL render while actively scrolling to guarantee 60fps compositor
     var isFastScrolling = false;
     var scrollStopTimer = null;
@@ -330,8 +342,8 @@
         }
 
         // Until the visitor points somewhere, the head leans toward the page content as it scrolls
-        var combinedTargetYaw = restYaw + (isMouseActive ? targetYaw : scrollBiasYaw);
-        var combinedTargetPitch = (isMouseActive ? targetPitch : 0);
+        var combinedTargetYaw = restYaw + (lookAtViewer ? 0 : isMouseActive ? targetYaw : scrollBiasYaw);
+        var combinedTargetPitch = lookAtViewer ? 0 : isMouseActive ? targetPitch : 0;
 
         var ease = 0.08;
         currentYaw += (combinedTargetYaw - currentYaw) * ease;
