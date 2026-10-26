@@ -13,6 +13,15 @@
     font-display: swap;
 }
 
+/* Archivo (SIL Open Font License), only for the name: subset to its letters, width 70-125 and weight 260-800 */
+@font-face {
+    font-family: 'Archivo Name';
+    src: url('../fonts/archivo-name.8200ecb0.woff2') format('woff2');
+    font-weight: 260 800;
+    font-stretch: 70% 125%;
+    font-display: swap;
+}
+
 :root {
     --bg: #0b0b0c;
     --bg-raised: #141416;
@@ -100,6 +109,34 @@ code {
     width: 0;
     height: 0;
     overflow: hidden;
+}
+
+/* The name, wherever it appears: condensed and heavy until the cursor comes near (name hover in site.js) */
+.hero-name,
+.contact-name,
+.name-credit {
+    font-family: 'Archivo Name', var(--font);
+    font-variation-settings: 'wdth' 70, 'wght' 800;
+}
+
+.name-credit {
+    font-weight: 800;
+}
+
+/* The condensed space is narrow next to wide letters */
+.contact-name,
+.name-credit {
+    word-spacing: 0.08em;
+}
+
+/* Swelling letters re-lay out only the name, never the rest of the page */
+.hero-name,
+.contact-name {
+    contain: layout;
+}
+
+.kin-letter {
+    display: inline-block;
 }
 
 .sr-only {
@@ -750,9 +787,9 @@ main,
 
 .hero-name {
     font-size: clamp(2.4rem, 4.6vw, 4.75rem);
-    font-weight: 500;
+    font-weight: 800;
     line-height: 0.95;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
 }
 
@@ -1771,9 +1808,9 @@ main,
 .contact-name {
     margin: 3.5rem 0 3rem;
     font-size: clamp(2.6rem, 7.5vw, 7rem);
-    font-weight: 500;
+    font-weight: 800;
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
 }
 

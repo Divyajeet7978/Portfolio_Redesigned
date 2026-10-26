@@ -469,6 +469,197 @@
 
     initNameLayers();
 
+    // --- Name hover: letters near the cursor swell wider and lighter on Archivo's width and weight axes, ---
+    // after mikewilcockdesign.com. Each line only stretches as far as its box has room. Mouse only.
+    function initKineticName() {
+        if (reduceMotion || !matchMedia('(hover: hover) and (pointer: fine)').matches || !('IntersectionObserver' in window)) return;
+        var STEPS = 16;
+        var variation = function (t) { return "'wdth' " + (70 + 55 * t).toFixed(1) + ", 'wght' " + Math.round(800 - 540 * t); };
+
+        // Splits a name into letter spans; screen readers keep reading the plain name
+        function split(el) {
+            var text = el.textContent.trim();
+            var holder = el;
+            el.textContent = '';
+            if (el.getAttribute('aria-hidden') !== 'true') {
+                var label = document.createElement('span');
+                label.className = 'sr-only';
+                label.textContent = text;
+                holder = document.createElement('span');
+                holder.setAttribute('aria-hidden', 'true');
+                el.append(label, holder);
+            }
+            var letters = [];
+            Array.from(text).forEach(function (ch) {
+                if (ch === ' ') { holder.append(' '); return; }
+                var span = document.createElement('span');
+                span.className = 'kin-letter';
+                span.textContent = ch;
+                holder.append(span);
+                letters.push(span);
+            });
+            return letters;
+        }
+
+        // The contact name is three stacked copies; their letters swell together. box = what the line may fill
+        var groups = [
+            { layers: ['.hero-name'], box: '.hero-name' },
+            { layers: ['.contact-name .name-front', '.contact-name .name-mid', '.contact-name .name-back'], box: '.contact-name' },
+            { layers: ['.name-credit'], box: null }
+        ].map(function (g) {
+            var layers = g.layers.map(function (s) { return document.querySelector(s); }).filter(Boolean);
+            if (!layers.length) return null;
+            var letters = layers.map(split);
+            var n = letters[0].length;
+            return { root: layers[0], box: g.box && document.querySelector(g.box), letters: letters, t: new Float32Array(n), v: new Float32Array(n), centers: [], lines: [], tables: {}, visible: false };
+        }).filter(Boolean);
+        if (!groups.length) return;
+
+        // Extra width of a letter at each step of the swell, in em, measured once per character and size
+        function widthTable(g, ch, size) {
+            var key = ch + size;
+            if (g.tables[key]) return g.tables[key];
+            var probe = document.createElement('span');
+            probe.setAttribute('aria-hidden', 'true');
+            probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
+            for (var i = 0; i <= STEPS; i++) {
+                var s = document.createElement('span');
+                s.className = 'kin-letter';
+                s.textContent = ch;
+                s.style.fontVariationSettings = variation(i / STEPS);
+                probe.append(s);
+            }
+            g.root.append(probe);
+            var spans = probe.children, base = spans[0].getBoundingClientRect().width, table = new Float32Array(STEPS + 1);
+            for (var j = 1; j <= STEPS; j++) table[j] = Math.max(table[j - 1], (spans[j].getBoundingClientRect().width - base) / size);
+            probe.remove();
+            return (g.tables[key] = table);
+        }
+
+        function extraAt(table, t) {
+            var x = Math.min(1, Math.max(0, t)) * STEPS, i = Math.min(Math.floor(x), STEPS - 1);
+            return table[i] + (table[i + 1] - table[i]) * (x - i);
+        }
+
+        // Letter centres at rest (page coordinates), lines, and how much wider each line may grow
+        function measure(g) {
+            g.letters.forEach(function (layer) { layer.forEach(function (l) { l.style.fontVariationSettings = ''; }); });
+            var size = parseFloat(getComputedStyle(g.root).fontSize) || 16;
+            g.size = size;
+            g.radius = Math.max(140, size * 2.6);
+            var rects = g.letters[0].map(function (l) { return l.getBoundingClientRect(); });
+            g.centers = rects.map(function (r) { return { x: r.left + r.width / 2 + window.scrollX, y: r.top + r.height / 2 + window.scrollY }; });
+            var byTop = {};
+            rects.forEach(function (r, i) { (byTop[Math.round(r.top)] = byTop[Math.round(r.top)] || []).push(i); });
+            var boxWidth = g.box ? g.box.clientWidth : 0;
+            g.lines = Object.keys(byTop).map(function (top) {
+                var idx = byTop[top];
+                var used = rects[idx[idx.length - 1]].right - rects[idx[0]].left;
+                return {
+                    idx: idx,
+                    tables: idx.map(function (i) { return widthTable(g, g.letters[0][i].textContent, size); }),
+                    room: (g.box ? Math.max(0, boxWidth - used - 4) : size * 3) / size
+                };
+            });
+            g.v.fill(-1);
+            stretch(g);
+        }
+
+        // Scale every letter's swell down together until the line fits its room
+        function stretch(g) {
+            g.lines.forEach(function (line) {
+                var total = function (s) {
+                    var sum = 0;
+                    line.idx.forEach(function (i, k) { sum += extraAt(line.tables[k], g.t[i] * s); });
+                    return sum;
+                };
+                var scale = 1;
+                if (total(1) > line.room) {
+                    var lo = 0, hi = 1;
+                    for (var it = 0; it < 12; it++) { var mid = (lo + hi) / 2; if (total(mid) <= line.room) lo = mid; else hi = mid; }
+                    scale = lo;
+                }
+                line.idx.forEach(function (i) {
+                    // 40 steps (about a pixel each): the browser reuses those font instances instead of
+                    // building and shaping a new one for every letter on every frame
+                    var v = Math.round(g.t[i] * scale * 40) / 40;
+                    if (v === g.v[i]) return;
+                    g.v[i] = v;
+                    var fvs = variation(v);
+                    g.letters.forEach(function (layer) { layer[i].style.fontVariationSettings = fvs; });
+                });
+            });
+        }
+
+        var pointer = { x: -9999, y: -9999, inside: false };
+        var frame = 0, last = 0;
+
+        function tick(now) {
+            var k = Math.min((now - last) / (1000 / 60), 4);
+            last = now;
+            var ease = 1 - Math.pow(1 - 0.12, k);
+            var px = pointer.x + window.scrollX, py = pointer.y + window.scrollY;
+            var moving = false;
+            groups.forEach(function (g) {
+                if (!g.visible) return;
+                g.centers.forEach(function (c, i) {
+                    var pull = 0;
+                    if (pointer.inside) {
+                        var d = Math.hypot(px - c.x, py - c.y);
+                        if (d < g.radius) { pull = 1 - d / g.radius; pull = pull * pull * (3 - 2 * pull); }
+                    }
+                    g.t[i] += (pull - g.t[i]) * ease;
+                    if (Math.abs(pull - g.t[i]) > 0.001) moving = true;
+                });
+                stretch(g);
+            });
+            frame = moving ? requestAnimationFrame(tick) : 0;
+        }
+
+        function wake() {
+            if (frame) return;
+            last = performance.now();
+            frame = requestAnimationFrame(tick);
+        }
+
+        window.addEventListener('pointermove', function (e) {
+            if (e.pointerType !== 'mouse') return;
+            pointer.x = e.clientX;
+            pointer.y = e.clientY;
+            pointer.inside = true;
+            wake();
+        }, { passive: true });
+        document.documentElement.addEventListener('pointerleave', function () {
+            pointer.inside = false;
+            wake();
+        });
+
+        // Names move with the page (the hero sits in a sticky stage), so measure again once scrolling stops
+        var settleTimer = 0;
+        function remeasure() {
+            clearTimeout(settleTimer);
+            settleTimer = setTimeout(function () {
+                groups.forEach(function (g) { if (g.visible) measure(g); });
+                wake();
+            }, 150);
+        }
+        window.addEventListener('scroll', function () { wake(); remeasure(); }, { passive: true });
+        window.addEventListener('resize', remeasure, { passive: true });
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                var g = groups.find(function (x) { return (x.box || x.root) === entry.target; });
+                g.visible = entry.isIntersecting;
+                if (g.visible) { measure(g); wake(); }
+            });
+        });
+        (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+            groups.forEach(function (g) { io.observe(g.box || g.root); });
+        });
+    }
+
+    initKineticName();
+
     // --- Light streaks behind the career section: large flaring stars, swirled into curved streaks that pulse ---
     // One small WebGL shader, capped at 30 fps and only running while the section is on screen.
     function initLightStreaks() {
