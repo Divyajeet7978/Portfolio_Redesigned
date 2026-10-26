@@ -189,19 +189,27 @@
 
     // Cursor tracking: the head turns toward the pointer wherever it is, measured from the head's
     // place on screen (the portrait moves as the page scrolls), and holds that pose when the pointer stops
-    var hasPointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
     var isMouseActive = false;
     var pointerX = 0;
     var pointerY = 0;
     var headScreenX = window.innerWidth / 2;
     var headScreenY = window.innerHeight * 0.3;
-    var HEAD_HEIGHT = 0.2; // the head sits about a fifth of the way down the canvas
-    var LOOK_DISTANCE = 700; // px between the head and the screen: smaller turns the head more sharply
+    var HEAD_HEIGHT = 0.2; // until the model loads: the head sits about a fifth of the way down the canvas
+    var lookDistance = 700; // px between the head and the screen: smaller turns the head more sharply
+    var headWorld = new THREE.Vector3();
 
     function measureHead() {
         var rect = canvas.getBoundingClientRect();
         headScreenX = rect.left + rect.width / 2;
         headScreenY = rect.top + rect.height * HEAD_HEIGHT;
+        if (headBone) {
+            // Where the head bone actually lands on screen, whatever the layout
+            headBone.getWorldPosition(headWorld).project(camera);
+            headScreenX = rect.left + (headWorld.x + 1) / 2 * rect.width;
+            headScreenY = rect.top + (1 - headWorld.y) / 2 * rect.height;
+        }
+        // Narrow screens turn the head further for the same finger distance
+        lookDistance = Math.min(700, Math.max(240, window.innerWidth * 0.5));
     }
 
     function clamp(value, limit) {
@@ -213,36 +221,31 @@
         pointerX = x;
         pointerY = y;
         isMouseActive = true;
-        targetYaw = clamp(Math.atan2(x - headScreenX, LOOK_DISTANCE), 1) / 1.5;
-        targetPitch = clamp(Math.atan2(y - headScreenY, LOOK_DISTANCE), 0.45) / 1.25;
+        targetYaw = clamp(Math.atan2(x - headScreenX, lookDistance), 1) / 1.5;
+        targetPitch = clamp(Math.atan2(y - headScreenY, lookDistance), 0.45) / 1.25;
     }
 
-    if (hasPointer && !reduceMotion) {
-        window.addEventListener('pointermove', function (e) { aimAt(e.clientX, e.clientY); }, { passive: true });
-    }
-
-    // Touch Tracking for mobile (iPhone / touchscreens)
-    function onTouchMove(e) {
-        if (!e.touches || e.touches.length === 0) return;
-        aimAt(e.touches[0].clientX, e.touches[0].clientY);
-    }
-
+    // Mouse: every move. Touch: taps only (down and up in the same spot), so swiping through the page
+    // never tugs the head toward the thumb
+    var aimIsMouse = false;
     if (!reduceMotion) {
-        window.addEventListener('touchmove', onTouchMove, { passive: true });
-        window.addEventListener('touchstart', onTouchMove, { passive: true });
-
-        // Device tilt parallax (gyroscope on mobile)
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', function (e) {
-                if (!isVisible || isFastScrolling || isMouseActive) return;
-                if (e.gamma !== null && e.beta !== null) {
-                    var tiltX = Math.max(-25, Math.min(25, e.gamma)) / 25;
-                    var tiltY = Math.max(-20, Math.min(35, e.beta - 40)) / 25;
-                    targetYaw = tiltX * 0.32;
-                    targetPitch = tiltY * 0.16;
-                }
-            }, { passive: true });
-        }
+        var tapStart = null;
+        window.addEventListener('pointermove', function (e) {
+            if (e.pointerType !== 'mouse') return;
+            aimIsMouse = true;
+            aimAt(e.clientX, e.clientY);
+        }, { passive: true });
+        window.addEventListener('pointerdown', function (e) {
+            tapStart = e.pointerType === 'mouse' ? null : { x: e.clientX, y: e.clientY };
+        }, { passive: true });
+        window.addEventListener('pointerup', function (e) {
+            if (tapStart && Math.hypot(e.clientX - tapStart.x, e.clientY - tapStart.y) < 12) {
+                aimIsMouse = false;
+                aimAt(e.clientX, e.clientY);
+            }
+            tapStart = null;
+        }, { passive: true });
+        window.addEventListener('pointercancel', function () { tapStart = null; }, { passive: true });
     }
 
     // Interactive nod on click or tap
@@ -277,9 +280,10 @@
         clearTimeout(scrollStopTimer);
         scrollStopTimer = setTimeout(function () {
             isFastScrolling = false;
-            // The portrait moved with the page: aim again from the head's new place
+            // The portrait moved with the page: aim again from the head's new place (a mouse is still
+            // where it was; a finger has left the screen, so a tap's aim just holds)
             measureHead();
-            if (isMouseActive) aimAt(pointerX, pointerY);
+            if (aimIsMouse) aimAt(pointerX, pointerY);
         }, 100);
     }, { passive: true });
 
@@ -295,7 +299,7 @@
         renderer.setSize(w, h);
         renderer.render(scene, camera);
         measureHead();
-        if (isMouseActive) aimAt(pointerX, pointerY);
+        if (aimIsMouse) aimAt(pointerX, pointerY);
     }
 
     if ('ResizeObserver' in window) {
