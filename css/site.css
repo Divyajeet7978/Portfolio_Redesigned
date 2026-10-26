@@ -14,17 +14,17 @@
 }
 
 :root {
-    --bg: #0b080c;
-    --bg-raised: #131016;
+    --bg: #0b0b0c;
+    --bg-raised: #141416;
     --line: rgba(234, 229, 236, 0.09);
     --line-strong: rgba(234, 229, 236, 0.2);
     --text: #eae5ec;
-    --muted: #a59ca9;
-    --faint: #6f6774;
-    --accent: #c2a4ff;
-    --accent-soft: rgba(194, 164, 255, 0.12);
-    --on-accent: #170e24;
-    --glow: 133, 76, 255;
+    --muted: #a1a1a6;
+    --faint: #6b6b70;
+    --accent: #ff5b2e;
+    --accent-soft: rgba(255, 91, 46, 0.12);
+    --on-accent: #0b0b0c;
+    --glow: 255, 91, 46;
 
     --font: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --mono: 'Geist Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
@@ -179,7 +179,7 @@ code {
 }
 
 .btn-accent {
-    background: linear-gradient(135deg, #d5c0ff, #a98bf0);
+    background: linear-gradient(135deg, #ff7a52, #ff5b2e);
     color: var(--on-accent);
     box-shadow: 0 8px 30px -10px rgba(var(--glow), 0.6);
 }
@@ -203,7 +203,7 @@ code {
     font-weight: 500;
     font-size: 0.92rem;
     color: var(--accent);
-    border-bottom: 1px solid rgba(194, 164, 255, 0.35);
+    border-bottom: 1px solid rgba(255, 91, 46, 0.35);
     padding-bottom: 0.1rem;
     transition: border-color 0.3s;
 }
@@ -268,7 +268,7 @@ code {
     align-items: center;
     justify-content: center;
     gap: 3rem;
-    background: #d9c8ff;
+    background: var(--accent);
     color: var(--on-accent);
     overflow: hidden;
     /* If the script never runs, the loader still gets out of the way */
@@ -311,7 +311,7 @@ code {
     padding: 0.9rem 1.6rem;
     border-radius: 999px;
     background: var(--on-accent);
-    color: #e7dcff;
+    color: #f3f0ea;
     font: 500 1rem/1 var(--mono);
     letter-spacing: 0.08em;
     font-variant-numeric: tabular-nums;
@@ -380,7 +380,7 @@ code {
         height: 1.1rem;
         margin: -0.55rem 0 0 -0.55rem;
         border-radius: 50%;
-        background: #d8c5ff;
+        background: var(--accent);
         pointer-events: none;
         mix-blend-mode: difference;
         opacity: 0;
@@ -420,7 +420,7 @@ code {
     align-items: center;
     height: var(--topbar);
     padding: 0 var(--gutter);
-    background: linear-gradient(var(--bg) 55%, rgba(11, 8, 12, 0));
+    background: linear-gradient(var(--bg) 55%, rgba(11, 11, 12, 0));
 }
 
 .topbar-mark {
@@ -504,7 +504,7 @@ code {
     padding: 0.7rem 0.6rem 0.7rem 1.1rem;
     border-radius: 999px;
     border: 1px solid var(--line);
-    background: rgba(11, 8, 12, 0.75);
+    background: rgba(11, 11, 12, 0.75);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     font-size: 0.85rem;
@@ -536,7 +536,7 @@ code {
     height: 2.6rem;
     border-radius: 999px;
     border: 1px solid var(--line);
-    background: rgba(11, 8, 12, 0.75);
+    background: rgba(11, 11, 12, 0.75);
     color: var(--muted);
     opacity: 0;
     visibility: hidden;
@@ -665,7 +665,7 @@ main,
     position: relative;
 }
 
-/* Lavender halo behind the portrait */
+/* Accent halo behind the portrait */
 .portrait-wrap::before {
     content: '';
     position: absolute;
@@ -698,7 +698,7 @@ main,
     height: 100%;
     overflow: visible;
     fill: none;
-    stroke: rgba(194, 164, 255, 0.28);
+    stroke: rgba(255, 91, 46, 0.28);
     stroke-width: 1.5;
     animation: ring-spin 60s linear infinite;
 }
@@ -770,10 +770,7 @@ main,
 .hero-role-words {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, #f1eaff, var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent);
     animation: roles 7.5s var(--ease) infinite;
 }
 
@@ -861,7 +858,7 @@ main,
 
 .bracket-box {
     padding: 2rem 2.25rem;
-    border: 1px dashed rgba(194, 164, 255, 0.28);
+    border: 1px dashed rgba(255, 91, 46, 0.28);
     border-radius: 2px;
     background: rgba(19, 16, 22, 0.6);
 }
@@ -994,7 +991,7 @@ main,
     margin-left: -6px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(194, 164, 255, 0.18), 0 0 24px 6px rgba(var(--glow), 0.8);
+    box-shadow: 0 0 0 4px rgba(255, 91, 46, 0.18), 0 0 24px 6px rgba(var(--glow), 0.8);
 }
 
 .career-row {
@@ -1169,7 +1166,7 @@ main,
 
 .project-tag {
     padding: 0.3rem 0.75rem;
-    border: 1px solid rgba(194, 164, 255, 0.45);
+    border: 1px solid rgba(255, 91, 46, 0.45);
     border-radius: 999px;
     font: 500 0.7rem/1.2 var(--mono);
     letter-spacing: 0.12em;
@@ -1331,7 +1328,7 @@ main,
     flex-direction: column;
     justify-content: flex-end;
     padding: 1.25rem;
-    background: linear-gradient(to top, rgba(11, 8, 12, 0.85), transparent 70%);
+    background: linear-gradient(to top, rgba(11, 11, 12, 0.85), transparent 70%);
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.85rem;
     opacity: 0;
@@ -1383,7 +1380,7 @@ main,
     padding: 0.5rem 1rem;
     border-radius: 999px;
     border: 1px solid var(--line-strong);
-    background: rgba(11, 8, 12, 0.7);
+    background: rgba(11, 11, 12, 0.7);
     font: 500 0.82rem/1 var(--mono);
     color: var(--accent);
     transition: transform 0.8s var(--ease);
@@ -1557,7 +1554,7 @@ main,
 
 @media (hover: hover) and (pointer: fine) {
     .cert-row:hover {
-        background: rgba(194, 164, 255, 0.04);
+        background: rgba(255, 91, 46, 0.04);
     }
 }
 
@@ -1792,7 +1789,7 @@ main,
 
 .name-back {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(194, 164, 255, 0.35);
+    -webkit-text-stroke: 1px rgba(255, 91, 46, 0.35);
     translate: 0.11em 0.07em;
 }
 
@@ -1891,7 +1888,7 @@ main,
 .field textarea:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(194, 164, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 91, 46, 0.2);
 }
 
 .field [aria-invalid='true'] {
@@ -1985,7 +1982,7 @@ main,
 
     .topbar {
         grid-template-columns: auto 1fr;
-        background: rgba(11, 8, 12, 0.88);
+        background: rgba(11, 11, 12, 0.88);
         -webkit-backdrop-filter: blur(14px);
         backdrop-filter: blur(14px);
         border-bottom: 1px solid rgba(234, 229, 236, 0.06);
@@ -2076,13 +2073,13 @@ main,
     /* Mobile touch micro-interactions & visible overlays */
     .bracket-box:active {
         transform: scale(0.985);
-        border-color: rgba(194, 164, 255, 0.4);
+        border-color: rgba(255, 91, 46, 0.4);
         transition: transform 0.15s ease, border-color 0.15s ease;
     }
 
     .work-overlay {
         opacity: 1;
-        background: linear-gradient(to top, rgba(11, 8, 12, 0.92) 25%, rgba(11, 8, 12, 0.45) 75%, transparent 100%);
+        background: linear-gradient(to top, rgba(11, 11, 12, 0.92) 25%, rgba(11, 11, 12, 0.45) 75%, transparent 100%);
     }
 
     .whatido {

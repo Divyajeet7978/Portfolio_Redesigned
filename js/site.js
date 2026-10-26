@@ -156,7 +156,7 @@
         var ctx = canvas.getContext('2d');
 
         var DOT = 3, GAP = 30, PROXIMITY = 130, SHOCK_RADIUS = 220, SHOCK_STRENGTH = 3;
-        var BASE = [45, 38, 51], ACTIVE = [157, 107, 255];
+        var BASE = [40, 40, 42], ACTIVE = [255, 91, 46];
         // Underdamped spring: pushed dots overshoot slightly and settle in about a second
         var STIFFNESS = 60, DAMPING = 9;
 

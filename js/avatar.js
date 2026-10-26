@@ -64,14 +64,14 @@
     renderer.toneMappingExposure = 1.08;
 
     // Streamlined 3-light setup (ambient + key + rim)
-    var ambient = new THREE.AmbientLight(0xdcd0f5, 1.2);
+    var ambient = new THREE.AmbientLight(0xe6e2dd, 1.2);
     scene.add(ambient);
 
     var keyLight = new THREE.DirectionalLight(0xfff6ea, 1.4);
     keyLight.position.set(1.5, 2.6, 2.2);
     scene.add(keyLight);
 
-    var rimLight = new THREE.DirectionalLight(0xc2a4ff, 2.5);
+    var rimLight = new THREE.DirectionalLight(0xff5b2e, 2.5);
     rimLight.position.set(0, 2.8, -2.2);
     scene.add(rimLight);
 
@@ -125,7 +125,11 @@
                         child.material.roughness = Math.max(child.material.roughness, 0.4);
                         child.material.depthWrite = true;
                         // The smaller hands leave the inside of the sleeve cuffs visible
-                        if (child.material.name === 'Purple') child.material.side = THREE.DoubleSide;
+                        if (child.material.name === 'Purple') {
+                            child.material.side = THREE.DoubleSide;
+                            // Off-white hoodie so the orange accent carries the colour
+                            child.material.color.set(0xe9e5df);
+                        }
                     }
                 }
             });
