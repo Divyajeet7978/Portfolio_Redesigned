@@ -105,7 +105,7 @@
     var loader = new THREE.GLTFLoader();
     loader.load(
         // Bump the version whenever avatar.glb changes: /img/* is cached for 30 days
-        'img/avatar.glb?v=7',
+        'img/avatar.glb?v=8',
         function (gltf) {
             avatar = gltf.scene;
 
@@ -116,12 +116,16 @@
                     if (boneName === 'Head') headBone = child;
                     else if (boneName === 'Neck') neckBone = child;
                     else if (boneName === 'Spine2') spine2Bone = child;
+                    // The model's hands are oversized next to its head; the clips never animate scale, so this sticks
+                    else if (/^Wrist\.?[LR]$/.test(boneName)) child.scale.multiplyScalar(0.75);
                 }
                 if (child.isMesh) {
                     child.frustumCulled = false;
                     if (child.material) {
                         child.material.roughness = Math.max(child.material.roughness, 0.4);
                         child.material.depthWrite = true;
+                        // The smaller hands leave the inside of the sleeve cuffs visible
+                        if (child.material.name === 'Purple') child.material.side = THREE.DoubleSide;
                     }
                 }
             });
@@ -167,6 +171,7 @@
             scene.add(avatar);
 
             canvas.classList.add('is-ready');
+            measureHead();
             container.classList.add('has-3d');
 
             renderer.render(scene, camera);
@@ -178,55 +183,44 @@
         }
     );
 
-    // Mouse Tracking (debounced and idle-safe)
+    // Cursor tracking: the head turns toward the pointer wherever it is, measured from the head's
+    // place on screen (the portrait moves as the page scrolls), and holds that pose when the pointer stops
     var hasPointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
-    var mouseIdleTimer = null;
     var isMouseActive = false;
+    var pointerX = 0;
+    var pointerY = 0;
+    var headScreenX = window.innerWidth / 2;
+    var headScreenY = window.innerHeight * 0.3;
+    var HEAD_HEIGHT = 0.2; // the head sits about a fifth of the way down the canvas
+    var LOOK_DISTANCE = 700; // px between the head and the screen: smaller turns the head more sharply
 
-    function onPointerMove(e) {
-        if (!isVisible || isFastScrolling) return;
+    function measureHead() {
+        var rect = canvas.getBoundingClientRect();
+        headScreenX = rect.left + rect.width / 2;
+        headScreenY = rect.top + rect.height * HEAD_HEIGHT;
+    }
+
+    function clamp(value, limit) {
+        return Math.max(-limit, Math.min(limit, value));
+    }
+
+    // Spine, neck and head share the turn (weights 1.5 for yaw, 1.25 for pitch), so divide by those
+    function aimAt(x, y) {
+        pointerX = x;
+        pointerY = y;
         isMouseActive = true;
-        clearTimeout(mouseIdleTimer);
-
-        var nx = (e.clientX / window.innerWidth) * 2 - 1;
-        var ny = (e.clientY / window.innerHeight) * 2 - 1;
-
-        targetYaw = nx * 0.42;
-        targetPitch = ny * 0.22;
-
-        mouseIdleTimer = setTimeout(function () {
-            isMouseActive = false;
-            targetYaw = 0;
-            targetPitch = 0;
-        }, 2800);
+        targetYaw = clamp(Math.atan2(x - headScreenX, LOOK_DISTANCE), 1) / 1.5;
+        targetPitch = clamp(Math.atan2(y - headScreenY, LOOK_DISTANCE), 0.45) / 1.25;
     }
 
     if (hasPointer && !reduceMotion) {
-        window.addEventListener('pointermove', onPointerMove, { passive: true });
-        document.documentElement.addEventListener('pointerleave', function () {
-            targetYaw = 0;
-            targetPitch = 0;
-        });
+        window.addEventListener('pointermove', function (e) { aimAt(e.clientX, e.clientY); }, { passive: true });
     }
 
     // Touch Tracking for mobile (iPhone / touchscreens)
     function onTouchMove(e) {
-        if (!isVisible || isFastScrolling || !e.touches || e.touches.length === 0) return;
-        var touch = e.touches[0];
-        isMouseActive = true;
-        clearTimeout(mouseIdleTimer);
-
-        var nx = (touch.clientX / window.innerWidth) * 2 - 1;
-        var ny = (touch.clientY / window.innerHeight) * 2 - 1;
-
-        targetYaw = nx * 0.42;
-        targetPitch = ny * 0.22;
-
-        mouseIdleTimer = setTimeout(function () {
-            isMouseActive = false;
-            targetYaw = 0;
-            targetPitch = 0;
-        }, 2200);
+        if (!e.touches || e.touches.length === 0) return;
+        aimAt(e.touches[0].clientX, e.touches[0].clientY);
     }
 
     if (!reduceMotion) {
@@ -279,6 +273,9 @@
         clearTimeout(scrollStopTimer);
         scrollStopTimer = setTimeout(function () {
             isFastScrolling = false;
+            // The portrait moved with the page: aim again from the head's new place
+            measureHead();
+            if (isMouseActive) aimAt(pointerX, pointerY);
         }, 100);
     }, { passive: true });
 
@@ -293,6 +290,8 @@
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
         renderer.render(scene, camera);
+        measureHead();
+        if (isMouseActive) aimAt(pointerX, pointerY);
     }
 
     if ('ResizeObserver' in window) {
@@ -322,7 +321,8 @@
             mixer.update(delta);
         }
 
-        var combinedTargetYaw = restYaw + (isMouseActive ? targetYaw : 0) + scrollBiasYaw;
+        // Until the visitor points somewhere, the head leans toward the page content as it scrolls
+        var combinedTargetYaw = restYaw + (isMouseActive ? targetYaw : scrollBiasYaw);
         var combinedTargetPitch = (isMouseActive ? targetPitch : 0);
 
         var ease = 0.08;
