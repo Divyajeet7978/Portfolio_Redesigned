@@ -9,7 +9,7 @@ Personal site for my work as a software engineer on backend and data systems.
 
 ## What's on the site
 
-- **Hero** with an interactive 3D avatar (Three.js + a `.glb` model) that follows the cursor
+- **Hero** with an interactive 3D character (Three.js + a `.glb` model) that idles, follows the cursor and waves when you start scrolling
 - **About** and **What I do**: backend & data, graph & AI
 - **Experience** timeline
 - **Selected work**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, with live screenshots
@@ -69,6 +69,10 @@ The previous version used an indigo/purple glassmorphism design and a light/dark
 ### v2: current redesign (October 2026)
 
 Rebuilt with a dark plum/lavender look, a 3D avatar in the hero, edge-glow cards and rewritten copy. See it [live](https://divyajeet.netlify.app).
+
+## Credits
+
+3D character: [Hoodie Character](https://poly.pizza/m/gKLBoRsyKe) by Quaternius (public domain, CC0).
 
 ## Contact
 

@@ -46,8 +46,8 @@
     var height = container.clientHeight || 550;
 
     var camera = new THREE.PerspectiveCamera(32, width / height, 0.1, 50);
-    camera.position.set(0, 1.46, 2.15);
-    camera.lookAt(0, 1.40, 0);
+    camera.position.set(0, 1.42, 2.65);
+    camera.lookAt(0, 1.32, 0);
 
     var renderer = new THREE.WebGLRenderer({
         canvas: canvas,
@@ -94,19 +94,28 @@
     var isHovered = false;
     var nodTime = 0;
 
+    // Wave: plays the model's own wave clip a fixed number of times, then eases back to idle
+    var idleAction = null;
+    var waveAction = null;
+    var isWaving = false;
+    var waveArmed = true;
+    var WAVE_LOOPS = 1;
+
     // Load Avatar
     var loader = new THREE.GLTFLoader();
     loader.load(
         // Bump the version whenever avatar.glb changes: /img/* is cached for 30 days
-        'img/avatar.glb?v=2',
+        'img/avatar.glb?v=7',
         function (gltf) {
             avatar = gltf.scene;
 
             avatar.traverse(function (child) {
                 if (child.isBone) {
-                    if (child.name === 'Head') headBone = child;
-                    else if (child.name === 'Neck') neckBone = child;
-                    else if (child.name === 'Spine2') spine2Bone = child;
+                    // Mixamo rigs prefix bone names with "mixamorig"
+                    var boneName = child.name.replace(/^mixamorig:?/, '');
+                    if (boneName === 'Head') headBone = child;
+                    else if (boneName === 'Neck') neckBone = child;
+                    else if (boneName === 'Spine2') spine2Bone = child;
                 }
                 if (child.isMesh) {
                     child.frustumCulled = false;
@@ -123,16 +132,30 @@
 
             if (gltf.animations && gltf.animations.length > 0) {
                 mixer = new THREE.AnimationMixer(avatar);
-                var idleAction = mixer.clipAction(gltf.animations[0]);
+                var idleClip = gltf.animations.find(function (clip) { return /idle$/i.test(clip.name); }) || gltf.animations[0];
+                idleAction = mixer.clipAction(idleClip);
                 idleAction.setEffectiveTimeScale(0.9);
                 idleAction.play();
+
+                var waveClip = gltf.animations.find(function (clip) { return /wave$/i.test(clip.name); });
+                if (waveClip) {
+                    waveAction = mixer.clipAction(waveClip);
+                    waveAction.setLoop(THREE.LoopRepeat, WAVE_LOOPS);
+                    waveAction.clampWhenFinished = true;
+                    mixer.addEventListener('finished', function (e) {
+                        if (e.action !== waveAction) return;
+                        idleAction.reset().play();
+                        waveAction.crossFadeTo(idleAction, 0.4, false);
+                        isWaving = false;
+                    });
+                }
                 mixer.update(0);
             }
 
             // The idle pose turns the hips away from the camera. Undo half by turning the model
             // and the other half in the head chain (spine + neck + head weights sum to 1.5),
             // so the head faces the viewer at rest and turns equally far either way.
-            var hips = avatar.getObjectByName('Hips');
+            var hips = avatar.getObjectByName('Hips') || avatar.getObjectByName('mixamorigHips');
             if (hips) {
                 avatar.updateMatrixWorld(true);
                 var hipsYaw = new THREE.Euler().setFromQuaternion(hips.getWorldQuaternion(new THREE.Quaternion()), 'YXZ').y;
@@ -245,6 +268,13 @@
     var scrollStopTimer = null;
 
     window.addEventListener('scroll', function () {
+        // Wave once when the visitor starts scrolling; re-arm only after they return to the top
+        if (window.scrollY < 10) {
+            waveArmed = true;
+        } else if (waveArmed && isVisible && !reduceMotion) {
+            waveArmed = false;
+            startWave();
+        }
         isFastScrolling = true;
         clearTimeout(scrollStopTimer);
         scrollStopTimer = setTimeout(function () {
@@ -279,8 +309,8 @@
     function render() {
         if (!isRunning) return;
 
-        // When user is actively scrolling vigorously, yield to the browser compositor
-        if (isFastScrolling) {
+        // When user is actively scrolling vigorously, yield to the browser compositor (except mid-wave)
+        if (isFastScrolling && !isWaving) {
             requestAnimationFrame(render);
             return;
         }
@@ -321,11 +351,18 @@
             spine2Bone.rotation.y = baseSpineRot.y + currentYaw * 0.15;
         }
 
-        var targetCamZ = isHovered ? 2.05 : 2.15;
+        var targetCamZ = isHovered ? 2.55 : 2.65;
         camera.position.z += (targetCamZ - camera.position.z) * 0.05;
 
         renderer.render(scene, camera);
         requestAnimationFrame(render);
+    }
+
+    function startWave() {
+        if (!waveAction || isWaving) return;
+        isWaving = true;
+        waveAction.reset().play();
+        idleAction.crossFadeTo(waveAction, 0.3, false);
     }
 
     function startLoop() {
