@@ -556,12 +556,21 @@ code {
     transition: opacity 0.2s, transform 0.3s var(--ease), visibility 0.2s;
 }
 
-.rail a:hover .rail-card,
+/* Mouse hover only: on touch screens a hover reveal would swallow the first tap on the link */
 .rail a:focus-visible .rail-card {
     opacity: 1;
     visibility: visible;
     transform: none;
     transition-delay: 0.12s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .rail a:hover .rail-card {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition-delay: 0.12s;
+    }
 }
 
 .rail-card-bar {
@@ -1002,6 +1011,48 @@ main,
     margin-top: 1rem;
 }
 
+/* Four results, each linked to where it is shown in full */
+.proof-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-top: 2rem;
+    list-style: none;
+}
+
+.proof-strip a {
+    display: block;
+    height: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.6rem;
+    background: rgba(19, 16, 22, 0.6);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .proof-strip a:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+    }
+}
+
+.proof-strip strong {
+    display: block;
+    font-size: clamp(1.4rem, 2vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+}
+
+.proof-strip span {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
 /* ---------- What I do ---------- */
 .whatido {
     display: grid;
@@ -1106,7 +1157,11 @@ main,
     column-gap: 0.75rem;
 }
 
+/* Links spaced, not dotted: a separator would dangle at the end of a wrapped line */
 .proof-list dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.9rem;
     font: 400 0.78rem/1.6 var(--mono);
     color: var(--faint);
 }
@@ -1119,9 +1174,11 @@ main,
     transition: color 0.3s, text-decoration-color 0.3s;
 }
 
-.proof-list dd a:hover {
-    color: var(--accent);
-    text-decoration-color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+    .proof-list dd a:hover {
+        color: var(--accent);
+        text-decoration-color: var(--accent);
+    }
 }
 
 .proof-list dt span {
@@ -1138,6 +1195,147 @@ main,
         background: var(--accent-soft);
         border-color: var(--accent);
         color: var(--accent);
+    }
+}
+
+/* ---------- Skills map (built by js/site.js from the lists in What I do) ---------- */
+.skillmap {
+    padding: 0 var(--gutter) 8rem;
+}
+
+/* Nothing to draw without JS: the lists above carry the same links */
+html:not(.js) .skillmap {
+    display: none;
+}
+
+.skillmap-head {
+    max-width: 36rem;
+    margin-bottom: 2.5rem;
+}
+
+.skillmap-head p:not(.label) {
+    margin-top: 0.6rem;
+    color: var(--muted);
+}
+
+.skillmap-graph {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: clamp(4rem, 12vw, 12rem);
+    align-items: center;
+}
+
+.skillmap-edges {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.skillmap-edges path {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 1;
+    transition: stroke 0.3s, opacity 0.3s;
+}
+
+.skillmap-graph.is-focused .skillmap-edges path {
+    opacity: 0.35;
+}
+
+.skillmap-graph .skillmap-edges path.is-lit {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    opacity: 1;
+}
+
+/* Right-aligned rows: every line leaves from the same edge and crosses no chips */
+.skillmap-skills {
+    position: relative;
+    display: grid;
+    justify-items: end;
+    gap: 0.45rem;
+}
+
+.skillmap-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.4rem;
+}
+
+.skillmap-evidence {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+}
+
+.skillmap-group {
+    display: grid;
+    justify-items: start;
+    gap: 0.4rem;
+}
+
+.skillmap-group p {
+    margin-bottom: 0.1rem;
+    font: 500 0.7rem/1 var(--mono);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* Opaque, so the lines pass underneath */
+.skillmap-node {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--bg);
+    font: 400 0.8rem/1.2 var(--font);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+}
+
+.skillmap-node.is-evidence {
+    border-radius: 0.4rem;
+    font: 400 0.74rem/1.3 var(--mono);
+}
+
+/* Dim with colour, not opacity, so the nodes stay solid over the lines */
+.skillmap-graph.is-focused .skillmap-node {
+    border-color: var(--line);
+    color: var(--faint);
+}
+
+.skillmap-graph .skillmap-node.is-lit {
+    border-color: var(--accent);
+    background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--bg);
+    color: var(--accent);
+}
+
+@media (max-width: 767px) {
+    .skillmap-graph {
+        grid-template-columns: 1fr;
+        row-gap: 4rem;
+    }
+
+    /* Stacked: the chips flow freely and each line drops from its own chip */
+    .skillmap-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skillmap-row {
+        display: contents;
+    }
+
+    /* Lines cross the chip grid here, so while a skill is picked only its own lines show */
+    .skillmap-graph.is-focused .skillmap-edges path {
+        opacity: 0;
     }
 }
 
@@ -1272,6 +1470,11 @@ main,
     display: grid;
     grid-template-columns: 5fr 7fr;
     gap: 3rem;
+}
+
+/* A grid item grows to its widest content by default; this keeps long Cypher lines scrolling inside their box */
+.work-list {
+    min-width: 0;
 }
 
 /* Sticky index: the number of the project in view, with every project name below it */
@@ -1514,10 +1717,139 @@ main,
     }
 }
 
+/* Olist demo: saved questions, their Cypher and the answer */
+.qa {
+    width: 100%;
+    max-width: 36rem;
+}
+
+.qa-tabs {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.js .qa-tabs {
+    display: flex;
+}
+
+.qa-tabs button {
+    min-height: 2rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    font: 400 0.8rem/1 var(--font);
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .qa-tabs button:hover {
+        color: var(--text);
+        border-color: var(--accent);
+    }
+}
+
+.qa-tabs button[aria-selected="true"] {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.qa-panel {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.6rem;
+    background: var(--bg-raised);
+}
+
+.qa-panel + .qa-panel {
+    margin-top: 0.75rem;
+}
+
+.qa-q {
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
+.qa-source {
+    margin: 0.3rem 0 0.8rem;
+    font: 400 0.7rem/1.4 var(--mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.qa-cypher {
+    margin-bottom: 0.8rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.4rem;
+    background: rgba(0, 0, 0, 0.35);
+    font: 400 0.76rem/1.6 var(--mono);
+    color: var(--text);
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.qa-cypher code {
+    font: inherit;
+}
+
+.cy-kw {
+    color: var(--accent);
+}
+
+.cy-str {
+    color: #e9c98a;
+}
+
+.qa-table {
+    width: 100%;
+    border-collapse: collapse;
+    font: 400 0.78rem/1.4 var(--mono);
+}
+
+.qa-table th,
+.qa-table td {
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+}
+
+.qa-table th {
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.qa-table td + td,
+.qa-table th + th {
+    text-align: right;
+}
+
+.qa-declined {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.qa-declined strong {
+    color: var(--text);
+}
+
+.qa-note {
+    margin-top: 0.6rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
 /* Landing on a job or certificate from a skill link: a brief outline so the eye finds it */
 .career-row:target,
 .cert-card:target,
-.cert-row:target {
+.cert-row:target,
+.edu-list li:target {
     animation: proof-flash 1.8s var(--ease);
 }
 
@@ -1918,8 +2250,21 @@ main,
 
 .resume-meta {
     margin-top: 1rem;
-    font: 400 0.78rem/1 var(--mono);
+    font: 400 0.78rem/1.8 var(--mono);
     color: var(--faint);
+}
+
+.resume-meta a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 91, 46, 0.4);
+    text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .resume-meta a:hover {
+        color: var(--accent);
+    }
 }
 
 /* ---------- Education ---------- */
@@ -2110,6 +2455,32 @@ main,
     color: var(--accent);
 }
 
+.contact-email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.copy-email {
+    min-height: 1.9rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    font: 400 0.75rem/1 var(--mono);
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .copy-email:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+}
+
 .social-list {
     display: grid;
     gap: 0.35rem;
@@ -2218,10 +2589,12 @@ main,
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
-.msg-templates button:hover {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-    color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+    .msg-templates button:hover {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+        color: var(--accent);
+    }
 }
 
 .form-status {

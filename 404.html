@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found | Divyajeet Panda</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#0b0b0c">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/css/site.css">
+    <!-- Absolute paths throughout: Netlify serves this page at whatever address was missing -->
+    <style>
+        .nf {
+            display: grid;
+            place-content: center;
+            gap: 1.5rem;
+            min-height: 100svh;
+            padding: 3rem var(--gutter);
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+
+        .nf h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .nf h1 span {
+            color: var(--accent);
+        }
+
+        .nf-query {
+            padding: 1rem 1.1rem;
+            border: 1px solid var(--line-strong);
+            border-radius: 0.6rem;
+            background: var(--bg-raised);
+            font: 400 0.82rem/1.7 var(--mono);
+            color: var(--muted);
+            white-space: pre-wrap;
+        }
+
+        .nf-query b {
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .nf p {
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <main class="nf">
+        <p class="label">Error 404</p>
+        <h1>No match<span>.</span></h1>
+        <pre class="nf-query"><b>MATCH</b> (p:Page {path: $requested})
+<b>RETURN</b> p
+
+(no records)</pre>
+        <p>This page doesn't exist, or it moved. Everything is on the home page.</p>
+        <div class="btn-row">
+            <a href="/" class="btn btn-accent">Back to the home page</a>
+            <a href="/#work" class="btn btn-ghost">Projects</a>
+            <a href="/resume" class="btn btn-ghost">Resume</a>
+        </div>
+    </main>
+</body>
+
+</html>

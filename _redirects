@@ -1,0 +1,3 @@
+# Netlify redirects
+# Short, shareable resume link: serves the PDF while the address stays /resume
+/resume  /Divyajeet_Panda_Resume.pdf  200

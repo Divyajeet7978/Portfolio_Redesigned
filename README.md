@@ -10,13 +10,15 @@ Personal site for my work as a software engineer on backend and data systems.
 ## What's on the site
 
 - **Hero** with an interactive 3D character (Three.js + a `.glb` model) that idles, follows the cursor, and waves when you start scrolling or tap "Hello"
-- **About** and **What I do**: backend & data, graph & AI, with each skill linked to the job, project or certificate that backs it
+- **About** with four headline results, each linked to its proof, and **What I do**: backend & data, graph & AI, with each skill linked to the job, project or certificate that backs it
+- **Skills map**: a clickable graph joining every skill to those jobs, projects and certificates
 - **Experience** timeline
-- **Personal projects**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, each with a data-flow diagram and, where public, a screenshot and code link
+- **Personal projects**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, each with a data-flow diagram and, where public, a screenshot and code link; Olist Query Studio has saved example questions with their Cypher and answers
 - **Certifications**: Microsoft Applied Skills, Neo4j, HackerRank and Udemy, with links to verify each one
-- **Resume** preview and PDF download
+- **Resume** preview and PDF download, also at the short link `/resume`
 - **Education & awards**, including the gold medal card that shows convocation photos on hover
-- **Contact** form (Netlify Forms) with an animated name heading, plus a back-to-top button
+- **Contact** form (Netlify Forms) with message templates and a copy-email button, an animated name heading, plus a back-to-top button
+- A custom **404 page**
 - **On phones**, a bar with Resume and Email buttons stays at the bottom of the screen
 
 The site uses an orange (`#ff5b2e`) accent on neutral black, Geist and Geist Mono fonts, and GSAP ScrollTrigger reveals. If the browser asks for reduced motion, the animations are turned off.
@@ -54,7 +56,9 @@ Use a local server, not `file://`. The browser blocks the avatar model from load
 ├── fonts/                # Self-hosted font subsets
 ├── vendor/               # GSAP and Three.js
 ├── Divyajeet_Panda_Resume.pdf
+├── 404.html
 ├── robots.txt, sitemap.xml
+├── _redirects            # /resume short link
 └── _headers              # Netlify cache and security headers (CSP)
 ```
 

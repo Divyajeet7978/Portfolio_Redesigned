@@ -96,6 +96,156 @@
         work.classList.add('is-tracking');
     }
 
+    // --- Skills map: each skill joined to the jobs, projects and certificates listed under it in "What I do" ---
+    // Built from .proof-list so the lists stay the single source; the lists are also the accessible version
+    (function initSkillMap() {
+        var graph = document.querySelector('.skillmap-graph');
+        var rows = document.querySelectorAll('.proof-list > div');
+        if (!graph || !rows.length) return;
+        var NS = 'http://www.w3.org/2000/svg';
+        var GROUPS = [['#career-', 'Jobs'], ['#proj-', 'Projects'], ['#cert-', 'Certificates']];
+        var skills = [], evidence = {}, edges = [], pinned = null;
+
+        // Skills keep their rows from the lists (a row shares the same evidence), so lines leave from the row's end
+        var skillCol = document.createElement('div');
+        skillCol.className = 'skillmap-skills';
+        rows.forEach(function (row) {
+            var links = row.querySelectorAll('dd a');
+            var rowEl = document.createElement('div');
+            rowEl.className = 'skillmap-row';
+            skillCol.append(rowEl);
+            row.querySelectorAll('dt span').forEach(function (span) {
+                var skill = { name: span.textContent, links: [], row: rowEl };
+                links.forEach(function (a) {
+                    var href = a.getAttribute('href');
+                    if (!evidence[href]) evidence[href] = { name: a.textContent, href: href };
+                    skill.links.push(evidence[href]);
+                });
+                skills.push(skill);
+            });
+        });
+
+        var svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('class', 'skillmap-edges');
+        skills.forEach(function (skill) {
+            skill.el = document.createElement('button');
+            skill.el.type = 'button';
+            skill.el.tabIndex = -1;
+            skill.el.className = 'skillmap-node';
+            skill.el.textContent = skill.name;
+            skill.row.append(skill.el);
+        });
+        var evCol = document.createElement('div');
+        evCol.className = 'skillmap-evidence';
+        GROUPS.forEach(function (g) {
+            var hrefs = Object.keys(evidence).filter(function (h) { return h.indexOf(g[0]) === 0; });
+            if (!hrefs.length) return;
+            var group = document.createElement('div');
+            group.className = 'skillmap-group';
+            var title = document.createElement('p');
+            title.textContent = g[1];
+            group.append(title);
+            hrefs.forEach(function (h) {
+                var ev = evidence[h];
+                ev.el = document.createElement('a');
+                ev.el.href = h;
+                ev.el.tabIndex = -1;
+                ev.el.className = 'skillmap-node is-evidence';
+                ev.el.textContent = ev.name;
+                group.append(ev.el);
+            });
+            evCol.append(group);
+        });
+        skills.forEach(function (skill) {
+            skill.links.forEach(function (ev) {
+                var path = document.createElementNS(NS, 'path');
+                svg.append(path);
+                edges.push({ skill: skill, ev: ev, path: path });
+            });
+        });
+        graph.append(svg, skillCol, evCol);
+
+        // Curves from each skill to its evidence: sideways on wide screens, downwards when the columns stack
+        var stacked = matchMedia('(max-width: 767px)');
+        function draw() {
+            var box = graph.getBoundingClientRect();
+            edges.forEach(function (e) {
+                var a = e.skill.el.getBoundingClientRect(), b = e.ev.el.getBoundingClientRect(), d;
+                if (stacked.matches) {
+                    var sx = a.left + a.width / 2 - box.left, sy = a.bottom - box.top;
+                    var ex = b.left + b.width / 2 - box.left, ey = b.top - box.top, my = (sy + ey) / 2;
+                    d = 'M' + sx + ' ' + sy + 'C' + sx + ' ' + my + ' ' + ex + ' ' + my + ' ' + ex + ' ' + ey;
+                } else {
+                    var r = e.skill.row.getBoundingClientRect();
+                    var x1 = r.right - box.left, y1 = r.top + r.height / 2 - box.top;
+                    var x2 = b.left - box.left, y2 = b.top + b.height / 2 - box.top, mx = (x1 + x2) / 2;
+                    d = 'M' + x1 + ' ' + y1 + 'C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2;
+                }
+                e.path.setAttribute('d', d);
+            });
+        }
+
+        // Light one skill (or one job/project/certificate) and everything joined to it
+        function light(target) {
+            graph.classList.toggle('is-focused', !!target);
+            graph.querySelectorAll('.is-lit').forEach(function (el) { el.classList.remove('is-lit'); });
+            edges.forEach(function (e) {
+                if (!target || (e.skill !== target && e.ev !== target)) return;
+                e.path.classList.add('is-lit');
+                svg.append(e.path); // lit lines on top
+                e.skill.el.classList.add('is-lit');
+                e.ev.el.classList.add('is-lit');
+            });
+        }
+
+        skills.forEach(function (skill) {
+            skill.el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') light(skill); });
+            skill.el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') light(pinned); });
+            skill.el.addEventListener('click', function () {
+                pinned = pinned === skill ? null : skill;
+                light(pinned);
+            });
+        });
+        Object.keys(evidence).forEach(function (h) {
+            var ev = evidence[h];
+            ev.el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') light(ev); });
+            ev.el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') light(pinned); });
+        });
+
+        // Open on Neo4j, so the idea shows before anyone touches it
+        pinned = skills.filter(function (s) { return s.name === 'Neo4j'; })[0] || null;
+        draw();
+        light(pinned);
+        if ('ResizeObserver' in window) new ResizeObserver(draw).observe(graph);
+        else window.addEventListener('resize', draw);
+        if (document.fonts) document.fonts.ready.then(draw);
+    })();
+
+    // --- Olist demo: saved questions as tabs (without JS every answer shows, one after another) ---
+    document.querySelectorAll('.qa').forEach(function (qa) {
+        var tabs = Array.prototype.slice.call(qa.querySelectorAll('[role="tab"]'));
+        var select = function (tab) {
+            tabs.forEach(function (t) {
+                var on = t === tab;
+                t.setAttribute('aria-selected', String(on));
+                t.tabIndex = on ? 0 : -1;
+                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+            });
+        };
+        tabs.forEach(function (tab, i) {
+            tab.addEventListener('click', function () { select(tab); });
+            tab.addEventListener('keydown', function (e) {
+                var step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+                if (!step) return;
+                e.preventDefault();
+                var next = tabs[(i + step + tabs.length) % tabs.length];
+                select(next);
+                next.focus();
+            });
+        });
+        select(tabs[0]);
+    });
+
     // --- Back-to-top button: shows once the hero is off screen ---
     var toTop = document.querySelector('.to-top');
     var hero = document.getElementById('home');
@@ -844,6 +994,28 @@
             var open = certList.classList.toggle('show-all');
             certToggle.setAttribute('aria-expanded', String(open));
             certToggle.textContent = open ? 'Show fewer' : 'Show all certifications';
+        });
+    }
+
+    // --- Copy email: shown only where the clipboard API exists (https or localhost) ---
+    var copyButton = document.querySelector('.copy-email');
+    if (copyButton && navigator.clipboard) {
+        var copyStatus = copyButton.nextElementSibling;
+        var copyTimer = null;
+        copyButton.hidden = false;
+        copyButton.addEventListener('click', function () {
+            navigator.clipboard.writeText(copyButton.dataset.copy).then(function () {
+                copyButton.textContent = 'Copied';
+                copyStatus.textContent = 'Email address copied';
+            }, function () {
+                copyButton.textContent = 'Copy failed';
+            }).then(function () {
+                clearTimeout(copyTimer);
+                copyTimer = setTimeout(function () {
+                    copyButton.textContent = 'Copy';
+                    copyStatus.textContent = '';
+                }, 2000);
+            });
         });
     }
 
