@@ -106,7 +106,7 @@
     var loader = new THREE.GLTFLoader();
     loader.load(
         // Bump the version whenever avatar.glb changes: /img/* is cached for 30 days
-        'img/avatar.glb?v=8',
+        'img/avatar.glb?v=9',
         function (gltf) {
             avatar = gltf.scene;
 
