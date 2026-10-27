@@ -104,7 +104,7 @@
         if (!graph || !rows.length) return;
         var NS = 'http://www.w3.org/2000/svg';
         var GROUPS = [['#career-', 'Jobs'], ['#proj-', 'Projects'], ['#cert-', 'Certificates']];
-        var skills = [], evidence = {}, edges = [], pinned = null;
+        var skills = [], evidence = {}, edges = [], pinned = null, home = null;
 
         // Skills keep their rows from the lists (a row shares the same evidence), so lines leave from the row's end
         var skillCol = document.createElement('div');
@@ -202,7 +202,7 @@
             skill.el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') light(skill); });
             skill.el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') light(pinned); });
             skill.el.addEventListener('click', function () {
-                pinned = pinned === skill ? null : skill;
+                pinned = pinned === skill ? home : skill;
                 light(pinned);
             });
         });
@@ -212,8 +212,8 @@
             ev.el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') light(pinned); });
         });
 
-        // Open on Neo4j, so the idea shows before anyone touches it
-        pinned = skills.filter(function (s) { return s.name === 'Neo4j'; })[0] || null;
+        // Open on the current job and every skill it backs; hovering elsewhere always comes back to it
+        home = pinned = evidence['#career-vimaan'] || null;
         draw();
         light(pinned);
         if ('ResizeObserver' in window) new ResizeObserver(draw).observe(graph);
