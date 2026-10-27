@@ -107,6 +107,15 @@
         toTop.classList.add('is-on');
     }
 
+    // --- Phone action bar: steps aside while the contact section (same two buttons) is on screen ---
+    var mobileCta = document.querySelector('.mobile-cta');
+    var contact = document.getElementById('contact');
+    if (mobileCta && contact && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            mobileCta.classList.toggle('is-away', entries[0].isIntersecting);
+        }).observe(contact);
+    }
+
     // --- Cursor dot ---
     var cursor = document.querySelector('.cursor');
     if (cursor && finePointer && !reduceMotion) {
@@ -842,6 +851,24 @@
     var form = document.getElementById('contactForm');
     if (form) {
         var status = form.querySelector('.form-status');
+
+        // Message templates: fill the box, then select the first [blank] so the visitor types straight over it
+        var message = form.querySelector('#message');
+        var templates = form.querySelectorAll('[data-template]');
+        var isTemplate = function (text) {
+            return Array.prototype.some.call(templates, function (b) { return b.dataset.template === text; });
+        };
+        templates.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var text = message.value.trim();
+                if (text && !isTemplate(message.value) && !confirm('Replace your message with this template?')) return;
+                message.value = button.dataset.template;
+                message.focus();
+                var start = message.value.indexOf('[');
+                if (start !== -1) message.setSelectionRange(start, message.value.indexOf(']', start) + 1);
+            });
+        });
+
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             var firstBad = null;
@@ -865,7 +892,7 @@
             }).then(function (res) {
                 if (!res.ok) throw new Error(res.status);
                 form.reset();
-                status.textContent = 'Thanks, your message is on its way.';
+                status.textContent = 'Thanks, your message is on its way. I usually reply within two working days.';
             }).catch(function () {
                 status.textContent = "That didn't go through. Email me at divyajeetpanda@outlook.com instead.";
             }).then(function () {

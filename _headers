@@ -1,4 +1,17 @@
 # Netlify HTTP headers
+
+# Security headers for every response.
+# The CSP hash allows the one inline script in index.html's <head> (the loader check).
+# If that script changes by even one character, recompute its sha256 or the loader stops working:
+#   python -c "import re,hashlib,base64;s=open('index.html',encoding='utf-8').read();print(base64.b64encode(hashlib.sha256(re.search(r'<script>(.*?)</script>',s,re.S).group(1).encode()).digest()).decode())"
+# blob: is for the textures three.js unpacks from avatar.glb; 'unsafe-inline' styles cover GSAP's inline transforms.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-aFXFHqT9E3xI0hs6NuhD5+h1q4NMvBk8aInxdiO8jMM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
 # Fonts and vendor scripts are versioned by directory path, safe to cache long-term.
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
