@@ -15,7 +15,7 @@ Personal site for my work as a software engineer on backend and data systems.
 - **Experience** timeline
 - **Personal projects**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, each with a data-flow diagram and, where public, a screenshot and code link; Olist Query Studio has saved example questions with their Cypher and answers
 - **Certifications**: Microsoft Applied Skills, Neo4j, HackerRank and Udemy, with links to verify each one
-- **Resume** preview and PDF download, also at the short link `/resume`
+- **Resume** preview and PDF download, also at the short link `/resume`, plus a Word copy for job portals
 - **Education & awards**, including the gold medal card that shows convocation photos on hover
 - **Contact** form (Netlify Forms) with message templates and a copy-email button, an animated name heading, plus a back-to-top button
 - A custom **404 page**
@@ -55,7 +55,7 @@ Use a local server, not `file://`. The browser blocks the avatar model from load
 ├── img/                  # Project images, photos, avatar.glb, og-card.png
 ├── fonts/                # Self-hosted font subsets
 ├── vendor/               # GSAP and Three.js
-├── Divyajeet_Panda_Resume.pdf
+├── Divyajeet_Panda_Resume.pdf, .docx  # phone-free copies of the resume
 ├── 404.html
 ├── robots.txt, sitemap.xml
 ├── _redirects            # /resume short link

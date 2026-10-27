@@ -93,6 +93,7 @@
         <symbol id="i-arrow-up" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-6 6 6-6 6 6"/></symbol>
         <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></symbol>
         <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h6"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
         <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
     </svg>
     <svg width="0" height="0" class="sprite" aria-hidden="true">
@@ -168,8 +169,9 @@
 
             <section id="home" class="hero" aria-label="Introduction">
                 <div class="hero-left" data-hero>
-                    <p class="hero-hello"><span class="hello-wave">Hello! I'm</span></p>
+                    <p class="hero-hello"><span class="hello-wave">Hello&nbsp;! I'm</span></p>
                     <h1 class="hero-name">Divyajeet</h1>
+                    <p class="hero-meta"><span>Software Engineer &middot;</span> <span>Vimaan Robotics &middot;</span> <span>3+ years</span></p>
                 </div>
                 <div class="hero-right" data-hero>
                     <p class="hero-kicker">A software engineer for</p>
@@ -234,13 +236,13 @@
                             <dd><a href="#career-cognizant">Cognizant</a></dd></div>
                         <div><dt><span>Docker</span></dt>
                             <dd><a href="#career-vimaan">Vimaan Robotics</a> <a href="#career-cognizant">Cognizant</a></dd></div>
-                        <div><dt><span>Kubernetes</span><span>AWS</span><span>Azure</span></dt>
+                        <div><dt><span>Kubernetes</span></dt>
                             <dd><a href="#career-cognizant">Cognizant</a></dd></div>
                         <div><dt><span>CI/CD</span><span>Deployments</span><span>Linux</span></dt>
                             <dd><a href="#career-vimaan">Vimaan Robotics</a></dd></div>
                         <div><dt><span>Pipeline configuration</span><span>Frontend configuration</span></dt>
                             <dd><a href="#career-vimaan">Vimaan Robotics</a></dd></div>
-                        <div><dt><span>Prometheus</span><span>Grafana</span></dt>
+                        <div><dt><span>Grafana</span></dt>
                             <dd><a href="#career-cognizant">Cognizant</a></dd></div>
                     </dl>
                 </article>
@@ -301,6 +303,8 @@
                             source records.</li>
                         <li>Debug Java/Spring Boot services, graph pipelines, and dashboards; support releases with
                             log analysis and regression testing.</li>
+                        <li>Run CI/CD and Docker-based deployments on Linux, and maintain pipeline and frontend
+                            configuration.</li>
                     </ul>
                 </article>
 
@@ -427,8 +431,8 @@
                                 <ul class="project-pills">
                                     <li>Python</li><li>Neo4j</li><li>Cypher</li><li>Ollama</li><li>FastAPI</li><li>Streamlit</li>
                                 </ul>
-                                <h4 class="label project-label">How it works</h4>
-                                <p>A local Ollama model writes the queries from the graph schema; a validator, an EXPLAIN check and a read-only account keep every query safe.</p>
+                                <h4 class="label project-label">Tradeoffs</h4>
+                                <p>A local 7B model keeps the data on the machine, but an answer takes several seconds and matches 73% of the benchmark. One correction attempt keeps latency bounded; the validator is a second check, and the read-only database account is what actually stops writes.</p>
                             </div>
                         </details>
                         <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="text-link"
@@ -468,8 +472,8 @@
                                 <ul class="project-pills">
                                     <li>Python</li><li>PyTorch</li><li>LoRA / PEFT</li><li>FastAPI</li><li>React</li><li>TypeScript</li>
                                 </ul>
-                                <h4 class="label project-label">How it works</h4>
-                                <p>A FastAPI service runs a local Qwen 2.5 model and replaces any claim the report doesn't support with &ldquo;unknown&rdquo;, and a React UI keeps the JSON in view for review. A LoRA fine-tuning pipeline is in place.</p>
+                                <h4 class="label project-label">Tradeoffs</h4>
+                                <p>Every response is schema-valid (30 of 30), but the 1.5B base model&rsquo;s labels are weak on the synthetic suite (40% category accuracy), so the guardrails prefer &ldquo;unknown&rdquo; and the UI asks for review. No fine-tune result is claimed until a reviewed, real-world evaluation exists.</p>
                             </div>
                         </details>
                         <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="text-link"
@@ -509,8 +513,8 @@
                                 <ul class="project-pills">
                                     <li>Python</li><li>Rich</li><li>PowerShell</li><li>pytest</li>
                                 </ul>
-                                <h4 class="label project-label">How it works</h4>
-                                <p>It files every loose download by category, extension and month, and sends exact duplicates (same size and MD5) to the Recycle Bin after a colour-coded preview of every move.</p>
+                                <h4 class="label project-label">Tradeoffs</h4>
+                                <p>Duplicates go to the Recycle Bin, grouped in one folder so they restore in one go, and name clashes become &ldquo;name (2)&rdquo; instead of overwriting. Matching on size plus MD5 only catches byte-identical copies, which is what a Downloads folder needs.</p>
                             </div>
                         </details>
                         <a href="https://github.com/Divyajeet7978/Sort-Downloads" target="_blank" rel="noopener noreferrer" class="text-link"
@@ -545,8 +549,8 @@
                                 <ul class="project-pills">
                                     <li>Next.js</li><li>TypeScript</li><li>Express.js</li><li>Supabase</li><li>OpenAI API</li><li>Zod</li>
                                 </ul>
-                                <h4 class="label project-label">How it works</h4>
-                                <p>A Next.js frontend and an Express/TypeScript API share Zod schemas, with Supabase auth and OpenAI-assisted feedback backed by deterministic scoring.</p>
+                                <h4 class="label project-label">Tradeoffs</h4>
+                                <p>OpenAI writes the feedback, but the score comes from deterministic scoring, with a heuristic fallback when no API key is set. Sharing Zod schemas between the Next.js app and the Express API keeps both sides on one contract.</p>
                             </div>
                         </details>
                     </article>
@@ -577,8 +581,8 @@
                                 <ul class="project-pills">
                                     <li>React</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Express.js</li><li>Recharts</li>
                                 </ul>
-                                <h4 class="label project-label">How it works</h4>
-                                <p>An Express backend polls CPU, RAM, GPU, storage, thermal, network and process telemetry behind cached endpoints, and a React/Vite UI renders live cards, time-series charts and process tables.</p>
+                                <h4 class="label project-label">Tradeoffs</h4>
+                                <p>The backend polls on its own timers (system every second, processes every two, GPU every three) and answers from an in-memory cache, so the UI never waits on a slow sensor, at the cost of data a few seconds old.</p>
                             </div>
                         </details>
                     </article>
@@ -593,8 +597,7 @@
         <section id="certifications" class="certs" aria-labelledby="certs-title">
             <div class="certs-head">
                 <h2 id="certs-title" class="section-title" data-reveal>Certifi<em>cations</em></h2>
-                <p data-reveal>11 credentials from Microsoft, Neo4j, HackerRank, and Udemy. Each one links to the
-                    issuer's page, so you can verify it yourself.</p>
+                <p data-reveal>Each credential links to the issuer's page, so you can verify it yourself.</p>
             </div>
 
             <div class="cert-featured">
@@ -697,16 +700,6 @@
                 <li class="cert-row hover-multi-effect cert-extra">
                     <svg class="issuer" aria-hidden="true"><use href="#logo-udemy"/></svg>
                     <div class="cert-row-main">
-                        <h3>Modern JavaScript From The Beginning 2.0</h3>
-                        <p>Udemy &middot; ID <code>UC-e58c0833-ac32-4b73-910e-0bb1d58560fd</code></p>
-                    </div>
-                    <p class="cert-date">Aug 2024</p>
-                    <a href="https://www.udemy.com/certificate/UC-e58c0833-ac32-4b73-910e-0bb1d58560fd/" target="_blank" rel="noopener noreferrer" class="text-link"
-                        aria-label="Verify: Modern JavaScript From The Beginning 2.0, Udemy (opens in a new tab)">Verify <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-                </li>
-                <li class="cert-row hover-multi-effect cert-extra">
-                    <svg class="issuer" aria-hidden="true"><use href="#logo-udemy"/></svg>
-                    <div class="cert-row-main">
                         <h3>Advanced SQL: MySQL Data Analysis &amp; Business Intelligence</h3>
                         <p>Udemy &middot; ID <code>UC-ae8fcb3e-c5f2-4d47-8de8-931c4fa2d75d</code></p>
                     </div>
@@ -723,7 +716,7 @@
         <section id="resume" class="resume" aria-labelledby="resume-title">
             <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="resume-preview hover-multi-effect"
                 aria-label="Open the resume PDF (opens in a new tab)" data-reveal>
-                <img src="img/resume-preview.webp" alt="First page of Divyajeet Panda's resume" width="480" height="679"
+                <img src="img/resume-preview.webp?v=3" alt="First page of Divyajeet Panda's resume" width="480" height="679"
                     loading="lazy" decoding="async">
             </a>
             <div class="resume-copy">
@@ -736,10 +729,20 @@
                     <li>Gold Medalist, M.Sc. IT</li>
                 </ul>
                 <div class="btn-row" data-reveal>
-                    <a href="Divyajeet_Panda_Resume.pdf" download class="btn btn-accent">Download PDF <svg aria-hidden="true"><use href="#i-download"/></svg></a>
+                    <!-- Split button: the main part downloads the PDF; the arrow offers the other format (works without JS) -->
+                    <div class="dl-split">
+                        <a href="Divyajeet_Panda_Resume.pdf" download class="btn btn-accent dl-main">Download PDF <svg aria-hidden="true"><use href="#i-download"/></svg></a>
+                        <details class="dl-more">
+                            <summary class="btn btn-accent" aria-label="Choose a format"><svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                            <ul class="dl-menu">
+                                <li><a href="Divyajeet_Panda_Resume.pdf" download>PDF <span>10 KB</span></a></li>
+                                <li><a href="Divyajeet_Panda_Resume.docx" download>Word (.docx) <span>39 KB</span></a></li>
+                            </ul>
+                        </details>
+                    </div>
                     <a href="Divyajeet_Panda_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">View online <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                 </div>
-                <p class="resume-meta" data-reveal>PDF &middot; 2 pages &middot; 8 KB &middot; Updated Oct 2026<br>Short link: <a href="/resume" target="_blank" rel="noopener">divyajeet.netlify.app/resume</a></p>
+                <p class="resume-meta" data-reveal>PDF &middot; 2 pages &middot; 10 KB &middot; Updated Oct 2026<br>Short link: <a href="/resume" target="_blank" rel="noopener">divyajeet.netlify.app/resume</a></p>
             </div>
         </section>
 
@@ -783,10 +786,6 @@
                         <li class="hover-multi-effect" data-reveal>
                             <h4>Cognizant Excellence Award</h4>
                             <p>For cutting PostgreSQL query execution time by 25%.</p>
-                        </li>
-                        <li class="hover-multi-effect" data-reveal>
-                            <h4>Grade A Research</h4>
-                            <p>An emotion-detection model I built with OpenCV for my final-year project.</p>
                         </li>
                     </ul>
                 </div>

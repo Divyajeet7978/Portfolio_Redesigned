@@ -65,7 +65,11 @@
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
                 navLinks.forEach(function (a) {
-                    a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+                    var on = a.getAttribute('href') === '#' + entry.target.id;
+                    a.classList.toggle('is-active', on);
+                    // Screen readers hear which section is current, not just sighted visitors
+                    if (on) a.setAttribute('aria-current', 'true');
+                    else a.removeAttribute('aria-current');
                 });
             });
         }, { rootMargin: '-45% 0px -50% 0px' });
@@ -996,6 +1000,21 @@
             certToggle.textContent = open ? 'Show fewer' : 'Show all certifications';
         });
     }
+
+    // --- Download menu: Escape, a click elsewhere or picking a format closes it ---
+    document.querySelectorAll('.dl-more').forEach(function (menu) {
+        document.addEventListener('click', function (e) {
+            if (menu.open && !menu.contains(e.target)) menu.open = false;
+        });
+        menu.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape' || !menu.open) return;
+            menu.open = false;
+            menu.querySelector('summary').focus();
+        });
+        menu.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { menu.open = false; });
+        });
+    });
 
     // --- Copy email: shown only where the clipboard API exists (https or localhost) ---
     var copyButton = document.querySelector('.copy-email');

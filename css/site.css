@@ -29,7 +29,7 @@
     --line-strong: rgba(234, 229, 236, 0.2);
     --text: #eae5ec;
     --muted: #a1a1a6;
-    --faint: #6b6b70;
+    --faint: #838389; /* 4.6:1 or better on every dark surface here */
     --accent: #ff5b2e;
     --accent-soft: rgba(255, 91, 46, 0.12);
     --on-accent: #0b0b0c;
@@ -233,6 +233,69 @@ code {
     gap: 0.75rem;
 }
 
+/* Split download button: PDF on the main part, a format menu behind the arrow */
+.dl-split {
+    position: relative;
+    display: inline-flex;
+}
+
+.dl-split .dl-main {
+    border-radius: 0.6rem 0 0 0.6rem;
+}
+
+.dl-more summary {
+    height: 100%;
+    padding: 0.7rem 0.8rem;
+    border-left: 1px solid rgba(11, 11, 12, 0.25);
+    border-radius: 0 0.6rem 0.6rem 0;
+    /* Solid end colour of the gradient, so the two halves meet without a seam */
+    background: #ff5b2e;
+    list-style: none;
+}
+
+.dl-more summary::-webkit-details-marker {
+    display: none;
+}
+
+.dl-more summary svg {
+    transition: transform 0.3s var(--ease);
+}
+
+.dl-more[open] summary svg {
+    transform: rotate(180deg);
+}
+
+.dl-menu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    z-index: 20;
+    min-width: 100%;
+    padding: 0.35rem;
+    list-style: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.6rem;
+    background: var(--bg-raised);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.dl-menu a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dl-menu a span {
+    font: 400 0.72rem/1 var(--mono);
+    color: var(--muted);
+}
+
 .text-link {
     display: inline-flex;
     align-items: center;
@@ -275,6 +338,16 @@ code {
 
     .btn-accent:hover {
         box-shadow: 0 12px 36px -10px rgba(var(--glow), 0.8);
+    }
+
+    /* The split button's halves lift together or not at all */
+    .dl-split .btn:hover {
+        transform: none;
+    }
+
+    .dl-menu a:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
     }
 
     .btn-ghost:hover {
@@ -457,7 +530,11 @@ code {
     align-items: center;
     height: var(--topbar);
     padding: 0 var(--gutter);
-    background: linear-gradient(var(--bg) 55%, rgba(11, 11, 12, 0));
+    /* Solid enough that content scrolling underneath never shows through the email and links */
+    background: rgba(11, 11, 12, 0.88);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(234, 229, 236, 0.06);
 }
 
 .topbar-mark {
@@ -883,6 +960,19 @@ main,
 .hero-hello {
     color: var(--accent);
     margin-bottom: 0.5rem;
+}
+
+.hero-meta {
+    margin-top: 0.9rem;
+    font: 400 clamp(0.72rem, 0.9vw, 0.85rem)/1.5 var(--mono);
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-wrap: balance;
+}
+
+/* Wraps only after a separator, never inside "3+ years" */
+.hero-meta span {
+    white-space: nowrap;
 }
 
 /* Becomes a control once the avatar's wave has loaded (js/avatar.js) */
@@ -2727,6 +2817,9 @@ html:not(.js) .skillmap {
     }
 
     .topbar-nav a {
+        display: inline-block;
+        /* At least 24px tall to tap */
+        padding: 0.45rem 0;
         font-size: 0.72rem;
         letter-spacing: 0.06em;
     }
