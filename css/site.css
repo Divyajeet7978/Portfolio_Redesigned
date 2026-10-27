@@ -575,6 +575,17 @@ code {
     display: none;
 }
 
+/* Small tablets: the centred email would run into the nav, so the bar drops it (it stays in Contact) */
+@media (min-width: 768px) and (max-width: 959px) {
+    .topbar {
+        grid-template-columns: auto 1fr;
+    }
+
+    .topbar-email {
+        display: none;
+    }
+}
+
 .rail {
     position: fixed;
     left: 1.1rem;
@@ -855,6 +866,18 @@ main,
     mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
     pointer-events: none;
     z-index: 3;
+}
+
+/* Outside the wide desktop layout the halo and edge glow sit right behind the legs, so a page-coloured overlay
+   shows as a dark box with a hard bottom edge. There the avatar fades out with a mask instead; the wide
+   layout keeps the overlay for frame rate */
+html:not(.is-wide) .portrait.has-3d {
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+}
+
+html:not(.is-wide) .portrait::after {
+    display: none;
 }
 
 .avatar-canvas {
