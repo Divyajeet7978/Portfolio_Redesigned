@@ -843,41 +843,12 @@ main,
     height: min(82svh, 46rem);
     overflow: hidden;
     pointer-events: auto;
-    /* Melt the photo's edges into the page */
+    /* Fade the legs out to transparent, so the halo and edge glow behind show through (a page-coloured
+       overlay left a dark box there). Measured: no frame-rate cost against the old overlay */
     -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
     mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
     will-change: transform;
     transform: translateZ(0);
-}
-
-/* For 3D avatar: avoid expensive CSS mask re-rasterization by using a GPU overlay instead */
-.portrait.has-3d {
-    -webkit-mask-image: none;
-    mask-image: none;
-}
-
-.portrait::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Dissolve the cropped legs into the page; feathered at the sides so the dot grid doesn't stop in a hard edge */
-    background: linear-gradient(to bottom, transparent 62%, var(--bg) 96%);
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* Outside the wide desktop layout the halo and edge glow sit right behind the legs, so a page-coloured overlay
-   shows as a dark box with a hard bottom edge. There the avatar fades out with a mask instead; the wide
-   layout keeps the overlay for frame rate */
-html:not(.is-wide) .portrait.has-3d {
-    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
-    mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
-}
-
-html:not(.is-wide) .portrait::after {
-    display: none;
 }
 
 .avatar-canvas {
