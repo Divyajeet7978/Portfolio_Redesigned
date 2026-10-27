@@ -785,6 +785,53 @@ main,
     margin-bottom: 0.5rem;
 }
 
+/* Becomes a control once the avatar's wave has loaded (js/avatar.js) */
+.hello-wave.is-ready {
+    position: relative;
+    cursor: pointer;
+    /* Taller hit area without moving the line */
+    padding-block: 0.6rem;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hello-hint {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.75rem;
+    font: 400 0.72rem/1 var(--mono);
+    color: var(--muted);
+    white-space: nowrap;
+    transform: translateY(-50%);
+    animation: hint-in 0.5s var(--ease) backwards;
+    transition: opacity 0.3s var(--ease);
+}
+
+.hello-hint::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: hint-pulse 1.6s ease-in-out infinite;
+}
+
+/* One wave is enough to learn it; the hint steps aside */
+.was-tapped .hello-hint {
+    opacity: 0;
+}
+
+@keyframes hint-in {
+    from { opacity: 0; transform: translate(-0.4rem, -50%); }
+}
+
+@keyframes hint-pulse {
+    50% { opacity: 0.25; transform: scale(0.7); }
+}
+
 .hero-name {
     font-size: clamp(2.4rem, 4.6vw, 4.75rem);
     font-weight: 800;

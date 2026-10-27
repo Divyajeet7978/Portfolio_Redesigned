@@ -158,6 +158,7 @@
                         isWaving = false;
                         lookAtViewer = false;
                     });
+                    enableHelloTap();
                 }
                 mixer.update(0);
             }
@@ -266,13 +267,31 @@
         scrollBiasYaw = -0.22 * progress;
     };
 
-    // Hovering (or tapping) "Hello! I'm" in the hero: the model turns to face the visitor and waves once
-    var hello = document.querySelector('.hero-hello');
-    if (hello && !reduceMotion) {
-        hello.addEventListener('pointerenter', function () {
-            if (!waveAction || isWaving) return;
+    // Tapping (or clicking) "Hello! I'm" in the hero: the model turns to face the visitor and waves once.
+    // It only becomes a control once the wave clip has loaded, so it never looks clickable and does nothing
+    var hello = document.querySelector('.hello-wave');
+    function enableHelloTap() {
+        if (!hello || reduceMotion || !waveAction) return;
+        hello.setAttribute('role', 'button');
+        hello.setAttribute('tabindex', '0');
+        var hint = document.createElement('span');
+        hint.className = 'hello-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.textContent = matchMedia('(pointer: coarse)').matches ? 'tap me' : 'click me';
+        hello.appendChild(hint);
+        hello.classList.add('is-ready');
+
+        function wave() {
+            hello.classList.add('was-tapped');
+            if (isWaving) return;
             lookAtViewer = true;
             startWave();
+        }
+        hello.addEventListener('click', wave);
+        hello.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            wave();
         });
     }
 
