@@ -42,8 +42,15 @@
     // Three.js Scene, Camera, Renderer
     var scene = new THREE.Scene();
 
-    var width = container.clientWidth || 380;
+    // The wave reaches past the portrait's sides, so the canvas is at least MIN_ASPECT wide for its height
+    // and overflows the portrait evenly (CSS centres it). The camera frames by height: the avatar keeps its size
+    var MIN_ASPECT = 1.05;
+    function canvasWidth(w, h) {
+        return Math.max(w, Math.round(h * MIN_ASPECT));
+    }
+
     var height = container.clientHeight || 550;
+    var width = canvasWidth(container.clientWidth || 380, height);
 
     var camera = new THREE.PerspectiveCamera(32, width / height, 0.1, 50);
     camera.position.set(0, 1.42, 2.65);
@@ -321,9 +328,9 @@
     // Resize
     function resize() {
         if (!container || !renderer || !camera) return;
-        var w = container.clientWidth;
         var h = container.clientHeight;
-        if (w === 0 || h === 0) return;
+        if (container.clientWidth === 0 || h === 0) return;
+        var w = canvasWidth(container.clientWidth, h);
 
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
