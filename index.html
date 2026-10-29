@@ -466,6 +466,72 @@
                             <li>Schema check</li>
                             <li>React review UI</li>
                         </ol>
+                        <h4 class="label project-label">Try a report</h4>
+                        <div class="qa">
+                            <div class="qa-tabs" role="tablist" aria-label="Example bug reports">
+                                <button type="button" role="tab" id="b2j-tab-1" aria-controls="b2j-1" aria-selected="true">Dark mode in Safari</button>
+                                <button type="button" role="tab" id="b2j-tab-2" aria-controls="b2j-2" aria-selected="false" tabindex="-1">Blank production page</button>
+                                <button type="button" role="tab" id="b2j-tab-3" aria-controls="b2j-3" aria-selected="false" tabindex="-1">Invoice access</button>
+                                <button type="button" role="tab" id="b2j-tab-4" aria-controls="b2j-4" aria-selected="false" tabindex="-1">Login spinner</button>
+                            </div>
+                            <div class="qa-panel" role="tabpanel" id="b2j-1" aria-labelledby="b2j-tab-1">
+                                <p class="qa-q">Whenever I select dark mode in Safari, the settings panel stays white.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                                <pre class="qa-cypher qa-json"><code>{
+  "category": <span class="cy-str">"ui"</span>,
+  "severity": <span class="cy-str">"low"</span>,
+  "priority": <span class="cy-str">"P4"</span>,
+  "environment": <span class="cy-str">"Safari"</span>,
+  "reproducible": <span class="cy-kw">true</span>,
+  "probable_cause": <span class="cy-str">"Settings panel color theme setting is not applied correctly."</span>,
+  "suggested_action": <span class="cy-str">"Check and update the UI rendering logic related to dark mode settings."</span>
+}</code></pre>
+                                <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
+                            </div>
+                            <div class="qa-panel" role="tabpanel" id="b2j-2" aria-labelledby="b2j-tab-2">
+                                <p class="qa-q">The production release shows a blank page for every user and blocks the entire application.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                                <pre class="qa-cypher qa-json"><code>{
+  "category": <span class="cy-str">"deployment"</span>,
+  "severity": <span class="cy-str">"critical"</span>,
+  "priority": <span class="cy-str">"P1"</span>,
+  "environment": <span class="cy-str">"production"</span>,
+  "reproducible": <span class="cy-str">"unknown"</span>,
+  "probable_cause": <span class="cy-str">"Application server initialization fails."</span>,
+  "suggested_action": <span class="cy-str">"Review and debug the application startup process."</span>
+}</code></pre>
+                                <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
+                            </div>
+                            <div class="qa-panel" role="tabpanel" id="b2j-3" aria-labelledby="b2j-tab-3">
+                                <p class="qa-q">An unauthenticated user can read another customer&rsquo;s private invoice by changing the invoice ID in the URL.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                                <pre class="qa-cypher qa-json"><code>{
+  "category": <span class="cy-str">"security"</span>,
+  "severity": <span class="cy-str">"critical"</span>,
+  "priority": <span class="cy-str">"P1"</span>,
+  "environment": <span class="cy-str">"unknown"</span>,
+  "reproducible": <span class="cy-str">"unknown"</span>,
+  "probable_cause": <span class="cy-str">"URL parameter injection vulnerability in the application."</span>,
+  "suggested_action": <span class="cy-str">"Implement input validation and sanitization for all URL parameters."</span>
+}</code></pre>
+                                <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
+                            </div>
+                            <div class="qa-panel" role="tabpanel" id="b2j-4" aria-labelledby="b2j-tab-4">
+                                <p class="qa-q">Whenever I enter the wrong password, the login form spins and never returns an error. Refreshing fixes it until the next attempt.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                                <pre class="qa-cypher qa-json"><code>{
+  "category": <span class="cy-str">"validation"</span>,
+  "severity": <span class="cy-str">"low"</span>,
+  "priority": <span class="cy-str">"P4"</span>,
+  "environment": <span class="cy-str">"unknown"</span>,
+  "reproducible": <span class="cy-kw">true</span>,
+  "probable_cause": <span class="cy-str">"Incorrect password input triggers infinite loop."</span>,
+  "suggested_action": <span class="cy-str">"Implement proper error handling for invalid passwords."</span>
+}</code></pre>
+                                <p class="qa-declined"><strong>2 of 5 labels match.</strong> Expected category &ldquo;authentication&rdquo;, severity &ldquo;medium&rdquo; and priority &ldquo;P2&rdquo;.</p>
+                            </div>
+                            <p class="qa-note">Nothing runs in your browser: these are saved from the base model&rsquo;s benchmark run on 30 synthetic reports.</p>
+                        </div>
                         <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
                             <img src="img/bug2json.webp" alt="Bug2JSON playground extracting a structured triage record from a login bug report" width="1026" height="722" loading="lazy"
                                 decoding="async" style="object-position: center top;">

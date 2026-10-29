@@ -225,7 +225,7 @@
         if (document.fonts) document.fonts.ready.then(draw);
     })();
 
-    // --- Olist demo: saved questions as tabs (without JS every answer shows, one after another) ---
+    // --- Project demos (Olist, Bug2JSON): saved examples as tabs (without JS every one shows, one after another) ---
     document.querySelectorAll('.qa').forEach(function (qa) {
         var tabs = Array.prototype.slice.call(qa.querySelectorAll('[role="tab"]'));
         var select = function (tab) {
