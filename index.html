@@ -231,7 +231,7 @@
                         <div><dt><span>Python</span></dt>
                             <dd><a href="#career-vimaan">Vimaan Robotics</a> <a href="#career-cognizant">Cognizant</a> <a href="#cert-hr-python">HackerRank Python</a></dd></div>
                         <div><dt><span>FastAPI</span></dt>
-                            <dd><a href="#career-cognizant">Cognizant</a> <a href="#proj-olist">Olist Query Studio</a> <a href="#proj-bug2json">Bug2JSON</a></dd></div>
+                            <dd><a href="#career-cognizant">Cognizant</a> <a href="#proj-olist">Olist Query Studio</a> <a href="#proj-bugsieve">BugSieve</a></dd></div>
                         <div><dt><span>Node.js</span></dt>
                             <dd><a href="#career-cognizant">Cognizant</a></dd></div>
                         <div><dt><span>PostgreSQL</span></dt>
@@ -265,13 +265,13 @@
                         <div><dt><span>Ollama</span><span>Streamlit</span></dt>
                             <dd><a href="#proj-olist">Olist Query Studio</a></dd></div>
                         <div><dt><span>PyTorch</span><span>LoRA / PEFT</span></dt>
-                            <dd><a href="#proj-bug2json">Bug2JSON</a></dd></div>
+                            <dd><a href="#proj-bugsieve">BugSieve</a></dd></div>
                         <div><dt><span>Microsoft Foundry</span></dt>
                             <dd><a href="#cert-ms-foundry">Microsoft Applied Skill: Foundry agents</a></dd></div>
                         <div><dt><span>Copilot Studio</span></dt>
                             <dd><a href="#cert-ms-agents">Microsoft Applied Skill: autonomous agents</a></dd></div>
                         <div><dt><span>React</span><span>TypeScript</span></dt>
-                            <dd><a href="#proj-bug2json">Bug2JSON</a> <a href="#proj-ethereal">Ethereal Command</a> <a href="#cert-hr-react">HackerRank React</a></dd></div>
+                            <dd><a href="#proj-bugsieve">BugSieve</a> <a href="#proj-ethereal">Ethereal Command</a> <a href="#cert-hr-react">HackerRank React</a></dd></div>
                     </dl>
                 </article>
             </div>
@@ -346,7 +346,7 @@
                         </div>
                         <ul class="work-names">
                             <li>Olist Query Studio</li>
-                            <li>Bug2JSON</li>
+                            <li>BugSieve</li>
                             <li>Sort-Downloads</li>
                             <li>AI Resume Analyzer</li>
                             <li>Ethereal Command</li>
@@ -444,10 +444,10 @@
                         <a href="https://github.com/Divyajeet7978/Olist-Query-Studio" target="_blank" rel="noopener noreferrer" class="text-link"
                             aria-label="View Olist Query Studio code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                     </article>
-                    <article class="project" aria-labelledby="proj-bug2json">
+                    <article class="project" aria-labelledby="proj-bugsieve">
                         <p class="label project-num">02</p>
                         <div class="project-head">
-                            <h3 id="proj-bug2json">Bug2JSON</h3>
+                            <h3 id="proj-bugsieve">BugSieve</h3>
                             <span class="project-tag">LLM &middot; Bug triage</span>
                         </div>
                         <p class="project-pitch">Turns free-text bug reports into schema-validated triage records, from category and severity to a suggested next step.</p>
@@ -459,7 +459,7 @@
                         </ul>
                         <p class="work-result"><svg aria-hidden="true"><use href="#i-check"/></svg>30 of 30 benchmark responses schema-valid</p>
                         <h4 class="label project-label">How it flows</h4>
-                        <ol class="flow" aria-label="How Bug2JSON works">
+                        <ol class="flow" aria-label="How BugSieve works">
                             <li>Free-text bug report</li>
                             <li>FastAPI + Qwen 2.5<small>runs locally</small></li>
                             <li class="flow-key">Guardrails<small>unsupported claims become &ldquo;unknown&rdquo;</small></li>
@@ -467,75 +467,75 @@
                             <li>React review UI</li>
                         </ol>
                         <h4 class="label project-label">Try a report</h4>
-                        <div class="qa">
-                            <div class="qa-tabs" role="tablist" aria-label="Example bug reports">
-                                <button type="button" role="tab" id="b2j-tab-1" aria-controls="b2j-1" aria-selected="true">Dark mode in Safari</button>
-                                <button type="button" role="tab" id="b2j-tab-2" aria-controls="b2j-2" aria-selected="false" tabindex="-1">Blank production page</button>
-                                <button type="button" role="tab" id="b2j-tab-3" aria-controls="b2j-3" aria-selected="false" tabindex="-1">Invoice access</button>
-                                <button type="button" role="tab" id="b2j-tab-4" aria-controls="b2j-4" aria-selected="false" tabindex="-1">Login spinner</button>
-                            </div>
-                            <div class="qa-panel" role="tabpanel" id="b2j-1" aria-labelledby="b2j-tab-1">
+                            <div class="qa">
+                                <div class="qa-tabs" role="tablist" aria-label="Example bug reports">
+                                <button type="button" role="tab" id="bs-tab-1" aria-controls="bs-1" aria-selected="true">Dark mode in Safari</button>
+                                <button type="button" role="tab" id="bs-tab-2" aria-controls="bs-2" aria-selected="false" tabindex="-1">Deleted addresses</button>
+                                <button type="button" role="tab" id="bs-tab-3" aria-controls="bs-3" aria-selected="false" tabindex="-1">Duplicate notes</button>
+                                <button type="button" role="tab" id="bs-tab-4" aria-controls="bs-4" aria-selected="false" tabindex="-1">Invoice access</button>
+                                </div>
+                            <div class="qa-panel" role="tabpanel" id="bs-1" aria-labelledby="bs-tab-1">
                                 <p class="qa-q">Whenever I select dark mode in Safari, the settings panel stays white.</p>
-                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 3B</p>
                                 <pre class="qa-cypher qa-json"><code>{
   "category": <span class="cy-str">"ui"</span>,
   "severity": <span class="cy-str">"low"</span>,
   "priority": <span class="cy-str">"P4"</span>,
   "environment": <span class="cy-str">"Safari"</span>,
   "reproducible": <span class="cy-kw">true</span>,
-  "probable_cause": <span class="cy-str">"Settings panel color theme setting is not applied correctly."</span>,
-  "suggested_action": <span class="cy-str">"Check and update the UI rendering logic related to dark mode settings."</span>
+  "probable_cause": <span class="cy-str">"The dark mode setting may not update the background color of the settings panel."</span>,
+  "suggested_action": <span class="cy-str">"Verify that the dark mode setting correctly changes the background color of the settings panel."</span>
 }</code></pre>
                                 <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
                             </div>
-                            <div class="qa-panel" role="tabpanel" id="b2j-2" aria-labelledby="b2j-tab-2">
-                                <p class="qa-q">The production release shows a blank page for every user and blocks the entire application.</p>
-                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                            <div class="qa-panel" role="tabpanel" id="bs-2" aria-labelledby="bs-tab-2">
+                                <p class="qa-q">Customer addresses were permanently deleted for every account during yesterday&rsquo;s migration; no restore is available.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 3B</p>
                                 <pre class="qa-cypher qa-json"><code>{
-  "category": <span class="cy-str">"deployment"</span>,
-  "severity": <span class="cy-str">"critical"</span>,
-  "priority": <span class="cy-str">"P1"</span>,
-  "environment": <span class="cy-str">"production"</span>,
-  "reproducible": <span class="cy-str">"unknown"</span>,
-  "probable_cause": <span class="cy-str">"Application server initialization fails."</span>,
-  "suggested_action": <span class="cy-str">"Review and debug the application startup process."</span>
-}</code></pre>
-                                <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
-                            </div>
-                            <div class="qa-panel" role="tabpanel" id="b2j-3" aria-labelledby="b2j-tab-3">
-                                <p class="qa-q">An unauthenticated user can read another customer&rsquo;s private invoice by changing the invoice ID in the URL.</p>
-                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
-                                <pre class="qa-cypher qa-json"><code>{
-  "category": <span class="cy-str">"security"</span>,
+  "category": <span class="cy-str">"database"</span>,
   "severity": <span class="cy-str">"critical"</span>,
   "priority": <span class="cy-str">"P1"</span>,
   "environment": <span class="cy-str">"unknown"</span>,
   "reproducible": <span class="cy-str">"unknown"</span>,
-  "probable_cause": <span class="cy-str">"URL parameter injection vulnerability in the application."</span>,
-  "suggested_action": <span class="cy-str">"Implement input validation and sanitization for all URL parameters."</span>
+  "probable_cause": <span class="cy-str">"The migration script may have used a destructive DELETE statement instead of an upsert or a restore function."</span>,
+  "suggested_action": <span class="cy-str">"Review the migration script to ensure it uses the correct SQL commands and includes a rollback plan if necessary."</span>
 }</code></pre>
                                 <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
                             </div>
-                            <div class="qa-panel" role="tabpanel" id="b2j-4" aria-labelledby="b2j-tab-4">
-                                <p class="qa-q">Whenever I enter the wrong password, the login form spins and never returns an error. Refreshing fixes it until the next attempt.</p>
-                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 1.5B</p>
+                            <div class="qa-panel" role="tabpanel" id="bs-3" aria-labelledby="bs-tab-3">
+                                <p class="qa-q">Each time I save an order note, the database stores the same note twice.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 3B</p>
                                 <pre class="qa-cypher qa-json"><code>{
-  "category": <span class="cy-str">"validation"</span>,
-  "severity": <span class="cy-str">"low"</span>,
-  "priority": <span class="cy-str">"P4"</span>,
+  "category": <span class="cy-str">"database"</span>,
+  "severity": <span class="cy-str">"medium"</span>,
+  "priority": <span class="cy-str">"P3"</span>,
   "environment": <span class="cy-str">"unknown"</span>,
   "reproducible": <span class="cy-kw">true</span>,
-  "probable_cause": <span class="cy-str">"Incorrect password input triggers infinite loop."</span>,
-  "suggested_action": <span class="cy-str">"Implement proper error handling for invalid passwords."</span>
+  "probable_cause": <span class="cy-str">"The save operation may not update the record ID correctly."</span>,
+  "suggested_action": <span class="cy-str">"Verify the order note is being saved with a unique ID each time."</span>
 }</code></pre>
-                                <p class="qa-declined"><strong>2 of 5 labels match.</strong> Expected category &ldquo;authentication&rdquo;, severity &ldquo;medium&rdquo; and priority &ldquo;P2&rdquo;.</p>
+                                <p class="qa-declined"><strong>5 of 5 labels match the expected answer.</strong></p>
                             </div>
-                            <p class="qa-note">Nothing runs in your browser: these are saved from the base model&rsquo;s benchmark run on 30 synthetic reports.</p>
-                        </div>
-                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
-                            <img src="img/bug2json.webp" alt="Bug2JSON playground extracting a structured triage record from a login bug report" width="1026" height="722" loading="lazy"
+                            <div class="qa-panel" role="tabpanel" id="bs-4" aria-labelledby="bs-tab-4">
+                                <p class="qa-q">An unauthenticated user can read another customer&rsquo;s private invoice by changing the invoice ID in the URL.</p>
+                                <p class="qa-source">Benchmark run &middot; base Qwen 2.5 3B</p>
+                                <pre class="qa-cypher qa-json"><code>{
+  "category": <span class="cy-str">"security"</span>,
+  "severity": <span class="cy-str">"high"</span>,
+  "priority": <span class="cy-str">"P1"</span>,
+  "environment": <span class="cy-str">"unknown"</span>,
+  "reproducible": <span class="cy-str">"unknown"</span>,
+  "probable_cause": <span class="cy-str">"The URL parameter may bypass authentication checks."</span>,
+  "suggested_action": <span class="cy-str">"Verify that the invoice ID is authenticated before accessing the invoice content."</span>
+}</code></pre>
+                                <p class="qa-declined"><strong>4 of 5 labels match.</strong> Expected severity &ldquo;critical&rdquo;.</p>
+                            </div>
+                                <p class="qa-note">Nothing runs in your browser: these are saved from the base model&rsquo;s benchmark run on 30 synthetic reports.</p>
+                            </div>
+                        <a href="https://github.com/Divyajeet7978/BugSieve" target="_blank" rel="noopener noreferrer" class="work-media hover-multi-effect" tabindex="-1" aria-hidden="true">
+                            <img src="img/bugsieve.webp" alt="BugSieve playground extracting a structured triage record from a CSV import bug report" width="1030" height="715" loading="lazy"
                                 decoding="async" style="object-position: center top;">
-                            <span class="work-overlay"><strong>Bug2JSON</strong>Bug reports to validated JSON</span>
+                            <span class="work-overlay"><strong>BugSieve</strong>Bug reports to validated JSON</span>
                         </a>
                         <details class="project-detail">
                             <summary>The technical detail<span aria-hidden="true">+</span></summary>
@@ -545,11 +545,11 @@
                                     <li>Python</li><li>PyTorch</li><li>LoRA / PEFT</li><li>FastAPI</li><li>React</li><li>TypeScript</li>
                                 </ul>
                                 <h4 class="label project-label">Tradeoffs</h4>
-                                <p>Every response is schema-valid (30 of 30), but the 1.5B base model&rsquo;s labels are weak on the synthetic suite (40% category accuracy), so the guardrails prefer &ldquo;unknown&rdquo; and the UI asks for review. No fine-tune result is claimed until a reviewed, real-world evaluation exists.</p>
+                                <p>A 3B model and a tuned prompt took category accuracy on the 30-report synthetic suite from 40% to 83%, but the tuning used that suite, so it is not a held-out result. Severity is still right only about half the time, so the guardrails prefer &ldquo;unknown&rdquo; and the UI asks for review. No fine-tune result is claimed until a reviewed, real-world evaluation exists.</p>
                             </div>
                         </details>
-                        <a href="https://github.com/Divyajeet7978/Bug2JSON" target="_blank" rel="noopener noreferrer" class="text-link"
-                            aria-label="View Bug2JSON code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                        <a href="https://github.com/Divyajeet7978/BugSieve" target="_blank" rel="noopener noreferrer" class="text-link"
+                            aria-label="View BugSieve code on GitHub (opens in a new tab)">View code <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                     </article>
                     <article class="project" aria-labelledby="proj-sort">
                         <p class="label project-num">03</p>

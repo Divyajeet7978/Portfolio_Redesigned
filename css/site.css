@@ -1803,7 +1803,7 @@ html:not(.js) .skillmap {
     }
 }
 
-/* Project demos: saved Olist questions with their Cypher and answer, saved Bug2JSON reports with their JSON */
+/* Project demos: saved Olist questions with their Cypher and answer, saved BugSieve reports with their JSON */
 .qa {
     width: 100%;
     max-width: 36rem;
@@ -1884,7 +1884,7 @@ html:not(.js) .skillmap {
     font: inherit;
 }
 
-/* Bug2JSON's long string values wrap instead of scrolling: the cause and next step are the part worth reading */
+/* BugSieve's long string values wrap instead of scrolling: the cause and next step are the part worth reading */
 .qa-json {
     white-space: pre-wrap;
 }

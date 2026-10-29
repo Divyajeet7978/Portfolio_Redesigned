@@ -13,7 +13,7 @@ Personal site for my work as a software engineer on backend and data systems.
 - **About** with four headline results, each linked to its proof, and **What I do**: backend & data, graph & AI, with each skill linked to the job, project or certificate that backs it
 - **Skills map**: a clickable graph joining every skill to those jobs, projects and certificates
 - **Experience** timeline
-- **Personal projects**: Olist Query Studio, Bug2JSON, Sort-Downloads and others, each with a data-flow diagram and, where public, a screenshot and code link; Olist Query Studio has saved example questions with their Cypher and answers
+- **Personal projects**: Olist Query Studio, BugSieve, Sort-Downloads and others, each with a data-flow diagram and, where public, a screenshot and code link; Olist Query Studio has saved example questions with their Cypher and answers
 - **Certifications**: Microsoft Applied Skills, Neo4j, HackerRank and Udemy, with links to verify each one
 - **Resume** preview and PDF download, also at the short link `/resume`, plus a Word copy for job portals
 - **Education & awards**, including the gold medal card that shows convocation photos on hover
