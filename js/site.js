@@ -990,6 +990,32 @@
 
     stepAmbient();
 
+    // --- GoatCounter events: Work and Resume reached, resume opened ---
+    // vendor/goatcounter's count.js counts the visit itself and skips localhost and browsers opted out
+    // with #toggle-goatcounter. It loads async, so each event checks it's there
+    function countEvent(path, title) {
+        if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true });
+    }
+    if ('IntersectionObserver' in window) {
+        var reached = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                countEvent('reached-' + entry.target.id, 'Reached ' + entry.target.id);
+                reached.unobserve(entry.target);
+            });
+        });
+        ['work', 'resume'].forEach(function (id) {
+            var section = document.getElementById(id);
+            if (section) reached.observe(section);
+        });
+    }
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href^="Divyajeet_Panda_Resume."]');
+        if (!link) return;
+        var word = /\.docx$/.test(link.getAttribute('href'));
+        countEvent(word ? 'resume-docx' : 'resume-pdf', word ? 'Resume opened (Word)' : 'Resume opened (PDF)');
+    });
+
     // --- Certifications: show all ---
     var certToggle = document.getElementById('certToggle');
     var certList = document.getElementById('certList');
